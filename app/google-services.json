@@ -1,0 +1,82 @@
+{
+  "project_info": {
+    "project_number": "275755443371",
+    "project_id": "sporthor",
+    "storage_bucket": "sporthor.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:275755443371:android:dccac5c62583263440c3ee",
+        "android_client_info": {
+          "package_name": "com.sporthor.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "275755443371-55krnku1upjccvg9u8oh7apn58rfndm1.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.sporthor.app",
+            "certificate_hash": "2145cf72c8ead2db592958ea385c2fddd12ed92a"
+          }
+        },
+        {
+          "client_id": "275755443371-5ap01np4k747rnuol930m86s1kju96p2.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.sporthor.app",
+            "certificate_hash": "a05ac5bebf1f95b09841bc2a4c5caf87983854a2"
+          }
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAAjTeg_K8KEUKj2kee_vCKD5svLvxq2Bk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:275755443371:android:54dbc86c7c41b57940c3ee",
+        "android_client_info": {
+          "package_name": "com.sporthor.app.beta"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "275755443371-0ldu0rok0tnio5t3e1cr1c12ein9npbq.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.sporthor.app.beta",
+            "certificate_hash": "2145cf72c8ead2db592958ea385c2fddd12ed92a"
+          }
+        },
+        {
+          "client_id": "275755443371-u42qode2qoavnncprddt4ksj8u4e70tj.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.sporthor.app.beta",
+            "certificate_hash": "a05ac5bebf1f95b09841bc2a4c5caf87983854a2"
+          }
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAAjTeg_K8KEUKj2kee_vCKD5svLvxq2Bk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

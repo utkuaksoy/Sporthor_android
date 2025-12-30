@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="281pt" height="260pt" viewBox="0 0 280.62 260">
+    <g class="graph">
+        <path fill="#fff" d="M0 260V0h280.62v260z"/>
+        <g class="node" transform="translate(4 256)">
+            <ellipse cx="136.31" cy="-234" fill="none" stroke="#000" rx="136.31" ry="18"/>
+            <text x="136.31" y="-228.95" font-family="Times,serif" font-size="14" text-anchor="middle">:feature:home:userTeams:domain</text>
+        </g>
+        <g class="node" transform="translate(4 256)">
+            <ellipse cx="171.31" cy="-162" fill="none" stroke="#000" rx="41.63" ry="18"/>
+            <text x="171.31" y="-156.95" font-family="Times,serif" font-size="14" text-anchor="middle">:domain</text>
+        </g>
+        <g stroke="red" stroke-width="2" class="edge">
+            <path fill="none" d="M148.96 40.3c3.82 7.63 8.39 16.78 12.65 25.3"/>
+            <path fill="red" d="m164.06 62.68 1.35 10.51-7.61-7.38z"/>
+        </g>
+        <g class="node" transform="translate(4 256)">
+            <ellipse cx="101.31" cy="-90" fill="none" stroke="#000" rx="65.17" ry="18"/>
+            <text x="101.31" y="-84.95" font-family="Times,serif" font-size="14" text-anchor="middle">:core:common</text>
+        </g>
+        <g stroke="#000" class="edge">
+            <path fill="none" d="M134.76 40.08C131.5 50.42 127.42 63.9 124.31 76c-5.18 20.14-10.06 43.1-13.57 60.65"/>
+            <path d="m114.2 137.22-5.37 9.13-1.5-10.48z"/>
+        </g>
+        <g stroke="red" stroke-width="2" class="edge">
+            <path fill="none" d="m159.43 110.88-29.46 29.46"/>
+            <path fill="red" d="m133.8 141.47-9.55 4.59 4.6-9.54z"/>
+        </g>
+        <g class="node" transform="translate(4 256)">
+            <ellipse cx="147.31" cy="-18" fill="none" stroke="#000" rx="66.71" ry="18"/>
+            <text x="147.31" y="-12.95" font-family="Times,serif" font-size="14" text-anchor="middle">:core:resources</text>
+        </g>
+        <g stroke="#000" class="edge">
+            <path fill="none" d="M178.97 112.35c3.17 18.15 6.37 47.33.34 71.65-2.23 8.99-6.29 18.13-10.64 26.24"/>
+            <path d="m171.7 211.98-8.03 6.91 1.97-10.41z"/>
+        </g>
+        <g stroke="red" stroke-width="2" class="edge">
+            <path fill="none" d="M116.45 183.95c5.25 7.99 11.64 17.72 17.51 26.65"/>
+            <path fill="red" d="m136.05 207.4 2.57 10.28-8.42-6.43z"/>
+        </g>
+    </g>
+</svg>

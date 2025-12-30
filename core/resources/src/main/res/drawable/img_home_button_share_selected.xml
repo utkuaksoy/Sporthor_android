@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2024 Sporthor Android
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+-->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="24"
+    android:viewportHeight="24">
+  <path
+      android:pathData="M4.526,1.904C5.81,1.25 7.49,1.25 10.85,1.25H13.15C16.51,1.25 18.191,1.25 19.474,1.904C20.603,2.479 21.521,3.397 22.096,4.526C22.75,5.81 22.75,7.49 22.75,10.85V13.15C22.75,16.51 22.75,18.191 22.096,19.474C21.521,20.603 20.603,21.521 19.474,22.096C18.191,22.75 16.51,22.75 13.15,22.75H10.85C7.49,22.75 5.81,22.75 4.526,22.096C3.397,21.521 2.479,20.603 1.904,19.474C1.25,18.191 1.25,16.51 1.25,13.15V10.85C1.25,7.49 1.25,5.81 1.904,4.526C2.479,3.397 3.397,2.479 4.526,1.904ZM12.75,8C12.75,7.586 12.414,7.25 12,7.25C11.586,7.25 11.25,7.586 11.25,8V11.25H8C7.586,11.25 7.25,11.586 7.25,12C7.25,12.414 7.586,12.75 8,12.75H11.25V16C11.25,16.414 11.586,16.75 12,16.75C12.414,16.75 12.75,16.414 12.75,16V12.75H16C16.414,12.75 16.75,12.414 16.75,12C16.75,11.586 16.414,11.25 16,11.25H12.75V8Z"
+      android:fillColor="#121515"
+      android:fillType="evenOdd"/>
+</vector>

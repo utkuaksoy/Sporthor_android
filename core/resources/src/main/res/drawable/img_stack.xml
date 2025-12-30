@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2024 Sporthor Android
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+-->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="20dp"
+    android:height="20dp"
+    android:viewportWidth="20"
+    android:viewportHeight="20">
+  <path
+      android:pathData="M5,7.5V7.5C5,7.036 5,6.803 5.038,6.61C5.196,5.817 5.816,5.197 6.61,5.039C6.803,5 7.035,5 7.5,5H11.8C12.92,5 13.48,5 13.908,5.218C14.284,5.41 14.59,5.716 14.782,6.092C15,6.52 15,7.08 15,8.2V12.5C15,12.965 15,13.197 14.962,13.391C14.804,14.184 14.184,14.804 13.39,14.962C13.197,15 12.965,15 12.5,15V15M8.333,4.167V4.167C8.333,3.702 8.333,3.47 8.372,3.277C8.53,2.483 9.15,1.863 9.943,1.705C10.136,1.667 10.369,1.667 10.833,1.667H15.133C16.253,1.667 16.813,1.667 17.241,1.885C17.618,2.077 17.924,2.383 18.115,2.759C18.333,3.187 18.333,3.747 18.333,4.867V9.167C18.333,9.632 18.333,9.864 18.295,10.057C18.137,10.851 17.517,11.471 16.723,11.629C16.53,11.667 16.298,11.667 15.833,11.667V11.667M4.867,18.334H8.467C9.587,18.334 10.147,18.334 10.575,18.116C10.951,17.924 11.257,17.618 11.449,17.242C11.667,16.814 11.667,16.254 11.667,15.134V11.534C11.667,10.414 11.667,9.854 11.449,9.426C11.257,9.049 10.951,8.743 10.575,8.552C10.147,8.334 9.587,8.334 8.467,8.334H4.867C3.747,8.334 3.186,8.334 2.759,8.552C2.382,8.743 2.076,9.049 1.885,9.426C1.667,9.854 1.667,10.414 1.667,11.534V15.134C1.667,16.254 1.667,16.814 1.885,17.242C2.076,17.618 2.382,17.924 2.759,18.116C3.186,18.334 3.747,18.334 4.867,18.334Z"
+      android:strokeLineJoin="round"
+      android:strokeWidth="1.5"
+      android:fillColor="#00000000"
+      android:strokeColor="#ffffff"
+      android:strokeLineCap="round"/>
+</vector>

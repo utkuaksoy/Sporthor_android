@@ -1,0 +1,94 @@
+package %__PACKAGE_NAME__%
+
+import androidx.compose.foundation.layout.padding
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import com.iamkurtgoz.core.designsystem.component.animation.AppLoadingDialog
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.ui.Modifier
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.iamkurtgoz.core.commonui.extension.observeSideEffect
+import com.iamkurtgoz.core.common.state.AppBuildConfigStatePack
+import com.iamkurtgoz.core.common.state.AppRemoteConfigStatePack
+import com.iamkurtgoz.core.commonui.extension.Alert
+import com.iamkurtgoz.core.designsystem.internal.PreviewAppWithNightMode
+import com.iamkurtgoz.core.designsystem.theme.AppTheme
+import com.iamkurtgoz.core.designsystem.theme.AppThemeScaffold
+import com.iamkurtgoz.core.designsystem.theme.AppThemeSurface
+import com.iamkurtgoz.core.commonui.component.log.TrackedScreen
+import androidx.compose.runtime.LaunchedEffect
+import com.iamkurtgoz.core.resources.R as resourcesR
+
+@Composable
+internal fun %__SCREEN_NAME__%Screen(
+    navigateUp: () -> Unit,
+    popBackStack: () -> Unit,
+    viewModel: %__SCREEN_NAME__%ViewModel = hiltViewModel(),
+) {
+    val state by viewModel.state.collectAsStateWithLifecycle()
+
+    TrackedScreen("%__SCREEN_NAME__%Screen")
+
+    LaunchedEffect(key1 = Unit) {
+        viewModel.setEvent(%__SCREEN_NAME__%ScreenContract.Event.Initialize)
+    }
+
+    viewModel.sideEffect.observeSideEffect { event ->
+        when (event) {
+            is %__SCREEN_NAME__%ScreenContract.SideEffect.NavigateUp -> navigateUp()
+            is %__SCREEN_NAME__%ScreenContract.SideEffect.PopBackStack -> popBackStack()
+        }
+    }
+
+    %__SCREEN_NAME__%ScreenScaffold(
+        state = state,
+        setEvent = viewModel::setEvent,
+    )
+}
+
+@Composable
+private fun %__SCREEN_NAME__%ScreenScaffold(
+    state: %__SCREEN_NAME__%ScreenContract.State,
+    setEvent: (%__SCREEN_NAME__%ScreenContract.Event) -> Unit,
+) {
+    AppThemeScaffold { padding ->
+        %__SCREEN_NAME__%ScreenContent(
+            modifier = Modifier
+                .padding(padding),
+            state = state,
+            setEvent = setEvent,
+        )
+
+        state.alertDialogModel?.Alert {
+            setEvent.invoke(%__SCREEN_NAME__%ScreenContract.Event.DismissDialogs)
+        }
+
+        AnimatedVisibility(
+            visible = state.isLoading,
+            enter = fadeIn(),
+            exit = fadeOut(),
+        ) {
+            AppLoadingDialog()
+        }
+    }
+}
+
+@PreviewAppWithNightMode
+@Composable
+private fun Preview() {
+    AppTheme {
+        AppThemeSurface {
+            %__SCREEN_NAME__%ScreenScaffold(
+                state = %__SCREEN_NAME__%ScreenContract.State(
+                    isLoading = true,
+                    appBuildConfigStatePack = AppBuildConfigStatePack(),
+                    appRemoteConfigStatePack = AppRemoteConfigStatePack(),
+                ),
+                setEvent = { },
+            )
+        }
+    }
+}

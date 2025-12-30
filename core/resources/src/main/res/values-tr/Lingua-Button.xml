@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2024 Sporthor Android
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+-->
+<resources>
+	<string name="button_update_button">Güncelle</string>
+	<string name="button_cancel_button">İptal</string>
+	<string name="button_ok_button">Tamam</string>
+	<string name="button_continue_button">Devam Et</string>
+	<string name="button_privacy_policy_button">Gizlilik Koşulları</string>
+	<string name="button_sign_in_with_google_button">Google ile Giriş Yap</string>
+	<string name="button_sign_in_with_email_button">Email ile Giriş Yap</string>
+	<string name="button_terms_button">Kullanım koşulları</string>
+	<string name="button_settings_button">Ayarlar</string>
+	<string name="button_try_button">Dene</string>
+	<string name="button_camera_button_title">Kamera</string>
+	<string name="button_gallery_button_title">Galeri</string>
+	<string name="button_next_button">Sonraki</string>
+	<string name="button_back_button">Önceki</string>
+	<string name="button_register_button">Kayıt Ol</string>
+	<string name="button_login_button">Giriş Yap</string>
+	<string name="button_send_otp_code">Doğrulama Kodu Gönder</string>
+	<string name="button_send_otp_code_again">Kodu Yeniden Gönder</string>
+	<string name="button_validate_phone_number">Numaranı Doğrula</string>
+	<string name="button_login_with_email_address">E-mail adresinle giriş yap</string>
+	<string name="button_continue_with_google_account">Google ile devam edin</string>
+	<string name="button_continue_with_facebook_account">Facebook ile devam edin</string>
+	<string name="button_send_reset_password_mail">Sıfırlama Maili Gönder</string>
+	<string name="button_discover_application">Uygulamayı Keşfet</string>
+	<string name="button_lets_start_now">Hemen Başlayalım</string>
+	<string name="button_finish">Bitir</string>
+</resources>

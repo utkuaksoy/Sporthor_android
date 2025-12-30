@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2024 Sporthor Android
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+-->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="800dp"
+    android:height="800dp"
+    android:viewportWidth="512"
+    android:viewportHeight="512">
+  <path
+      android:pathData="M256,206.6c-8.98,0 -17.97,-0.9 -35.93,-3.59v39.52h71.86v-39.52C273.96,205.7 264.98,206.6 256,206.6"
+      android:fillColor="#444C6D"/>
+  <path
+      android:pathData="M229.05,242.53l53.89,0l-26.95,269.47z"
+      android:fillColor="#D8D8D8"/>
+  <path
+      android:pathData="M363.79,107.79C363.79,48.51 315.28,0 256,0S148.21,48.51 148.21,107.79S196.72,215.58 256,215.58S363.79,167.07 363.79,107.79"
+      android:fillColor="#DD342E"/>
+  <path
+      android:pathData="M184.14,116.77c-5.39,0 -8.98,-3.59 -8.98,-8.98c0,-44.91 35.93,-80.84 80.84,-80.84c5.39,0 8.98,3.59 8.98,8.98s-3.59,8.98 -8.98,8.98c-35.03,0 -62.88,27.85 -62.88,62.88C193.12,113.18 189.53,116.77 184.14,116.77"
+      android:fillColor="#F86363"/>
+  <path
+      android:pathData="M184.14,116.77c-5.39,0 -8.98,-3.59 -8.98,-8.98c0,-44.91 35.93,-80.84 80.84,-80.84c5.39,0 8.98,3.59 8.98,8.98s-3.59,8.98 -8.98,8.98c-35.03,0 -62.88,27.85 -62.88,62.88C193.12,113.18 189.53,116.77 184.14,116.77"
+      android:fillColor="#F86363"/>
+</vector>

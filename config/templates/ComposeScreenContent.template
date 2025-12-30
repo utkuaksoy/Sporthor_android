@@ -1,0 +1,53 @@
+package %__PACKAGE_NAME__%
+
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import com.iamkurtgoz.core.common.state.AppBuildConfigStatePack
+import com.iamkurtgoz.core.common.state.AppRemoteConfigStatePack
+import com.iamkurtgoz.core.designsystem.internal.PreviewAppWithNightMode
+import com.iamkurtgoz.core.designsystem.theme.AppTheme
+import com.iamkurtgoz.core.designsystem.theme.AppThemeSurface
+import androidx.compose.foundation.clickable
+import com.iamkurtgoz.core.resources.R as resourcesR
+
+@Composable
+internal fun %__SCREEN_NAME__%ScreenContent(
+    state: %__SCREEN_NAME__%ScreenContract.State,
+    modifier: Modifier = Modifier,
+    setEvent: (%__SCREEN_NAME__%ScreenContract.Event) -> Unit,
+) {
+    Column(
+        modifier = modifier
+            .fillMaxSize(),
+    ) {
+        if (!state.isLoading) {
+            Text(
+                text = "%__SCREEN_NAME__%",
+                modifier = Modifier
+                    .clickable {
+                        setEvent.invoke(%__SCREEN_NAME__%ScreenContract.Event.DismissDialogs)
+                    },
+            )
+        }
+    }
+}
+
+@PreviewAppWithNightMode
+@Composable
+private fun Preview() {
+    AppTheme {
+        AppThemeSurface {
+            %__SCREEN_NAME__%ScreenContent(
+                state = %__SCREEN_NAME__%ScreenContract.State(
+                    isLoading = true,
+                    appBuildConfigStatePack = AppBuildConfigStatePack(),
+                    appRemoteConfigStatePack = AppRemoteConfigStatePack(),
+                ),
+                setEvent = { },
+            )
+        }
+    }
+}

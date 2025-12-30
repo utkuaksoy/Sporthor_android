@@ -1,0 +1,52 @@
+/*
+ * Copyright 2024 Sporthor Android
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+plugins {
+    alias(libs.plugins.build.logic.android.library)
+    alias(libs.plugins.build.logic.android.library.design.system.compose)
+}
+
+android {
+    namespace = "com.iamkurtgoz.core.designsystem"
+    buildFeatures.compose = true
+}
+
+dependencies {
+    // Projects
+    implementation(projects.domain)
+
+    // Projects - Core
+    implementation(projects.core.resources)
+    implementation(projects.core.common)
+
+    // AndroidX
+    implementation(libs.androidx.core.ktx)
+
+    // Kotlin
+    implementation(libs.kotlin.stdlib)
+
+    // Compose
+    api(libs.androidx.activity.compose)
+    api(libs.androidx.compose.foundation)
+    api(libs.androidx.compose.foundation.layout)
+    api(libs.androidx.compose.material3)
+    api(libs.androidx.compose.runtime)
+    api(libs.androidx.compose.ui.tooling.preview)
+    api(libs.androidx.compose.ui.util)
+    debugApi(libs.androidx.compose.ui.tooling)
+
+    // Lottie
+    api(libs.airbnb.lottie.compose)
+}
