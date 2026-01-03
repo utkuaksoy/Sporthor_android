@@ -35,6 +35,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
 import androidx.compose.material.icons.filled.KeyboardArrowDown
 import androidx.compose.material.icons.filled.Menu
@@ -57,6 +58,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -79,7 +81,6 @@ import com.iamkurtgoz.core.designsystem.theme.AppThemeSurface
 import com.iamkurtgoz.core.navigation.model.home.mediaViewer.HomeScreenMediaViewerScreenNavigateModel
 import com.iamkurtgoz.core.navigation.model.home.share.HomeScreenShareRouteScreenNavigateModel
 import com.iamkurtgoz.core.navigation.model.home.webview.HomeScreenWebViewScreenNavigateModel
-import com.iamkurtgoz.core.resources.R as resourcesR
 import com.iamkurtgoz.domain.model.enums.MenuKeyType.AddDocument
 import com.iamkurtgoz.domain.model.enums.MenuKeyType.CoachList
 import com.iamkurtgoz.domain.model.enums.MenuKeyType.GenerateClub
@@ -94,6 +95,7 @@ import com.iamkurtgoz.feature.home.dashboard.component.comment.CommentDialog
 import com.iamkurtgoz.feature.home.dashboard.domain.model.MenuUIModelItem
 import com.iamkurtgoz.feature.home.dashboard.domain.types.MenuClickModel
 import kotlinx.coroutines.launch
+import com.iamkurtgoz.core.resources.R as resourcesR
 
 @OptIn(ExperimentalPermissionsApi::class)
 @Composable
@@ -177,8 +179,21 @@ private fun DashboardScreenScaffold(
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val scope = rememberCoroutineScope()
 
+    // ŞU ANKİ MENÜDE mainMenu var mı? yoksa submenu’deyiz
+    val isOnSubMenu = state.menuList
+        ?.menu
+        .orEmpty()
+        .any { it.mainMenu == true }
+        .not()
+
     BackHandler(drawerState.isOpen) {
-        scope.launch { drawerState.close() }
+        if (isOnSubMenu) {
+            // önce main menüye dön
+            setEvent(DashboardScreenContract.Event.GetMenu)
+        } else {
+            // zaten main menüdeysek drawer’ı kapat
+            scope.launch { drawerState.close() }
+        }
     }
 
     ModalNavigationDrawer(
@@ -186,6 +201,10 @@ private fun DashboardScreenScaffold(
         drawerContent = {
             HomeDrawerContent(
                 menu = state.menuList?.menu.orEmpty(),
+                showBack = isOnSubMenu,
+                onBackClick = {
+                    setEvent(DashboardScreenContract.Event.GetMenu)
+                },
                 onMenuItemClick = { menuClickModel ->
                     // scope.launch { drawerState.close() }
 
@@ -248,6 +267,14 @@ private fun DashboardScreenScaffold(
                         null -> {}
                     }
                 },
+                onMainMenuClick = { mainMenuItem ->
+                    setEvent(
+                        DashboardScreenContract.Event.OnMainMenuClick(
+                            mainMenuItem = mainMenuItem,
+                        ),
+                    )
+                },
+                text = state.menuTitle
             )
         },
     ) {
@@ -352,7 +379,11 @@ private fun DashboardScreenScaffold(
 fun HomeDrawerContent(
     menu: List<MenuUIModelItem>,
     modifier: Modifier = Modifier,
+    showBack: Boolean = false,
+    onBackClick: () -> Unit = {},
     onMenuItemClick: (MenuClickModel) -> Unit,
+    onMainMenuClick: (MenuUIModelItem) -> Unit,
+    text: String,
 ) {
     var expandedMenuId by remember { mutableStateOf<String?>(null) }
 
@@ -362,24 +393,90 @@ fun HomeDrawerContent(
             .background(AppTheme.colors.generalColors.backgroundPrimary)
             .padding(top = AppTheme.appHomeSafeAreaPadding.calculateTopPadding()),
     ) {
+        item {
+            Text(
+                text = text ?: "",
+                color = AppTheme.colors.generalColors.foregroundPrimary,
+                style = AppTheme.typography.subtitleLarge,
+                textAlign = TextAlign.Center,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(
+                        horizontal = AppTheme.spacing.spacingMedium,
+                        vertical = AppTheme.spacing.spacingSmall,
+                    ),
+            )
+
+            Spacer(modifier = Modifier.size(AppTheme.spacing.spacingSmall))
+
+
+        }
+
+        if (showBack) {
+            item {
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .clickable { onBackClick() }
+                        .padding(
+                            vertical = AppTheme.spacing.spacingSmall,
+                            horizontal = AppTheme.spacing.spacingMedium,
+                        ),
+                    verticalAlignment = Alignment.CenterVertically,
+                ) {
+                    Icon(
+                        imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                        contentDescription = null,
+                        tint = AppTheme.colors.generalColors.foregroundPrimary,
+                    )
+                    Spacer(modifier = Modifier.size(AppTheme.spacing.spacingSmall))
+                    Text(
+                        text = "Geri",
+                        color = AppTheme.colors.generalColors.foregroundPrimary,
+                        style = AppTheme.typography.subtitleLarge,
+                    )
+                }
+
+                Spacer(modifier = Modifier.size(AppTheme.spacing.spacingSmall))
+
+                HorizontalDivider(
+                    color = AppTheme.colors.generalColors.foregroundDisabled,
+                    thickness = 1.dp,
+                    modifier = Modifier.padding(horizontal = AppTheme.spacing.spacingMedium),
+                )
+            }
+        }
+
         items(menu, key = { "${it.menuKey}_${it.name}" }) { menuItem ->
             val itemId = "${menuItem.menuKey}_${menuItem.name}"
-
             Column {
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
                         .clickable {
-                            if (menuItem.subMenus?.isNotEmpty() == true) {
-                                expandedMenuId = if (expandedMenuId == itemId) null else itemId
-                            } else {
-                                onMenuItemClick(
-                                    MenuClickModel(
-                                        first = menuItem.name,
-                                        second = menuItem.url,
-                                        third = menuItem.menuKey,
-                                    ),
-                                )
+                            when {
+                                // MAIN MENU: sayfayı yeniden yükle / menüyü değiştir
+                                menuItem.mainMenu == true -> {
+                                    expandedMenuId = null
+                                    onMainMenuClick(menuItem)
+                                }
+
+                                // Normal menu + subMenu: expand/collapse
+                                menuItem.subMenus?.isNotEmpty() == true -> {
+                                    expandedMenuId =
+                                        if (expandedMenuId == itemId) null else itemId
+                                }
+
+                                // Leaf menu: direkt click
+                                else -> {
+                                    onMenuItemClick(
+                                        MenuClickModel(
+                                            first = menuItem.name,
+                                            second = menuItem.url,
+                                            third = menuItem.menuKey,
+                                        ),
+                                    )
+                                }
                             }
                         }
                         .padding(
@@ -404,17 +501,33 @@ fun HomeDrawerContent(
                         modifier = Modifier.weight(1f),
                     )
 
-                    if (menuItem.subMenus?.isNotEmpty() == true) {
-                        Icon(
-                            imageVector = if (expandedMenuId == itemId) Icons.Default.KeyboardArrowDown else Icons.AutoMirrored.Filled.KeyboardArrowRight,
-                            contentDescription = null,
-                            tint = AppTheme.colors.generalColors.foregroundPrimary,
-                        )
+                    when {
+                        // mainMenu ise sadece sağ ok gösterebilirsin (isteğe bağlı)
+                        menuItem.mainMenu == true -> {
+                            Icon(
+                                imageVector = Icons.AutoMirrored.Filled.KeyboardArrowRight,
+                                contentDescription = null,
+                                tint = AppTheme.colors.generalColors.foregroundPrimary,
+                            )
+                        }
+                        // alt menüsü olan normal menu ise expand/collapse ikonu
+                        menuItem.subMenus?.isNotEmpty() == true -> {
+                            Icon(
+                                imageVector = if (expandedMenuId == itemId)
+                                    Icons.Default.KeyboardArrowDown
+                                else
+                                    Icons.AutoMirrored.Filled.KeyboardArrowRight,
+                                contentDescription = null,
+                                tint = AppTheme.colors.generalColors.foregroundPrimary,
+                            )
+                        }
                     }
                 }
 
-                if (expandedMenuId == itemId) {
-                    menuItem.subMenus?.forEachIndexed { index, subMenuItem ->
+                // MAIN MENU’ler için burada hiçbir şey göstermiyorsun,
+                // sadece normal menu + subMenu’ler için expand alanı:
+                if (menuItem.mainMenu != true && expandedMenuId == itemId) {
+                    menuItem.subMenus?.forEach { subMenuItem ->
                         Card(
                             modifier = Modifier
                                 .fillMaxWidth()

@@ -60,6 +60,11 @@ private fun AccountSettingsScreenScaffold(
     AppThemeScaffold(
         topBar = {
             AppToolbar.Toolbar(
+                leftContent = {
+                    AppToolbarFields.NavigateIcon {
+                        setEvent.invoke(AccountSettingsScreenContract.Event.NavigateUp)
+                    }
+                },
                 centerContent = {
                     AppToolbarFields.Title(
                         text = "Hesap Ayarları", // TODO: Localize

@@ -38,7 +38,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
-import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextOverflow
 import com.iamkurtgoz.core.common.contract.AppDefaults
@@ -198,7 +197,6 @@ internal fun TrainingScreenScreenContent(
                 keyboardOptions = KeyboardOptions(
                     keyboardType = KeyboardType.Text,
                     imeAction = ImeAction.Next,
-                    capitalization = KeyboardCapitalization.Words,
                 ),
                 modifier = Modifier
                     .padding(top = AppTheme.spacing.spacingHuge)

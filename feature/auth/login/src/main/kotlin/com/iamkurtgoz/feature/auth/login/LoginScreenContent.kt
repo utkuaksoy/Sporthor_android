@@ -45,8 +45,8 @@ import com.iamkurtgoz.core.designsystem.internal.PreviewAppWithNightMode
 import com.iamkurtgoz.core.designsystem.theme.AppTheme
 import com.iamkurtgoz.core.designsystem.theme.AppThemeSurface
 import com.iamkurtgoz.core.resources.R
-import com.iamkurtgoz.core.resources.R as resourcesR
 import java.util.Locale
+import com.iamkurtgoz.core.resources.R as resourcesR
 
 @Composable
 internal fun LoginScreenContent(
@@ -109,7 +109,6 @@ internal fun LoginScreenContent(
                 keyboardOptions = KeyboardOptions(
                     keyboardType = KeyboardType.Text,
                     imeAction = ImeAction.Next,
-                    capitalization = KeyboardCapitalization.Words,
                 ),
                 modifier = Modifier
                     .padding(top = AppTheme.spacing.spacingHuge)

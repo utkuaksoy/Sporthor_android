@@ -80,7 +80,13 @@ internal fun ProfileAbout(
                     Text(
                         modifier = Modifier
                             .padding(start = AppTheme.spacing.spacingSmall),
-                        text = it.value ?: "",
+                        text = if (it.key != null && (it.key!!.contains("Doğum") || it.key!!.contains("Birth"))) {
+                            "Doğum Tarihi: ${it.value ?: ""}"
+                        } else if (it.key != null && (it.key!!.contains("Adres") || it.key!!.contains("Address"))) {
+                            "Adres: ${it.value ?: ""}"
+                        } else {
+                            it.value ?: ""
+                        },
                         style = AppTheme.typography.bodyMediumCompact,
                     )
                 }

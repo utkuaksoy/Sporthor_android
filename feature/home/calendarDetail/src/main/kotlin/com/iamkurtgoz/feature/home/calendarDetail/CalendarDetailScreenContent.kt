@@ -77,6 +77,9 @@ internal fun CalendarDetailScreenContent(
                         currentRPEItem = clickedItem
                         showRPEBottomSheet = true
                     },
+                    onMapClick = { location ->
+                        setEvent.invoke(CalendarDetailScreenContract.Event.OnMapClick(location))
+                    },
                 )
             },
         )

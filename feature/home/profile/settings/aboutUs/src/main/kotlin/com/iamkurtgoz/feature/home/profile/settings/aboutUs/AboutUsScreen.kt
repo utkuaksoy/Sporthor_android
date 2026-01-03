@@ -60,6 +60,11 @@ private fun AboutUsScreenScaffold(
     AppThemeScaffold(
         topBar = {
             AppToolbar.Toolbar(
+                leftContent = {
+                    AppToolbarFields.NavigateIcon { 
+                        setEvent.invoke(AboutUsScreenContract.Event.NavigateUp)
+                    }
+                },
                 centerContent = {
                     AppToolbarFields.Title(
                         text = "Hakkında", // TODO: Localize

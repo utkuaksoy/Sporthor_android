@@ -75,6 +75,8 @@ internal class AddEventScreenContract {
         val textDescription: AppTextFieldValue = AppTextFieldValue(isError = true),
         val showAddDescriptionDialog: Boolean = false,
         val isDraft: Boolean = false,
+        val recurrenceEndDate: LocalDate? = null,
+        val showRecurrenceEndDatePicker: Boolean = false,
     ) : CoreState.ViewState
 
     sealed class SideEffect : CoreState.SideEffect {
@@ -121,6 +123,8 @@ internal class AddEventScreenContract {
         data class SetDescription(val value: String) : Event()
         data object ShowAddDescriptionDialog : Event()
         data object ChangeCheckBoxDraftState : Event()
+        data object ShowRecurrenceEndDatePicker : Event()
+        data class SetRecurrenceEndDate(val value: LocalDate) : Event()
         data object AddTask : Event()
     }
 

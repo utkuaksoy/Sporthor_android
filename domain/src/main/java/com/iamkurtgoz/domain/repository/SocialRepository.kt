@@ -26,8 +26,8 @@ import com.iamkurtgoz.domain.model.request.FollowUserRequest
 import com.iamkurtgoz.domain.model.request.HidePostRequest
 import com.iamkurtgoz.domain.model.request.LikePostRequest
 import com.iamkurtgoz.domain.model.request.RemoveSearchHistoryRequest
-import com.iamkurtgoz.domain.model.request.WatchedStoryRequest
 import com.iamkurtgoz.domain.model.request.ReportPostRequest
+import com.iamkurtgoz.domain.model.request.WatchedStoryRequest
 import com.iamkurtgoz.domain.model.response.CommentsDomainModel
 import com.iamkurtgoz.domain.model.response.CreatePostDomainModel
 import com.iamkurtgoz.domain.model.response.DashboardFeedDomainModel
@@ -39,12 +39,12 @@ import com.iamkurtgoz.domain.model.response.StoryFeedDomainModel
 import com.iamkurtgoz.domain.model.response.UserRelationDomainModel
 
 interface SocialRepository {
-    suspend fun getSearch(searchTerm: String): RestResult<SearchSocialDomainModel>
+    suspend fun getSearch(searchTerm: String, role: Int? = null): RestResult<SearchSocialDomainModel>
     suspend fun getSearchHistory(): RestResult<SearchHistorySocialDomainModel>
     suspend fun addSearchHistory(body: AddSearchHistoryRequest): RestResult<Unit>
     suspend fun removeSearchHistory(body: RemoveSearchHistoryRequest): RestResult<Unit>
     suspend fun getFollowers(userId: String?): RestResult<UserRelationDomainModel>
-    suspend fun getFollowing(userId: String?): RestResult<UserRelationDomainModel>
+    suspend fun getFollowing(userId: String?, role: Int? = null): RestResult<UserRelationDomainModel>
     suspend fun followUser(body: FollowUserRequest): RestResult<FollowUserDomainModel>
     suspend fun unFollowUser(body: FollowUserRequest): RestResult<FollowUserDomainModel>
     suspend fun getFeedAsync(page: Int?, pageSize: Int?): RestResult<DashboardFeedDomainModel>

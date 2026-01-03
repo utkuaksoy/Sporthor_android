@@ -81,6 +81,7 @@ internal class CalendarDetailViewModel @Inject constructor(
                 setSideEffect(CalendarDetailScreenContract.SideEffect.NavigateToEditEventScreen(model))
             }
             is CalendarDetailScreenContract.Event.RpeSurvey -> rpeSurvey(taskId = event.taskId, rating = event.rating)
+            is CalendarDetailScreenContract.Event.OnMapClick -> setSideEffect(CalendarDetailScreenContract.SideEffect.NavigateToMap(event.location))
         }
     }
 

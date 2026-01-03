@@ -40,8 +40,8 @@ import com.iamkurtgoz.core.designsystem.internal.PreviewAppWithNightMode
 import com.iamkurtgoz.core.designsystem.theme.AppTheme
 import com.iamkurtgoz.core.designsystem.theme.AppThemeSurface
 import com.iamkurtgoz.core.navigation.HomeScreenSelectTrainingGroupScreenRoute
-import com.iamkurtgoz.core.resources.R as resourcesR
 import com.iamkurtgoz.feature.home.selectTrainingGroup.domain.model.mockTrainingGroupUserUIModel
+import com.iamkurtgoz.core.resources.R as resourcesR
 
 @Composable
 internal fun SelectTrainingGroupScreenContent(
@@ -104,6 +104,14 @@ internal fun SelectTrainingGroupScreenContent(
                                         .padding(top = AppTheme.spacing.spacingTiny),
                                 )
                             }
+
+                            Text(
+                                text = "${item.users?.size ?: 0} Sporcu - ${item.coaches?.size ?: 0} Antrenör",
+                                style = AppTheme.typography.bodyMedium,
+                                modifier = Modifier
+                                    .padding(top = AppTheme.spacing.spacingTiny),
+                                color = AppTheme.colors.generalColors.contentSoft600,
+                            )
                         }
 
                         if (state.isDeleteMode) {

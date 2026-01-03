@@ -26,7 +26,7 @@ import com.iamkurtgoz.core.common.qualifiers.DefaultDispatcher
 import com.iamkurtgoz.core.common.qualifiers.DeviceId
 import com.iamkurtgoz.core.common.state.AppBuildConfigStatePack
 import com.iamkurtgoz.domain.state.AuthState
-import com.sporthor.app.BuildConfig
+import com.sporthor.`as`.BuildConfig
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

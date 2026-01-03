@@ -1,6 +1,6 @@
 [versions]
-namespace = "com.sporthor.app"
-applicationId = "com.sporthor.app"
+namespace = "com.sporthor.as"
+applicationId = "com.sporthor.as"
 targetSdk = "36"
 compileSdk = "36"
 minSdk = "24"

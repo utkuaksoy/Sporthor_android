@@ -29,6 +29,7 @@ import com.iamkurtgoz.domain.model.enums.FetchParam
 import com.iamkurtgoz.domain.model.enums.UserActionPostLikeType
 import com.iamkurtgoz.feature.home.dashboard.domain.model.DashboardPostUIModel
 import com.iamkurtgoz.feature.home.dashboard.domain.model.MenuUIModel
+import com.iamkurtgoz.feature.home.dashboard.domain.model.MenuUIModelItem
 import com.iamkurtgoz.feature.home.dashboard.domain.model.StoryFeedUIModel
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
@@ -55,6 +56,7 @@ internal class DashboardScreenContract {
         val playingVideoUrl: String? = null,
         val showReportDialogForPostId: String? = null,
         val reportText: String = "",
+        val menuTitle: String = "Hızlı Menü",
     ) : CoreState.ViewState
 
     sealed class SideEffect : CoreState.SideEffect {
@@ -96,6 +98,7 @@ internal class DashboardScreenContract {
         data class UpdateReportText(val text: String?) : Event()
         data object DismissReportDialog : Event()
         data object GetMenu : Event()
+        data class OnMainMenuClick(val mainMenuItem: MenuUIModelItem) : Event()
         data object NavigateToCalendar : Event()
         data object NavigateToNotifications : Event()
         data object NavigateToCreateTeamScreen : Event()

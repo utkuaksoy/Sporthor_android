@@ -58,6 +58,7 @@ internal class AddEventViewModel @Inject constructor(
         eventStartTime = LocalTime.now(),
         eventEndDate = savedStateHandle.toHomeScreenAddEventRouteTypeMap().model.selectedDate ?: LocalDate.now(),
         eventEndTime = LocalTime.now().plusHours(2),
+        recurrenceEndDate = savedStateHandle.toHomeScreenAddEventRouteTypeMap().model.selectedDate ?: LocalDate.now(),
     ),
 ) {
     override fun setEvent(event: AddEventScreenContract.Event) {
@@ -98,6 +99,8 @@ internal class AddEventViewModel @Inject constructor(
             is AddEventScreenContract.Event.SetDescription -> setDescription(event.value)
             is AddEventScreenContract.Event.ShowAddDescriptionDialog -> showAddDescriptionDialog()
             is AddEventScreenContract.Event.ChangeCheckBoxDraftState -> changeCheckBoxDraftState()
+            is AddEventScreenContract.Event.ShowRecurrenceEndDatePicker -> showRecurrenceEndDatePicker()
+            is AddEventScreenContract.Event.SetRecurrenceEndDate -> setRecurrenceEndDate(event.value)
             is AddEventScreenContract.Event.AddTask -> addTask()
         }
     }
@@ -118,6 +121,7 @@ internal class AddEventViewModel @Inject constructor(
                 showAddTaskTypeDialog = false,
                 showAddUserBottomSheet = false,
                 showAddDescriptionDialog = false,
+                showRecurrenceEndDatePicker = false,
             )
         }
     }
@@ -495,6 +499,22 @@ internal class AddEventViewModel @Inject constructor(
         }
     }
 
+    private fun showRecurrenceEndDatePicker() {
+        updateState { state ->
+            state.copy(
+                showRecurrenceEndDatePicker = true,
+            )
+        }
+    }
+
+    private fun setRecurrenceEndDate(date: LocalDate) {
+        updateState { state ->
+            state.copy(
+                recurrenceEndDate = date,
+            )
+        }
+    }
+
     private fun addTask() {
         if (viewState.textEventName.isEmpty) {
             updateState { state ->
@@ -570,7 +590,7 @@ internal class AddEventViewModel @Inject constructor(
             trainingGroupIds = if (viewState.selectedGetTrainingGroupUserUIModelTeam == null) null else listOfNotNull(viewState.selectedGetTrainingGroupUserUIModelTeam?.value),
             taskType = viewState.selectedTaskType?.value,
             recurrence = if (viewState.switchEventRepeat) viewState.selectedRepeatType else null,
-            recurrenceEndDate = if (viewState.switchEventRepeat) viewState.eventEndDate.toString() else null,
+            recurrenceEndDate = if (viewState.switchEventRepeat) viewState.recurrenceEndDate.toString() else null,
         )
 
         addTaskUseCase.invoke(request)

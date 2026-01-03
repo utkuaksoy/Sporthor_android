@@ -28,6 +28,7 @@ data class MenuUIModelItem(
     val iconPath: String?,
     val name: String?,
     val url: String?,
+    val mainMenu: Boolean?,
     val subMenus: List<MenuUIModelSubItem>?,
 )
 
@@ -36,4 +37,23 @@ data class MenuUIModelSubItem(
     val name: String?,
     val url: String?,
     val menuKey: MenuKeyType?,
+    val subMenus: List<MenuUIModelSubItem>?,
 )
+
+fun MenuUIModelSubItem.toMenuUIModelItem(
+    parentMenuUserType: MenuUserType? = null,
+): MenuUIModelItem {
+    return MenuUIModelItem(
+        menuUserType = parentMenuUserType,
+        menuKey = menuKey,
+        iconPath = iconPath,
+        name = name,
+        url = url,
+        mainMenu = false, // artık main menu değil
+        subMenus = subMenus, // ÖNEMLİ: çocukları aynen taşı
+    )
+}
+
+fun List<MenuUIModelSubItem>.toMenuUIModelItemList(
+    parentMenuUserType: MenuUserType? = null,
+): List<MenuUIModelItem> = map { it.toMenuUIModelItem(parentMenuUserType) }

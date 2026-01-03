@@ -236,6 +236,17 @@ internal class EditTrainingGroupViewModel @Inject constructor(
                             username = user.username,
                         )
                     },
+                    coaches = viewState.route.model.coaches.map { coach ->
+                        HomeScreenSuccessAddTrainingGroupScreenNavigationModelUser(
+                            id = coach.id,
+                            imageUrl = coach.imageUrl,
+                            isCurrentUser = coach.isCurrentUser,
+                            isFollow = coach.isFollow,
+                            name = coach.name,
+                            summary = coach.summary,
+                            username = coach.username,
+                        )
+                    },
                 )
                 setSideEffect(EditTrainingGroupScreenContract.SideEffect.NavigateToSuccessAddTrainingGroupScreen(model))
             }

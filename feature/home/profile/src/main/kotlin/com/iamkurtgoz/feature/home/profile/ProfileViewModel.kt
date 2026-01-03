@@ -75,7 +75,11 @@ internal class ProfileViewModel @Inject constructor(
             is ProfileScreenContract.Event.UpdateEventBusStatus -> updateEventBusStatus(status = event.eventBusState)
             is ProfileScreenContract.Event.UserPosts -> getUserPosts()
             is ProfileScreenContract.Event.NavigateToSettings -> setSideEffect(ProfileScreenContract.SideEffect.NavigateToSettings)
-            is ProfileScreenContract.Event.NavigateToPostDetail -> setSideEffect(ProfileScreenContract.SideEffect.NavigateToPostDetail(event.userId, event.index))
+            is ProfileScreenContract.Event.NavigateToPostDetail -> {
+                viewModelScope.launch {
+                    setSideEffect(ProfileScreenContract.SideEffect.NavigateToPostDetail(getUserId(), event.index))
+                }
+            }
         }
     }
 

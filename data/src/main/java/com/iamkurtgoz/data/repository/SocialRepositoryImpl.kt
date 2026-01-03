@@ -38,8 +38,8 @@ import com.iamkurtgoz.domain.model.request.FollowUserRequest
 import com.iamkurtgoz.domain.model.request.HidePostRequest
 import com.iamkurtgoz.domain.model.request.LikePostRequest
 import com.iamkurtgoz.domain.model.request.RemoveSearchHistoryRequest
-import com.iamkurtgoz.domain.model.request.WatchedStoryRequest
 import com.iamkurtgoz.domain.model.request.ReportPostRequest
+import com.iamkurtgoz.domain.model.request.WatchedStoryRequest
 import com.iamkurtgoz.domain.model.response.CommentsDomainModel
 import com.iamkurtgoz.domain.model.response.CreatePostDomainModel
 import com.iamkurtgoz.domain.model.response.DashboardFeedDomainModel
@@ -64,8 +64,8 @@ internal class SocialRepositoryImpl @Inject constructor(
     private val createPostDomainMapper: CreatePostDomainMapper,
     private val likePostDomainMapper: LikePostDomainMapper,
 ) : SocialRepository, CoreRepository() {
-    override suspend fun getSearch(searchTerm: String): RestResult<SearchSocialDomainModel> = mapToRestResult {
-        socialRemoteDataSource.getSearch(searchTerm)
+    override suspend fun getSearch(searchTerm: String, role: Int?): RestResult<SearchSocialDomainModel> = mapToRestResult {
+        socialRemoteDataSource.getSearch(searchTerm, role)
     }.mapOnSuccess {
         searchSocialDomainMapper.map(it)
     }
@@ -90,8 +90,8 @@ internal class SocialRepositoryImpl @Inject constructor(
         userRelationDomainMapper.map(it)
     }
 
-    override suspend fun getFollowing(userId: String?): RestResult<UserRelationDomainModel> = mapToRestResult {
-        socialRemoteDataSource.getFollowing(userId)
+    override suspend fun getFollowing(userId: String?, role: Int?): RestResult<UserRelationDomainModel> = mapToRestResult {
+        socialRemoteDataSource.getFollowing(userId, role)
     }.mapOnSuccess {
         userRelationDomainMapper.map(it)
     }
@@ -167,5 +167,4 @@ internal class SocialRepositoryImpl @Inject constructor(
     override suspend fun watchedStory(body: WatchedStoryRequest): RestResult<Unit> = mapToRestResult {
         socialRemoteDataSource.watchedStory(body)
     }.mapOnSuccess {}
-
 }

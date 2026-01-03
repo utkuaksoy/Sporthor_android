@@ -144,7 +144,7 @@ internal fun ProfileScreenContent(
                                     Pair(it.url, it.type ?: 0)
                                 } ?: listOf(),
                                 onClick = {
-                                    setEvent.invoke(ProfileScreenContract.Event.NavigateToPostDetail(item.userId, index = index))
+                                    setEvent.invoke(ProfileScreenContract.Event.NavigateToPostDetail(index = index))
                                 },
                                 itemRatio = itemRatio,
                             )

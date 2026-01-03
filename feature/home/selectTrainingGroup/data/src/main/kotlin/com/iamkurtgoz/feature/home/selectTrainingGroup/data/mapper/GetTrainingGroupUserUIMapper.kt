@@ -17,6 +17,7 @@ package com.iamkurtgoz.feature.home.selectTrainingGroup.data.mapper
 
 import com.iamkurtgoz.core.common.mapper.IMapper
 import com.iamkurtgoz.domain.model.response.GetTrainingGroupUserDomainModel
+import com.iamkurtgoz.feature.home.selectTrainingGroup.domain.model.GetTrainingGroupCoachUIModelUser
 import com.iamkurtgoz.feature.home.selectTrainingGroup.domain.model.GetTrainingGroupUserUIModel
 import com.iamkurtgoz.feature.home.selectTrainingGroup.domain.model.GetTrainingGroupUserUIModelGroup
 import com.iamkurtgoz.feature.home.selectTrainingGroup.domain.model.GetTrainingGroupUserUIModelTeam
@@ -40,6 +41,17 @@ class GetTrainingGroupUserUIMapper @Inject constructor() : IMapper<GetTrainingGr
                         ),
                         users = item?.users?.map { user ->
                             GetTrainingGroupUserUIModelUser(
+                                id = user?.id,
+                                imageUrl = user?.imageUrl,
+                                isCurrentUser = user?.isCurrentUser,
+                                isFollow = user?.isFollow,
+                                name = user?.name,
+                                summary = user?.summary,
+                                username = user?.username,
+                            )
+                        },
+                        coaches = item?.coaches?.map { user ->
+                            GetTrainingGroupCoachUIModelUser(
                                 id = user?.id,
                                 imageUrl = user?.imageUrl,
                                 isCurrentUser = user?.isCurrentUser,

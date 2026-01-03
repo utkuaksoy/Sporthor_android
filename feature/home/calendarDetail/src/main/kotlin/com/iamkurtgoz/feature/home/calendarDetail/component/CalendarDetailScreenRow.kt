@@ -71,6 +71,7 @@ internal fun CalendarDetailScreenRow(
     modifier: Modifier = Modifier,
     onClick: (CalendarDetailEventUIModelTask) -> Unit = {},
     onRPEClick: (CalendarDetailEventUIModelTask) -> Unit = {},
+    onMapClick: (com.iamkurtgoz.feature.home.calendarDetail.domain.model.CalendarDetailEventUIModelLocation) -> Unit = {},
 ) {
     Surface(
         modifier = modifier
@@ -251,6 +252,38 @@ internal fun CalendarDetailScreenRow(
                             ),
                         )
                     }
+                }
+            }
+
+            item.location?.let { location ->
+                Row(
+                    horizontalArrangement = Arrangement.Center,
+                    verticalAlignment = Alignment.CenterVertically,
+                    modifier = Modifier
+                        .padding(top = AppTheme.spacing.spacingMedium)
+                        .clickable { onMapClick(location) },
+                ) {
+                    Image(
+                        painter = painterResource(resourcesR.drawable.img_location_pin),
+                        contentDescription = null,
+                    )
+
+                    Text(
+                        text = "Haritada Göster",
+                        style = AppTheme.typography.subtitleSmall.copy(
+                            fontWeight = FontWeight.Bold,
+                        ),
+                        color = Color.Black,
+                        modifier = Modifier
+                            .padding(start = AppTheme.spacing.spacingSmallest),
+                    )
+
+                    Spacer(modifier = Modifier.weight(1f))
+
+                    Image(
+                        painter = painterResource(resourcesR.drawable.img_arrow_right),
+                        contentDescription = null,
+                    )
                 }
             }
         }

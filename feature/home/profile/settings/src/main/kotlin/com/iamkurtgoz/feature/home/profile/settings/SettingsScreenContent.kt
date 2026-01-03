@@ -81,30 +81,6 @@ internal fun SettingsScreenContent(
             SettingsScreenRow(
                 modifier = Modifier
                     .clickable {
-                    }
-                    .padding(horizontal = AppTheme.spacing.spacingMedium)
-                    .padding(vertical = AppTheme.spacing.spacingSmall),
-                icon = resourcesR.drawable.img_question_circle,
-                title = "Yardım Alın", // TODO: Localize
-            )
-        }
-
-        item {
-            SettingsScreenRow(
-                modifier = Modifier
-                    .clickable {
-                    }
-                    .padding(horizontal = AppTheme.spacing.spacingMedium)
-                    .padding(vertical = AppTheme.spacing.spacingSmall),
-                icon = resourcesR.drawable.img_comment_plus_v2,
-                title = "İletişim Merkezi", // TODO: Localize
-            )
-        }
-
-        item {
-            SettingsScreenRow(
-                modifier = Modifier
-                    .clickable {
                         setEvent(
                             SettingsScreenContract.Event.NavigateToWebView(
                                 routeType = HomeScreenWebViewScreenNavigateModel(
@@ -137,7 +113,27 @@ internal fun SettingsScreenContent(
                     .padding(horizontal = AppTheme.spacing.spacingMedium)
                     .padding(vertical = AppTheme.spacing.spacingSmall),
                 icon = resourcesR.drawable.img_document,
-                title = "Gizlilik Sözleşmesi", // TODO: Localize
+                title = "Gizlilik Politikası", // TODO: Localize
+            )
+        }
+
+        item {
+            SettingsScreenRow(
+                modifier = Modifier
+                    .clickable {
+                        setEvent(
+                            SettingsScreenContract.Event.NavigateToWebView(
+                                routeType = HomeScreenWebViewScreenNavigateModel(
+                                    title = "İletişim Merkezi",
+                                    url = "https://accounts.sporthor.com/Agreement/Privacy",
+                                ),
+                            ),
+                        )
+                    }
+                    .padding(horizontal = AppTheme.spacing.spacingMedium)
+                    .padding(vertical = AppTheme.spacing.spacingSmall),
+                icon = resourcesR.drawable.img_document,
+                title = "İletişim Merkezi", // TODO: Localize
             )
         }
 

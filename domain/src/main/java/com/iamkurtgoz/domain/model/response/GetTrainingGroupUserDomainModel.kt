@@ -26,6 +26,7 @@ data class GetTrainingGroupUserDomainModelGroup(
     val season: String?,
     val team: GetTrainingGroupUserDomainModelTeam?,
     val users: List<GetTrainingGroupUserDomainModelUser?>?,
+    val coaches: List<GetTrainingGroupCoachDomainModelUser?>?,
 )
 
 data class GetTrainingGroupUserDomainModelTeam(
@@ -35,6 +36,16 @@ data class GetTrainingGroupUserDomainModelTeam(
 )
 
 data class GetTrainingGroupUserDomainModelUser(
+    val id: String?,
+    val imageUrl: String?,
+    val isCurrentUser: Boolean?,
+    val isFollow: Boolean?,
+    val name: String?,
+    val summary: String?,
+    val username: String?,
+)
+
+data class GetTrainingGroupCoachDomainModelUser(
     val id: String?,
     val imageUrl: String?,
     val isCurrentUser: Boolean?,

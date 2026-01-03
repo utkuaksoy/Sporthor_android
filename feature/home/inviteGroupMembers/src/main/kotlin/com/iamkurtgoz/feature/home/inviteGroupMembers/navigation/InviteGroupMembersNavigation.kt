@@ -20,6 +20,7 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
 import com.iamkurtgoz.core.navigation.HomeScreenInviteGroupMemberRoute
+import com.iamkurtgoz.core.navigation.model.home.inviteGroupMember.HomeScreenAddNewUserScreenNavigationModel
 import com.iamkurtgoz.core.navigation.model.home.inviteGroupMember.HomeScreenInviteGroupMemberScreenNavigationModel
 import com.iamkurtgoz.core.navigation.model.home.inviteGroupMember.homeScreenInviteGroupMemberRouteTypeMap
 import com.iamkurtgoz.feature.home.inviteGroupMembers.InviteGroupMembersScreen
@@ -28,6 +29,8 @@ fun NavGraphBuilder.inviteGroupMembersScreenNavigation(
     navigateUp: () -> Unit,
     popBackStack: () -> Unit,
     navigateToHome: () -> Unit,
+    navigateToSelectGroup: () -> Unit,
+    navigateToAddNewUserScreen: (HomeScreenAddNewUserScreenNavigationModel, fromTrainingGroup: Boolean) -> Unit,
 ) {
     composable<HomeScreenInviteGroupMemberRoute>(
         typeMap = homeScreenInviteGroupMemberRouteTypeMap,
@@ -36,6 +39,8 @@ fun NavGraphBuilder.inviteGroupMembersScreenNavigation(
             navigateUp = navigateUp,
             popBackStack = popBackStack,
             navigateToHome = navigateToHome,
+            navigateToSelectGroup = navigateToSelectGroup,
+            navigateToAddNewUserScreen = navigateToAddNewUserScreen,
         )
     }
 }

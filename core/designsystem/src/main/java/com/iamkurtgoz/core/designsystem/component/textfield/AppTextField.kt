@@ -336,7 +336,13 @@ internal fun AppTextFieldImpl(
             decorationBox = { innerTextField ->
                 Row(
                     modifier = Modifier
-                        .height(sizes.height)
+                        .run {
+                            if (singleLine) {
+                                height(sizes.height)
+                            } else {
+                                heightIn(min = sizes.height)
+                            }
+                        }
                         .background(
                             color = containerColor,
                             shape = shapes.roundedCornerShape,

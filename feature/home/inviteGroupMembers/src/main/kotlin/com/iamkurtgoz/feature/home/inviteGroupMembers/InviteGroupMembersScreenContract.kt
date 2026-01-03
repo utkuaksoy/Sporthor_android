@@ -20,8 +20,10 @@ import com.iamkurtgoz.core.common.state.AppBuildConfigStatePack
 import com.iamkurtgoz.core.common.state.AppRemoteConfigStatePack
 import com.iamkurtgoz.core.commonui.model.AppTextFieldValue
 import com.iamkurtgoz.core.navigation.HomeScreenInviteGroupMemberRoute
+import com.iamkurtgoz.core.navigation.model.home.inviteGroupMember.HomeScreenAddNewUserScreenNavigationModel
 import com.iamkurtgoz.domain.core.CoreState
 import com.iamkurtgoz.domain.model.base.AlertDialogModel
+import com.iamkurtgoz.feature.home.inviteGroupMembers.domain.model.InviteGroupMembersTab
 import com.iamkurtgoz.feature.home.inviteGroupMembers.domain.model.SocialSearchUIItemModel
 import com.iamkurtgoz.feature.home.inviteGroupMembers.domain.model.SocialSearchUIModel
 import com.iamkurtgoz.feature.home.inviteGroupMembers.domain.model.UserRelationUIModel
@@ -40,12 +42,22 @@ internal class InviteGroupMembersScreenContract {
         val selectedUserList: List<SocialSearchUIItemModel?> = emptyList(),
         val selectedUserIdList: List<String> = emptyList(),
         val followingList: UserRelationUIModel? = null,
+        val selectedTab: InviteGroupMembersTab = InviteGroupMembersTab.PLAYERS,
+        val firstCreateSheet: InviteGroupMembersTab? = null,
+        val isInCreateFlowSecondStep: Boolean = false,
+        val showCoachRoleSelectionBottomSheet: Boolean = false,
+        val selectedCoachForRoleSelection: Any? = null,
+        val selectedCoachRole: String? = null,
     ) : CoreState.ViewState
 
     sealed class SideEffect : CoreState.SideEffect {
         data object NavigateUp : SideEffect()
         data object PopBackStack : SideEffect()
         data object NavigateToHome : SideEffect()
+        data class NavigateToAddAddNewUserScreen(val model: HomeScreenAddNewUserScreenNavigationModel) : SideEffect()
+        data object CloseBottomSheet : SideEffect()
+        data object OpenBottomSheet : SideEffect() // YENİ
+        data object NavigateToSelectGroup : SideEffect()
     }
 
     sealed class Event : CoreState.Event {
@@ -53,9 +65,18 @@ internal class InviteGroupMembersScreenContract {
         data object NavigateUp : Event()
         data object PopBackStack : Event()
         data object DismissDialogs : Event()
-        data object InviteClubMembers : Event()
+        data class ChangeSelectedUserState(val item: Any?, val tab: InviteGroupMembersTab) : Event()
+        data class OnChangeTab(val tab: InviteGroupMembersTab) : Event()
         data class SetSearchText(val text: String) : Event()
-        data class ChangeSelectedUserState(val item: Any?) : Event()
+        data object InviteClubMembersFromScreen : Event() // ANA EKRAN BUTON
+        data object InviteClubMembersFromBottomSheet : Event()
+        data class OpenCreateFlowSheet(val type: InviteGroupMembersTab) : Event()
+        data object NextCreateFlowStep : Event() // sheet içindeki buton için
+        data class OpenCoachRoleSelection(val coach: Any) : Event()
+        data object DismissCoachRoleSelection : Event()
+        data class SetCoachRole(val role: String) : Event()
+        data object ConfirmCoachRoleSelection : Event()
+        data object NavigateToSelectGroup : Event()
     }
 
     object Static {

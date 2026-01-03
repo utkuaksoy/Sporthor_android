@@ -19,4 +19,9 @@ import com.iamkurtgoz.core.common.common.useCase.IUseCase
 import com.iamkurtgoz.core.common.model.RestResult
 import com.iamkurtgoz.feature.home.inviteGroupMembers.domain.model.SocialSearchUIModel
 
-interface SearchUseCase : IUseCase<String, RestResult<SocialSearchUIModel>>
+interface SearchUseCase : IUseCase<SearchUseCaseParams, RestResult<SocialSearchUIModel>>
+
+data class SearchUseCaseParams(
+    val params: String,
+    val role: Int? = null,
+)

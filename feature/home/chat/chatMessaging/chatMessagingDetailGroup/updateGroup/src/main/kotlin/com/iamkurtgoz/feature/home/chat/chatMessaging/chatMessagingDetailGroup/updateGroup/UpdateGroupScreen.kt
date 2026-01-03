@@ -20,9 +20,12 @@ import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -34,6 +37,7 @@ import com.iamkurtgoz.core.commonui.extension.Alert
 import com.iamkurtgoz.core.commonui.extension.observeSideEffect
 import com.iamkurtgoz.core.designsystem.component.animation.AppLoadingDialog
 import com.iamkurtgoz.core.designsystem.component.button.AppButton
+import com.iamkurtgoz.core.designsystem.component.textfield.AppTextField
 import com.iamkurtgoz.core.designsystem.internal.PreviewAppWithNightMode
 import com.iamkurtgoz.core.designsystem.theme.AppTheme
 import com.iamkurtgoz.core.designsystem.theme.AppThemeScaffold
@@ -101,26 +105,88 @@ private fun UpdateGroupScreenScaffold(
         state.alertDialogModel?.Alert {
             setEvent.invoke(UpdateGroupScreenContract.Event.DismissDialogs)
         }
+    }
 
-        AnimatedVisibility(
-            visible = state.isLoading,
-            enter = fadeIn(),
-            exit = fadeOut(),
-        ) {
-            AppLoadingDialog()
-        }
+    AnimatedVisibility(
+        visible = state.isLoading,
+        enter = fadeIn(),
+        exit = fadeOut(),
+    ) {
+        AppLoadingDialog()
+    }
 
-        PhotoPicker(
-            isShow = state.showPhotoPicker,
-            onSelectedFileCallback = {
-                setEvent.invoke(UpdateGroupScreenContract.Event.SetSelectedImage(it))
-                setEvent.invoke(UpdateGroupScreenContract.Event.DismissDialogs)
+    if (state.showEditNameDialog) {
+        UpdateGroupNameDialog(
+            currentName = state.groupName ?: "",
+            onDismiss = {
+                setEvent.invoke(UpdateGroupScreenContract.Event.SetShowEditNameDialog(false))
             },
-            onDismissRequest = {
-                setEvent.invoke(UpdateGroupScreenContract.Event.DismissDialogs)
+            onConfirm = { newName ->
+                setEvent.invoke(UpdateGroupScreenContract.Event.SetGroupName(newName))
+                setEvent.invoke(UpdateGroupScreenContract.Event.SetShowEditNameDialog(false))
             },
         )
     }
+
+    PhotoPicker(
+        isShow = state.showPhotoPicker,
+        onSelectedFileCallback = {
+            setEvent.invoke(UpdateGroupScreenContract.Event.SetSelectedImage(it))
+            setEvent.invoke(UpdateGroupScreenContract.Event.DismissDialogs)
+        },
+        onDismissRequest = {
+            setEvent.invoke(UpdateGroupScreenContract.Event.DismissDialogs)
+        },
+    )
+}
+
+@Composable
+private fun UpdateGroupNameDialog(
+    currentName: String,
+    onDismiss: () -> Unit,
+    onConfirm: (String) -> Unit,
+) {
+    var text by remember { androidx.compose.runtime.mutableStateOf(currentName) }
+
+    androidx.compose.material3.AlertDialog(
+        onDismissRequest = onDismiss,
+        title = {
+            androidx.compose.material3.Text(
+                text = "Grup Adını Düzenle",
+                style = MaterialTheme.typography.titleMedium,
+                color = AppTheme.colors.generalColors.foregroundPrimary,
+            )
+        },
+        text = {
+            AppTextField.Primary(
+                value = text,
+                onValueChange = { text = it },
+                modifier = Modifier.fillMaxWidth(),
+                placeholder = "Grup Adı",
+            )
+        },
+        confirmButton = {
+            androidx.compose.material3.TextButton(
+                onClick = { onConfirm(text) },
+            ) {
+                androidx.compose.material3.Text(
+                    text = "Tamam",
+                    color = AppTheme.colors.generalColors.foregroundPrimary,
+                )
+            }
+        },
+        dismissButton = {
+            androidx.compose.material3.TextButton(
+                onClick = onDismiss,
+            ) {
+                androidx.compose.material3.Text(
+                    text = "İptal",
+                    color = AppTheme.colors.generalColors.foregroundPrimary,
+                )
+            }
+        },
+        containerColor = AppTheme.colors.generalColors.backgroundSecondary,
+    )
 }
 
 @PreviewAppWithNightMode

@@ -17,6 +17,7 @@ package com.iamkurtgoz.feature.home.dashboard.webview
 
 import android.annotation.SuppressLint
 import android.view.ViewGroup
+import android.webkit.WebResourceRequest
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import androidx.compose.foundation.layout.Box
@@ -33,6 +34,7 @@ import com.iamkurtgoz.core.designsystem.theme.AppTheme
 import com.iamkurtgoz.core.designsystem.theme.AppThemeSurface
 import com.iamkurtgoz.core.navigation.HomeScreenDashboardWebviewRoute
 import com.iamkurtgoz.core.navigation.model.home.webview.HomeScreenWebViewScreenNavigateModel
+import timber.log.Timber
 
 @SuppressLint("SetJavaScriptEnabled")
 @Composable
@@ -55,26 +57,34 @@ internal fun WebviewScreenContent(
                         ViewGroup.LayoutParams.MATCH_PARENT,
                     )
                     settings.javaScriptEnabled = true
+                    settings.domStorageEnabled = true
 
                     webViewClient = object : WebViewClient() {
                         override fun onPageStarted(view: WebView?, url: String?, favicon: android.graphics.Bitmap?) {
                             setEvent(WebviewScreenContract.Event.SetLoadingStatus(true))
+                            Timber.tag("WebViewClient").d(url)
                         }
 
                         override fun onPageFinished(view: WebView?, url: String?) {
                             setEvent(WebviewScreenContract.Event.SetLoadingStatus(false))
                         }
+
+                        override fun shouldOverrideUrlLoading(view: WebView?, request: WebResourceRequest?): Boolean {
+                            return false
+                        }
                     }
 
-                    loadUrl(state.navigateRoute.routeType.url.toString())
+                    val initialUrl = state.navigateRoute.routeType.url.toString()
+                    loadUrl(initialUrl)
+                    tag = initialUrl
                 }
             },
-            update = { webView ->
-                val currentUrl = webView.url
+            update = { webViewInstance ->
                 val newUrl = state.navigateRoute.routeType.url.toString()
-                if (currentUrl != newUrl) {
+                if (webViewInstance.tag as? String != newUrl) {
                     setEvent(WebviewScreenContract.Event.SetLoadingStatus(true))
-                    webView.loadUrl(newUrl)
+                    webViewInstance.loadUrl(newUrl)
+                    webViewInstance.tag = newUrl
                 }
             },
         )

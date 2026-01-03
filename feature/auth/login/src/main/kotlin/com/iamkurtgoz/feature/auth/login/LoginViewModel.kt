@@ -59,8 +59,8 @@ internal class LoginViewModel @Inject constructor(
     // Events functions
     private fun initialize() = viewModelScope.launch {
         if (appBuildConfigStatePack.isDebug) {
-            setUserName("derturke3")
-            setPassword("123456Dt.")
+//            setUserName("derturke3")
+//            setPassword("123456Dt.")
         }
     }
 

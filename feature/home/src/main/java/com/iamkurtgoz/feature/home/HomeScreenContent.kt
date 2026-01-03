@@ -84,6 +84,8 @@ import com.iamkurtgoz.feature.home.editTeam.selectBranch.navigation.navigateToEd
 import com.iamkurtgoz.feature.home.editTeam.selectBranch.navigation.selectEditTeamBranchScreenNavigation
 import com.iamkurtgoz.feature.home.editTrainingGroup.navigation.editTrainingGroupScreenNavigation
 import com.iamkurtgoz.feature.home.editTrainingGroup.navigation.navigateToEditTrainingGroupScreen
+import com.iamkurtgoz.feature.home.inviteGroupMembers.addNewUser.navigation.addNewUserScreenNavigation
+import com.iamkurtgoz.feature.home.inviteGroupMembers.addNewUser.navigation.navigateToAddNewUserScreen
 import com.iamkurtgoz.feature.home.inviteGroupMembers.navigation.inviteGroupMembersScreenNavigation
 import com.iamkurtgoz.feature.home.inviteGroupMembers.navigation.navigateToInviteGroupMembersScreen
 import com.iamkurtgoz.feature.home.mediaViewer.navigation.mediaViewerScreenNavigation
@@ -259,7 +261,13 @@ internal fun HomeScreenContent(
             navigateUp = homeNavController::navigateUp,
             popBackStack = homeNavController::popBackStack,
             navigateToUserTeams = {
-                homeNavController.navigateAndClearBackStack(HomeScreenSelectTeamRoute)
+                homeNavController.navigateAndClearBackStack(
+                    HomeScreenSelectTeamRoute(
+                        isEdit = false,
+                        fromGenerateClub = false,
+                        fromTrainingGroup = false,
+                    ),
+                )
             },
             navigateToHome = {
                 homeNavController.navigateAndClearBackStack(HomeScreenDashboardRoute)
@@ -666,6 +674,25 @@ internal fun HomeScreenContent(
             navigateToHome = {
                 homeNavController.navigateAndClearBackStack(HomeScreenDashboardRoute)
             },
+            navigateToSelectGroup = homeNavController::navigateToSelectTrainingGroupScreen,
+            navigateToAddNewUserScreen = { model, fromTrainingGroup: Boolean ->
+                val option = NavOptions.Builder()
+                option.setPopUpTo(
+                    route = homeNavController.currentDestination?.route,
+                    inclusive = false,
+                )
+
+                homeNavController.navigateToAddNewUserScreen(
+                    model = model,
+                    fromTrainingGroup = fromTrainingGroup,
+                    navOptions = option.build(),
+                )
+            }
+        )
+
+        addNewUserScreenNavigation(
+            navigateUp = homeNavController::navigateUp,
+            popBackStack = homeNavController::popBackStack,
         )
 
         webviewScreenNavigation(

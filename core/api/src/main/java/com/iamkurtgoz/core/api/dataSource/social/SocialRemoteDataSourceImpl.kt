@@ -39,8 +39,8 @@ import com.iamkurtgoz.domain.model.request.FollowUserRequest
 import com.iamkurtgoz.domain.model.request.HidePostRequest
 import com.iamkurtgoz.domain.model.request.LikePostRequest
 import com.iamkurtgoz.domain.model.request.RemoveSearchHistoryRequest
-import com.iamkurtgoz.domain.model.request.WatchedStoryRequest
 import com.iamkurtgoz.domain.model.request.ReportPostRequest
+import com.iamkurtgoz.domain.model.request.WatchedStoryRequest
 import kotlinx.serialization.json.Json
 import javax.inject.Inject
 
@@ -50,8 +50,8 @@ internal class SocialRemoteDataSourceImpl @Inject constructor(
     private val socialService: SocialService,
 ) : SocialRemoteDataSource, CoreRemoteDataSource(appBuildConfigStatePack, json) {
 
-    override suspend fun getSearch(searchTerm: String): BaseResponse<SearchSocialResponseModel> = requestRetrofit {
-        socialService.getSearch(searchTerm)
+    override suspend fun getSearch(searchTerm: String, role: Int?): BaseResponse<SearchSocialResponseModel> = requestRetrofit {
+        socialService.getSearch(searchTerm, role)
     }
 
     override suspend fun getSearchHistory(): BaseResponse<SearchHistorySocialResponseModel> = requestRetrofit {
@@ -70,8 +70,8 @@ internal class SocialRemoteDataSourceImpl @Inject constructor(
         socialService.getFollowers(userId)
     }
 
-    override suspend fun getFollowing(userId: String?): BaseResponse<UserRelationResponseModel> = requestRetrofit {
-        socialService.getFollowing(userId)
+    override suspend fun getFollowing(userId: String?, role: Int?): BaseResponse<UserRelationResponseModel> = requestRetrofit {
+        socialService.getFollowing(userId, role)
     }
 
     override suspend fun followUser(body: FollowUserRequest): BaseResponse<FollowUserResponseModel> = requestRetrofit {

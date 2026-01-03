@@ -133,7 +133,6 @@ internal fun UserInfoScreenContent(
                     keyboardOptions = KeyboardOptions(
                         keyboardType = KeyboardType.Text,
                         imeAction = ImeAction.Next,
-                        capitalization = KeyboardCapitalization.Words,
                     ),
                     modifier = Modifier
                         .width(width = dynamicWidth.div(AppDefaults.TWO) - AppTheme.spacing.spacingSmall),
@@ -151,7 +150,6 @@ internal fun UserInfoScreenContent(
                     keyboardOptions = KeyboardOptions(
                         keyboardType = KeyboardType.Text,
                         imeAction = ImeAction.Next,
-                        capitalization = KeyboardCapitalization.Words,
                     ),
                     modifier = Modifier
                         .width(width = dynamicWidth.div(AppDefaults.TWO) - AppTheme.spacing.spacingSmall),

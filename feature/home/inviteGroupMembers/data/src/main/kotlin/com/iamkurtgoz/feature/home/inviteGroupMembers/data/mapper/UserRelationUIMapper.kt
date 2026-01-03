@@ -17,6 +17,7 @@ package com.iamkurtgoz.feature.home.inviteGroupMembers.data.mapper
 
 import com.iamkurtgoz.core.common.mapper.IMapper
 import com.iamkurtgoz.domain.model.response.UserRelationDomainModel
+import com.iamkurtgoz.feature.home.inviteGroupMembers.domain.model.CoachRelationUIItemModel
 import com.iamkurtgoz.feature.home.inviteGroupMembers.domain.model.UserRelationUIItemModel
 import com.iamkurtgoz.feature.home.inviteGroupMembers.domain.model.UserRelationUIModel
 import javax.inject.Inject
@@ -27,6 +28,17 @@ internal class UserRelationUIMapper @Inject constructor() : IMapper<UserRelation
             UserRelationUIModel(
                 users = users?.map {
                     UserRelationUIItemModel(
+                        id = it?.id,
+                        name = it?.name,
+                        username = it?.username,
+                        summary = it?.summary,
+                        imageUrl = it?.imageUrl,
+                        isFollow = it?.isFollow,
+                        isCurrentUser = it?.isCurrentUser,
+                    )
+                },
+                coaches = coaches?.map {
+                    CoachRelationUIItemModel(
                         id = it?.id,
                         name = it?.name,
                         username = it?.username,

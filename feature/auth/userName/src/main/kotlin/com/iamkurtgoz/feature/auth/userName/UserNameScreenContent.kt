@@ -32,7 +32,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
-import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.input.KeyboardType
 import com.iamkurtgoz.core.common.contract.AppDefaults
 import com.iamkurtgoz.core.common.state.AppBuildConfigStatePack
@@ -46,10 +45,10 @@ import com.iamkurtgoz.core.designsystem.theme.AppTheme
 import com.iamkurtgoz.core.designsystem.theme.AppThemeSurface
 import com.iamkurtgoz.core.navigation.AuthUserNameScreenRoute
 import com.iamkurtgoz.core.navigation.model.auth.userName.fakeAuthUserNameScreenNavigateModel
-import com.iamkurtgoz.core.resources.R as resourcesR
 import com.iamkurtgoz.feature.auth.userName.domain.model.CheckUserNameUIModel
 import kotlinx.collections.immutable.toImmutableList
 import java.util.Locale
+import com.iamkurtgoz.core.resources.R as resourcesR
 
 @Composable
 internal fun UserNameScreenContent(
@@ -115,7 +114,6 @@ internal fun UserNameScreenContent(
                 keyboardOptions = KeyboardOptions(
                     keyboardType = KeyboardType.Text,
                     imeAction = ImeAction.Next,
-                    capitalization = KeyboardCapitalization.Words,
                 ),
                 modifier = Modifier
                     .padding(top = AppTheme.spacing.spacingHuge)

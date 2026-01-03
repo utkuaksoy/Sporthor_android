@@ -68,6 +68,7 @@ dependencies {
     implementation(projects.feature.home.trainingScreen)
     implementation(projects.feature.home.successAddTrainingGroup)
     implementation(projects.feature.home.inviteGroupMembers)
+    implementation(projects.feature.home.inviteGroupMembers.addNewUser)
     implementation(projects.feature.home.calendar)
     implementation(projects.feature.home.calendarDetail)
     implementation(projects.feature.home.addEvent)

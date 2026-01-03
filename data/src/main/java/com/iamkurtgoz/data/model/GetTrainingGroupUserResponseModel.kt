@@ -41,6 +41,8 @@ data class GetTrainingGroupUserResponseModelGroup(
     val team: GetTrainingGroupUserResponseModelTeam?,
     @SerialName("users")
     val users: List<GetTrainingGroupUserResponseModelUser?>?,
+    @SerialName("coaches")
+    val coaches: List<GetTrainingGroupCoachResponseModelUser?>?,
 )
 
 @Keep
@@ -57,6 +59,25 @@ data class GetTrainingGroupUserResponseModelTeam(
 @Keep
 @Serializable
 data class GetTrainingGroupUserResponseModelUser(
+    @SerialName("id")
+    val id: String?,
+    @SerialName("imageUrl")
+    val imageUrl: String?,
+    @SerialName("isCurrentUser")
+    val isCurrentUser: Boolean?,
+    @SerialName("isFollow")
+    val isFollow: Boolean?,
+    @SerialName("name")
+    val name: String?,
+    @SerialName("summary")
+    val summary: String?,
+    @SerialName("username")
+    val username: String?,
+)
+
+@Keep
+@Serializable
+data class GetTrainingGroupCoachResponseModelUser(
     @SerialName("id")
     val id: String?,
     @SerialName("imageUrl")

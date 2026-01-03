@@ -27,7 +27,13 @@ data class SocialSearchUIItemModel(
     val name: String?,
     val attribute: String?,
     val type: SocialSearchUIItemType?,
+    val role: InviteGroupMembersTab? = null,
 )
+
+enum class InviteGroupMembersTab {
+    PLAYERS,
+    STAFF,
+}
 
 object MockSocialSearchUIModel {
     val list = SocialSearchUIModel(

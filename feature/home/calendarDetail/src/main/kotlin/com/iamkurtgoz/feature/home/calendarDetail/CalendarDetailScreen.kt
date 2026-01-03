@@ -43,6 +43,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.layout.onGloballyPositioned
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
@@ -69,13 +70,13 @@ import com.iamkurtgoz.core.navigation.HomeScreenCalendarDetailRoute
 import com.iamkurtgoz.core.navigation.model.home.addEvent.HomeScreenAddEventScreenNavigationModel
 import com.iamkurtgoz.core.navigation.model.home.calendarDetail.HomeScreenCalendarDetailScreenNavigationModel
 import com.iamkurtgoz.core.navigation.model.home.editEvent.HomeScreenEditEventScreenNavigationModel
-import com.iamkurtgoz.core.resources.R as resourcesR
 import com.iamkurtgoz.feature.home.calendarDetail.domain.model.DayItem
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.time.LocalDate
 import java.time.format.TextStyle
 import java.util.Locale
+import com.iamkurtgoz.core.resources.R as resourcesR
 
 @Composable
 internal fun CalendarDetailScreen(
@@ -88,6 +89,7 @@ internal fun CalendarDetailScreen(
 ) {
     val lazyListState: LazyListState = rememberLazyListState()
     val state by viewModel.state.collectAsStateWithLifecycle()
+    val context = LocalContext.current
 
     TrackedScreen("CalendarDetailScreen")
 
@@ -113,6 +115,13 @@ internal fun CalendarDetailScreen(
             }
             is CalendarDetailScreenContract.SideEffect.NavigateToSelectEventDrafts -> navigateToSelectEventDrafts()
             is CalendarDetailScreenContract.SideEffect.NavigateToEditEventScreen -> navigateToEditEventScreen(event.model)
+            is CalendarDetailScreenContract.SideEffect.NavigateToMap -> {
+                val intent = android.content.Intent(
+                    android.content.Intent.ACTION_VIEW,
+                    android.net.Uri.parse("geo:${event.location.lat},${event.location.lng}?q=${event.location.lat},${event.location.lng}(${event.location.title})"),
+                )
+                context.startActivity(intent)
+            }
         }
     }
 

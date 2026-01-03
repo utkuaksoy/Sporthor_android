@@ -128,7 +128,7 @@ internal fun ProfileDetailFeaturedSkills(
                         .fillMaxWidth(),
                     maxItemsInEachRow = AppDefaults.TWO,
                 ) {
-                    state.selectedSkillState?.details?.fastForEach {
+                    state.selectedSkillState?.details?.filter { !it?.value.isNullOrBlank() }?.fastForEach {
                         key(it) {
                             InfoColumn(
                                 modifier = Modifier

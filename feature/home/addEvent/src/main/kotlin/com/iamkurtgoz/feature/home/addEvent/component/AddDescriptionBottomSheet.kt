@@ -147,6 +147,7 @@ private fun PreviewAddTaskTypeBottomSheetContent() {
                         eventStartTime = LocalTime.now(),
                         eventEndDate = LocalDate.now(),
                         eventEndTime = LocalTime.now().plusHours(2),
+                        recurrenceEndDate = LocalDate.now()
                     ),
                     setEvent = {},
                 )

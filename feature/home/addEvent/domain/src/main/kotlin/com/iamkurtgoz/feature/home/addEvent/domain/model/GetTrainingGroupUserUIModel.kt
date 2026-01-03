@@ -21,7 +21,7 @@ data class GetTrainingGroupUserUIModel(
     val allUsers: List<GetTrainingGroupUserUIModelUser>
         get() {
             val users: MutableSet<GetTrainingGroupUserUIModelUser> = mutableSetOf()
-            groups?.forEach { group -> 
+            groups?.forEach { group ->
                 group?.users?.filterNotNull()?.forEach { user ->
                     users.add(user)
                 }
@@ -37,6 +37,7 @@ data class GetTrainingGroupUserUIModelGroup(
     val season: String?,
     val team: GetTrainingGroupUserUIModelTeam?,
     val users: List<GetTrainingGroupUserUIModelUser?>?,
+    val coaches: List<GetTrainingGroupCoachUIModelUser?>?,
 )
 
 data class GetTrainingGroupUserUIModelTeam(
@@ -46,6 +47,20 @@ data class GetTrainingGroupUserUIModelTeam(
 )
 
 data class GetTrainingGroupUserUIModelUser(
+    val id: String?,
+    val imageUrl: String?,
+    val isCurrentUser: Boolean?,
+    val isFollow: Boolean?,
+    val name: String?,
+    val summary: String?,
+    val username: String?,
+) {
+    fun isMatch(text: String): Boolean {
+        return name?.contains(text, ignoreCase = true) == true || username?.contains(text, ignoreCase = true) == true
+    }
+}
+
+data class GetTrainingGroupCoachUIModelUser(
     val id: String?,
     val imageUrl: String?,
     val isCurrentUser: Boolean?,
@@ -69,66 +84,123 @@ val mockTrainingGroupUserUIModel = GetTrainingGroupUserUIModel(
             season = "2025-yaz",
             team = GetTrainingGroupUserUIModelTeam(
                 detail = "https://api.sporthor.com/Uploads/2f8423f9-fe02-4734-b0e9-2560bf92ded2.jpg",
-                name   = "Fenerbahçe Test 3",
-                value  = "684ed12a5451af7c7d6772fd"
+                name = "Fenerbahçe Test 3",
+                value = "684ed12a5451af7c7d6772fd",
             ),
             users = listOf(
                 GetTrainingGroupUserUIModelUser(
-                    id             = "685c63585970f8eef1545150",
-                    name           = "Der Turke",
-                    username       = "derturke3",
-                    summary        = "",
-                    imageUrl       = "https://api.sporthor.com/Uploads/ba89bf51-c58b-483e-b63a-abf21160f52e.jpg",
-                    isFollow       = false,
-                    isCurrentUser  = false
+                    id = "685c63585970f8eef1545150",
+                    name = "Der Turke",
+                    username = "derturke3",
+                    summary = "",
+                    imageUrl = "https://api.sporthor.com/Uploads/ba89bf51-c58b-483e-b63a-abf21160f52e.jpg",
+                    isFollow = false,
+                    isCurrentUser = false,
                 ),
                 GetTrainingGroupUserUIModelUser(
-                    id             = "685c66d8e62dc93bcfc12e77",
-                    name           = "Emre Öztürk",
-                    username       = "emreozturk",
-                    summary        = "",
-                    imageUrl       = null,
-                    isFollow       = false,
-                    isCurrentUser  = false
+                    id = "685c66d8e62dc93bcfc12e77",
+                    name = "Emre Öztürk",
+                    username = "emreozturk",
+                    summary = "",
+                    imageUrl = null,
+                    isFollow = false,
+                    isCurrentUser = false,
                 ),
                 GetTrainingGroupUserUIModelUser(
-                    id             = "68611ddaa70665a7f6809091",
-                    name           = "Eşref Tek",
-                    username       = "esreftek",
-                    summary        = "",
-                    imageUrl       = null,
-                    isFollow       = false,
-                    isCurrentUser  = false
+                    id = "68611ddaa70665a7f6809091",
+                    name = "Eşref Tek",
+                    username = "esreftek",
+                    summary = "",
+                    imageUrl = null,
+                    isFollow = false,
+                    isCurrentUser = false,
                 ),
                 GetTrainingGroupUserUIModelUser(
-                    id             = "6861983308766379410d38bc",
-                    name           = "Eşref Tek",
-                    username       = "esreftek1",
-                    summary        = "",
-                    imageUrl       = "https://api.sporthor.com/Uploads/f4531cbf-e44f-4a3f-850a-af0639935b9a.jpg",
-                    isFollow       = false,
-                    isCurrentUser  = true
+                    id = "6861983308766379410d38bc",
+                    name = "Eşref Tek",
+                    username = "esreftek1",
+                    summary = "",
+                    imageUrl = "https://api.sporthor.com/Uploads/f4531cbf-e44f-4a3f-850a-af0639935b9a.jpg",
+                    isFollow = false,
+                    isCurrentUser = true,
                 ),
                 // JSON içindeki tekrar eden kullanıcılar
                 GetTrainingGroupUserUIModelUser(
-                    id             = "685c63585970f8eef1545150",
-                    name           = "Der Turke",
-                    username       = "derturke3",
-                    summary        = "",
-                    imageUrl       = "https://api.sporthor.com/Uploads/ba89bf51-c58b-483e-b63a-abf21160f52e.jpg",
-                    isFollow       = false,
-                    isCurrentUser  = false
+                    id = "685c63585970f8eef1545150",
+                    name = "Der Turke",
+                    username = "derturke3",
+                    summary = "",
+                    imageUrl = "https://api.sporthor.com/Uploads/ba89bf51-c58b-483e-b63a-abf21160f52e.jpg",
+                    isFollow = false,
+                    isCurrentUser = false,
                 ),
                 GetTrainingGroupUserUIModelUser(
-                    id             = "685c66d8e62dc93bcfc12e77",
-                    name           = "Emre Öztürk",
-                    username       = "emreozturk",
-                    summary        = "",
-                    imageUrl       = null,
-                    isFollow       = false,
-                    isCurrentUser  = false
-                )
-            )
+                    id = "685c66d8e62dc93bcfc12e77",
+                    name = "Emre Öztürk",
+                    username = "emreozturk",
+                    summary = "",
+                    imageUrl = null,
+                    isFollow = false,
+                    isCurrentUser = false,
+                ),
+            ),
+            coaches = listOf(
+                GetTrainingGroupCoachUIModelUser(
+                    id = "685c63585970f8eef1545150",
+                    name = "Der Turke",
+                    username = "derturke3",
+                    summary = "",
+                    imageUrl = "https://api.sporthor.com/Uploads/ba89bf51-c58b-483e-b63a-abf21160f52e.jpg",
+                    isFollow = false,
+                    isCurrentUser = false,
+                ),
+                GetTrainingGroupCoachUIModelUser(
+                    id = "685c66d8e62dc93bcfc12e77",
+                    name = "Emre Öztürk",
+                    username = "emreozturk",
+                    summary = "",
+                    imageUrl = null,
+                    isFollow = false,
+                    isCurrentUser = false,
+                ),
+                GetTrainingGroupCoachUIModelUser(
+                    id = "68611ddaa70665a7f6809091",
+                    name = "Eşref Tek",
+                    username = "esreftek",
+                    summary = "",
+                    imageUrl = null,
+                    isFollow = false,
+                    isCurrentUser = false,
+                ),
+                GetTrainingGroupCoachUIModelUser(
+                    id = "6861983308766379410d38bc",
+                    name = "Eşref Tek",
+                    username = "esreftek1",
+                    summary = "",
+                    imageUrl = "https://api.sporthor.com/Uploads/f4531cbf-e44f-4a3f-850a-af0639935b9a.jpg",
+                    isFollow = false,
+                    isCurrentUser = true,
+                ),
+                // JSON içindeki tekrar eden kullanıcılar
+                GetTrainingGroupCoachUIModelUser(
+                    id = "685c63585970f8eef1545150",
+                    name = "Der Turke",
+                    username = "derturke3",
+                    summary = "",
+                    imageUrl = "https://api.sporthor.com/Uploads/ba89bf51-c58b-483e-b63a-abf21160f52e.jpg",
+                    isFollow = false,
+                    isCurrentUser = false,
+                ),
+                GetTrainingGroupCoachUIModelUser(
+                    id = "685c66d8e62dc93bcfc12e77",
+                    name = "Emre Öztürk",
+                    username = "emreozturk",
+                    summary = "",
+                    imageUrl = null,
+                    isFollow = false,
+                    isCurrentUser = false,
+                ),
+            ),
         ),
 
         // 2. Grup (users listesi boş)
@@ -139,10 +211,11 @@ val mockTrainingGroupUserUIModel = GetTrainingGroupUserUIModel(
             season = "2025-2026",
             team = GetTrainingGroupUserUIModelTeam(
                 detail = "https://api.sporthor.com/Uploads/1dd57c11-631f-4161-82d3-f8d93dcc04f9.jpg",
-                name   = "Fenerbahçe SK",
-                value  = "68658a727d304bb096270d4c"
+                name = "Fenerbahçe SK",
+                value = "68658a727d304bb096270d4c",
             ),
-            users = emptyList()
+            users = emptyList(),
+            coaches = emptyList(),
         ),
 
         // 3. Grup
@@ -153,20 +226,31 @@ val mockTrainingGroupUserUIModel = GetTrainingGroupUserUIModel(
             season = "2025-2026",
             team = GetTrainingGroupUserUIModelTeam(
                 detail = "https://api.sporthor.com/Uploads/2f8423f9-fe02-4734-b0e9-2560bf92ded2.jpg",
-                name   = "Fenerbahçe Test 3",
-                value  = "684ed12a5451af7c7d6772fd"
+                name = "Fenerbahçe Test 3",
+                value = "684ed12a5451af7c7d6772fd",
             ),
             users = listOf(
                 GetTrainingGroupUserUIModelUser(
-                    id             = "685c63585970f8eef1545150",
-                    name           = "Der Turke",
-                    username       = "derturke3",
-                    summary        = "",
-                    imageUrl       = "https://api.sporthor.com/Uploads/ba89bf51-c58b-483e-b63a-abf21160f52e.jpg",
-                    isFollow       = false,
-                    isCurrentUser  = false
-                )
-            )
-        )
-    )
+                    id = "685c63585970f8eef1545150",
+                    name = "Der Turke",
+                    username = "derturke3",
+                    summary = "",
+                    imageUrl = "https://api.sporthor.com/Uploads/ba89bf51-c58b-483e-b63a-abf21160f52e.jpg",
+                    isFollow = false,
+                    isCurrentUser = false,
+                ),
+            ),
+            coaches = listOf(
+                GetTrainingGroupCoachUIModelUser(
+                    id = "685c63585970f8eef1545150",
+                    name = "Der Turke",
+                    username = "derturke3",
+                    summary = "",
+                    imageUrl = "https://api.sporthor.com/Uploads/ba89bf51-c58b-483e-b63a-abf21160f52e.jpg",
+                    isFollow = false,
+                    isCurrentUser = false,
+                ),
+            ),
+        ),
+    ),
 )

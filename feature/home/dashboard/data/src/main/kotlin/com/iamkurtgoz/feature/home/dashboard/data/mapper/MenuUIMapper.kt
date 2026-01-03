@@ -49,13 +49,16 @@ internal class MenuItemUIMapper @Inject constructor(
                 iconPath = iconPath,
                 name = name,
                 url = url,
-                subMenus = subMenus.orEmpty().map(subMenuItemUIMapper::map),
+                mainMenu = mainMenu,
+                subMenus = subMenus
+                    ?.map(subMenuItemUIMapper::map), // tüm tree buradan başlıyor
             )
         }
     }
 }
 
-internal class SubMenuItemUIMapper @Inject constructor() : IMapper<MenuDomainModelSubItem, MenuUIModelSubItem> {
+internal class SubMenuItemUIMapper @Inject constructor() :
+    IMapper<MenuDomainModelSubItem, MenuUIModelSubItem> {
 
     override fun map(response: MenuDomainModelSubItem): MenuUIModelSubItem {
         return with(response) {
@@ -64,6 +67,7 @@ internal class SubMenuItemUIMapper @Inject constructor() : IMapper<MenuDomainMod
                 name = name,
                 url = url,
                 menuKey = menuKey,
+                subMenus = subMenus?.map { map(it) }, // REKÜRSİF
             )
         }
     }

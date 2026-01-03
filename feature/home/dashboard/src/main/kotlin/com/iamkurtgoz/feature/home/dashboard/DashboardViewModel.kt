@@ -29,7 +29,13 @@ import com.iamkurtgoz.domain.model.enums.UserActionPostLikeType
 import com.iamkurtgoz.domain.model.request.DeletePostRequest
 import com.iamkurtgoz.domain.model.request.HidePostRequest
 import com.iamkurtgoz.domain.model.request.ReportPostRequest
+import com.iamkurtgoz.feature.home.dashboard.DashboardScreenContract.SideEffect.NavigateToMediaViewer
+import com.iamkurtgoz.feature.home.dashboard.DashboardScreenContract.SideEffect.NavigateToSelectTeamScreen
+import com.iamkurtgoz.feature.home.dashboard.DashboardScreenContract.SideEffect.NavigateToSelectTrainingGroupScreen
+import com.iamkurtgoz.feature.home.dashboard.DashboardScreenContract.SideEffect.NavigateToShare
+import com.iamkurtgoz.feature.home.dashboard.DashboardScreenContract.SideEffect.NavigateToWebView
 import com.iamkurtgoz.feature.home.dashboard.domain.model.DashboardPostUIModel
+import com.iamkurtgoz.feature.home.dashboard.domain.model.toMenuUIModelItemList
 import com.iamkurtgoz.feature.home.dashboard.domain.useCase.DashboardFeedAsyncUseCase
 import com.iamkurtgoz.feature.home.dashboard.domain.useCase.DashboardFeedAsyncUseCaseParams
 import com.iamkurtgoz.feature.home.dashboard.domain.useCase.DeletePostUseCase
@@ -73,8 +79,8 @@ internal class DashboardViewModel @Inject constructor(
             is DashboardScreenContract.Event.UpdateEventBusStatus -> updateEventBusStatus(status = event.eventBusState)
             is DashboardScreenContract.Event.SetLikeStatus -> setLikeStatus(postId = event.postId, actionType = event.actionType)
             is DashboardScreenContract.Event.ClickedStoryItem -> clickedStoryItem(userId = event.userId)
-            is DashboardScreenContract.Event.NavigateToMediaViewer -> setSideEffect(DashboardScreenContract.SideEffect.NavigateToMediaViewer(event.routeType))
-            is DashboardScreenContract.Event.NavigateToShare -> setSideEffect(DashboardScreenContract.SideEffect.NavigateToShare(event.routeType))
+            is DashboardScreenContract.Event.NavigateToMediaViewer -> setSideEffect(NavigateToMediaViewer(event.routeType))
+            is DashboardScreenContract.Event.NavigateToShare -> setSideEffect(NavigateToShare(event.routeType))
             is DashboardScreenContract.Event.SetAskedNotificationPermission -> setAskedNotificationPermission()
             is DashboardScreenContract.Event.SetCommentDialogShowPostId -> setCommentDialogShowPostId(event.commentDialogShowPostId)
             is DashboardScreenContract.Event.SetComplain -> setComplain(event.postId)
@@ -97,14 +103,26 @@ internal class DashboardViewModel @Inject constructor(
             }
             is DashboardScreenContract.Event.SetPlayingVideoUrl -> setPlayingVideoUrl(event.playingVideoUrl)
             is DashboardScreenContract.Event.GetMenu -> getMenu()
-            is DashboardScreenContract.Event.NavigateToWebView -> setSideEffect(DashboardScreenContract.SideEffect.NavigateToWebView(event.routeType))
+            is DashboardScreenContract.Event.NavigateToWebView -> setSideEffect(NavigateToWebView(event.routeType))
             is DashboardScreenContract.Event.NavigateToCalendar -> setSideEffect(DashboardScreenContract.SideEffect.NavigateToCalendar)
             is DashboardScreenContract.Event.NavigateToNotifications -> setSideEffect(DashboardScreenContract.SideEffect.NavigateToNotifications)
             is DashboardScreenContract.Event.NavigateToCreateTeamScreen -> setSideEffect(DashboardScreenContract.SideEffect.NavigateToCreateTeamScreen)
             is DashboardScreenContract.Event.NavigateToSelectSportClubScreen -> setSideEffect(DashboardScreenContract.SideEffect.NavigateToSelectSportClubScreen)
-            is DashboardScreenContract.Event.NavigateToSelectTeamScreen -> setSideEffect(DashboardScreenContract.SideEffect.NavigateToSelectTeamScreen(event.fromGenerateClub, event.fromTrainingGroup))
-            is DashboardScreenContract.Event.NavigateToSelectTrainingGroupScreen -> setSideEffect(DashboardScreenContract.SideEffect.NavigateToSelectTrainingGroupScreen(event.fromTrainingGroup))
+            is DashboardScreenContract.Event.NavigateToSelectTeamScreen -> setSideEffect(NavigateToSelectTeamScreen(event.fromGenerateClub, event.fromTrainingGroup))
+            is DashboardScreenContract.Event.NavigateToSelectTrainingGroupScreen -> setSideEffect(NavigateToSelectTrainingGroupScreen(event.fromTrainingGroup))
             is DashboardScreenContract.Event.NavigateToCoachListScreen -> setSideEffect(DashboardScreenContract.SideEffect.NavigateToCoachListScreen)
+            is DashboardScreenContract.Event.OnMainMenuClick -> {
+                updateState { state ->
+                    state.copy(
+                        menuTitle = "${event.mainMenuItem.name} Menüsü",
+                        menuList = state.menuList?.copy(
+                            menu = event.mainMenuItem.subMenus
+                                ?.toMenuUIModelItemList(event.mainMenuItem.menuUserType)
+                                .orEmpty(),
+                        ),
+                    )
+                }
+            }
         }
     }
 
@@ -186,6 +204,7 @@ internal class DashboardViewModel @Inject constructor(
                     state.copy(
                         isLoading = false,
                         menuList = it,
+                        menuTitle = "Hızlı Menü",
                     )
                 }
             }

@@ -62,6 +62,8 @@ internal class UpdateGroupViewModel @Inject constructor(
             is UpdateGroupScreenContract.Event.SetShowStatePhotoPicker -> setShowStatePhotoPicker(event.isShow)
             is UpdateGroupScreenContract.Event.SetSelectedImage -> setSelectedImage(event.imagePath)
             is UpdateGroupScreenContract.Event.UpdateChatGroup -> updateChatGroup(image = event.groupImage, name = event.groupName)
+            is UpdateGroupScreenContract.Event.SetShowEditNameDialog -> setShowEditNameDialog(event.isShow)
+            is UpdateGroupScreenContract.Event.SetGroupName -> setGroupName(event.name)
         }
     }
 
@@ -246,4 +248,20 @@ internal class UpdateGroupViewModel @Inject constructor(
                 }
             }
     }
-}
+
+        private fun setShowEditNameDialog(isShow: Boolean) {
+            updateState { state ->
+                state.copy(
+                    showEditNameDialog = isShow,
+                )
+            }
+        }
+
+        private fun setGroupName(name: String) {
+            updateState { state ->
+                state.copy(
+                    groupName = name,
+                )
+            }
+        }
+    }

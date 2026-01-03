@@ -28,6 +28,10 @@
             "package_name": "com.sporthor.app",
             "certificate_hash": "a05ac5bebf1f95b09841bc2a4c5caf87983854a2"
           }
+        },
+        {
+          "client_id": "275755443371-6njsvt2mi8js03rve7p74o40p1r8444b.apps.googleusercontent.com",
+          "client_type": 3
         }
       ],
       "api_key": [
@@ -37,7 +41,12 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "275755443371-6njsvt2mi8js03rve7p74o40p1r8444b.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     },
@@ -64,6 +73,10 @@
             "package_name": "com.sporthor.app.beta",
             "certificate_hash": "a05ac5bebf1f95b09841bc2a4c5caf87983854a2"
           }
+        },
+        {
+          "client_id": "275755443371-6njsvt2mi8js03rve7p74o40p1r8444b.apps.googleusercontent.com",
+          "client_type": 3
         }
       ],
       "api_key": [
@@ -73,7 +86,70 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "275755443371-6njsvt2mi8js03rve7p74o40p1r8444b.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:275755443371:android:d778f9e46177c8ac40c3ee",
+        "android_client_info": {
+          "package_name": "com.sporthor.as"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "275755443371-6njsvt2mi8js03rve7p74o40p1r8444b.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAAjTeg_K8KEUKj2kee_vCKD5svLvxq2Bk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "275755443371-6njsvt2mi8js03rve7p74o40p1r8444b.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:275755443371:android:8559f914b4892fd640c3ee",
+        "android_client_info": {
+          "package_name": "com.sporthor.as.beta"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "275755443371-6njsvt2mi8js03rve7p74o40p1r8444b.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAAjTeg_K8KEUKj2kee_vCKD5svLvxq2Bk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "275755443371-6njsvt2mi8js03rve7p74o40p1r8444b.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     }

@@ -32,7 +32,7 @@
     <uses-feature android:name="android.hardware.camera" android:required="false" />
 
     <application
-        android:name=".App"
+        android:name="com.sporthor.app.App"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -51,7 +51,7 @@
             android:value="AIzaSyDVFakk3xpgr72bxCha-MLwA5UJ-C4goVs"/>
 
         <activity
-            android:name=".MainActivity"
+            android:name="com.sporthor.app.MainActivity"
             android:exported="true"
             android:windowFullscreen="true"
             android:screenOrientation="portrait"
@@ -64,7 +64,7 @@
         </activity>
 
         <service
-            android:name=".service.MyFirebaseMessagingService"
+            android:name="com.sporthor.app.service.MyFirebaseMessagingService"
             android:exported="false">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />

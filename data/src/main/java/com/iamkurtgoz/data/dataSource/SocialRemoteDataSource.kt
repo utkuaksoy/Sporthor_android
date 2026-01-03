@@ -35,16 +35,16 @@ import com.iamkurtgoz.domain.model.request.FollowUserRequest
 import com.iamkurtgoz.domain.model.request.HidePostRequest
 import com.iamkurtgoz.domain.model.request.LikePostRequest
 import com.iamkurtgoz.domain.model.request.RemoveSearchHistoryRequest
-import com.iamkurtgoz.domain.model.request.WatchedStoryRequest
 import com.iamkurtgoz.domain.model.request.ReportPostRequest
+import com.iamkurtgoz.domain.model.request.WatchedStoryRequest
 
 interface SocialRemoteDataSource {
-    suspend fun getSearch(searchTerm: String): BaseResponse<SearchSocialResponseModel>
+    suspend fun getSearch(searchTerm: String, role: Int? = null): BaseResponse<SearchSocialResponseModel>
     suspend fun getSearchHistory(): BaseResponse<SearchHistorySocialResponseModel>
     suspend fun addSearchHistory(body: AddSearchHistoryRequest): BaseResponse<Unit>
     suspend fun removeSearchHistory(body: RemoveSearchHistoryRequest): BaseResponse<Unit>
     suspend fun getFollowers(userId: String?): BaseResponse<UserRelationResponseModel>
-    suspend fun getFollowing(userId: String?): BaseResponse<UserRelationResponseModel>
+    suspend fun getFollowing(userId: String?, role: Int? = null): BaseResponse<UserRelationResponseModel>
     suspend fun followUser(body: FollowUserRequest): BaseResponse<FollowUserResponseModel>
     suspend fun unFollowUser(body: FollowUserRequest): BaseResponse<FollowUserResponseModel>
     suspend fun getFeedAsync(page: Int?, pageSize: Int?): BaseResponse<GetFeedAsyncResponseModel>

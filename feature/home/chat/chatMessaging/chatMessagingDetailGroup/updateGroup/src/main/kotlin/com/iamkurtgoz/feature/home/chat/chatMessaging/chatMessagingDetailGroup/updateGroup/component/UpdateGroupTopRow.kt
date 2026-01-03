@@ -16,8 +16,10 @@
 package com.iamkurtgoz.feature.home.chat.chatMessaging.chatMessagingDetailGroup.updateGroup.component
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
@@ -42,6 +44,7 @@ import com.iamkurtgoz.core.designsystem.theme.AppTheme
 fun UpdateGroupTopRow(
     groupImage: String?,
     groupName: String?,
+    onGroupNameClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Column(
@@ -49,7 +52,7 @@ fun UpdateGroupTopRow(
             .fillMaxSize()
             .padding(vertical = 32.dp),
         verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
+        horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         // Profil Fotoğrafı
         AppAsyncImageLoader.Load(
@@ -59,27 +62,39 @@ fun UpdateGroupTopRow(
                 .clip(CircleShape)
                 .background(Color.LightGray),
             contentScale = ContentScale.Crop,
-            contentDescription = "Grup Profil Fotoğrafı"
+            contentDescription = "Grup Profil Fotoğrafı",
         )
 
         Spacer(modifier = Modifier.height(16.dp))
 
         // "Grup Adı" yazısı
-        Text(
-            text = "Group Adı",
-            style = MaterialTheme.typography.bodyMedium,
-            color = Color.Gray
-        )
-
-        Spacer(modifier = Modifier.height(4.dp))
-
-        // Grup adı (bold)
-        Text(
-            text = groupName ?: "",
-            style = MaterialTheme.typography.titleMedium.copy(
-                fontWeight = FontWeight.Bold
+        Column(
+            modifier = Modifier.clickable { onGroupNameClick() },
+            horizontalAlignment = Alignment.CenterHorizontally,
+        ) {
+            Text(
+                text = "Group Adı",
+                style = MaterialTheme.typography.bodyMedium,
+                color = Color.Gray,
             )
-        )
+
+            Spacer(modifier = Modifier.height(4.dp))
+
+            // Grup adı (bold)
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.Center,
+            ) {
+                Text(
+                    text = groupName ?: "",
+                    style = MaterialTheme.typography.titleMedium.copy(
+                        fontWeight = FontWeight.Bold,
+                    ),
+                )
+
+                Spacer(modifier = Modifier.size(8.dp))
+            }
+        }
     }
 }
 
@@ -89,7 +104,8 @@ fun GroupInfoScreenPreview() {
     AppTheme {
         UpdateGroupTopRow(
             groupImage = "https://example.com/group_image.jpg",
-            groupName = "Grup Adı"
+            groupName = "Grup Adı",
+            onGroupNameClick = {},
         )
     }
 }

@@ -15,13 +15,15 @@
  */
 package com.iamkurtgoz.feature.home.successAddTrainingGroup
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -30,7 +32,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import com.iamkurtgoz.core.common.state.AppBuildConfigStatePack
 import com.iamkurtgoz.core.common.state.AppRemoteConfigStatePack
@@ -50,20 +52,23 @@ internal fun SuccessAddTrainingGroupScreenContent(
     setEvent: (SuccessAddTrainingGroupScreenContract.Event) -> Unit,
 ) {
     Box(
-        modifier = modifier,
+        modifier = modifier
+            .fillMaxSize()
+            .background(AppTheme.colors.generalColors.backgroundPrimary),
     ) {
         Column {
+            // Üst bölüm – butonla aynı yeşil ton
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .background(AppTheme.colors.generalColors.green100)
+                    .background(Color(0xFF212A1D))
                     .padding(bottom = AppTheme.dimens.dp72),
                 contentAlignment = Alignment.Center,
             ) {
-                Box(
+                Column(
                     modifier = Modifier
-                        .padding(top = AppTheme.dimens.dp72)
-                        .align(Alignment.BottomCenter),
+                        .padding(top = AppTheme.dimens.dp72),
+                    horizontalAlignment = Alignment.CenterHorizontally,
                 ) {
                     Box(
                         modifier = Modifier
@@ -71,7 +76,7 @@ internal fun SuccessAddTrainingGroupScreenContent(
                             .size(AppTheme.dimens.dp72)
                             .border(
                                 width = AppTheme.dimens.dp2,
-                                color = AppTheme.colors.generalColors.foregroundDisabled,
+                                color = AppTheme.colors.generalColors.foregroundWhite,
                                 shape = AppTheme.shapes.radiusCircle,
                             ),
                         contentAlignment = Alignment.Center,
@@ -80,79 +85,69 @@ internal fun SuccessAddTrainingGroupScreenContent(
                             modifier = Modifier
                                 .clip(AppTheme.shapes.radiusCircle)
                                 .size(AppTheme.dimens.dp64),
-                            data = resourcesR.drawable.temp_img_profile_women,
+                            data = state.route.model.clubLogo
+                                ?: resourcesR.drawable.temp_img_profile_women,
                         )
                     }
 
-                    Box(
+                    Spacer(modifier = Modifier.height(AppTheme.dimens.dp16))
+
+                    Text(
+                        text = state.route.model.clubName ?: "Sporthor Voleybol Klubü",
+                        style = AppTheme.typography.bodyMedium,
+                        color = AppTheme.colors.generalColors.foregroundWhite,
+                        textAlign = TextAlign.Center,
                         modifier = Modifier
-                            .align(Alignment.TopEnd)
-                            .size(AppTheme.dimens.dp28)
-                            .background(
-                                color = AppTheme.colors.generalColors.backgroundPrimary,
-                                shape = AppTheme.shapes.radiusCircle,
-                            )
-                            .clip(AppTheme.shapes.radiusCircle),
-                        contentAlignment = Alignment.Center,
-                    ) {
-                        Box(
-                            modifier = Modifier
-                                .background(
-                                    color = AppTheme.colors.generalColors.primary,
-                                    shape = AppTheme.shapes.radiusCircle,
-                                )
-                                .clip(AppTheme.shapes.radiusCircle)
-                                .size(AppTheme.dimens.dp24),
-                            contentAlignment = Alignment.Center,
-                        ) {
-                            Image(
-                                painter = painterResource(resourcesR.drawable.img_radio_button_selected_check),
-                                contentDescription = null,
-                                modifier = Modifier
-                                    .size(AppTheme.dimens.dp18),
-                            )
-                        }
-                    }
+                            .fillMaxWidth()
+                            .padding(horizontal = AppTheme.spacing.spacingHuge),
+                    )
+
+                    Text(
+                        text = state.route.model.groupName ?: "Başlangıç Minik Erkek",
+                        style = AppTheme.typography.bodyMedium,
+                        color = AppTheme.colors.generalColors.foregroundWhite,
+                        textAlign = TextAlign.Center,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(
+                                top = AppTheme.dimens.dp4,
+                                start = AppTheme.spacing.spacingHuge,
+                                end = AppTheme.spacing.spacingHuge,
+                            ),
+                    )
                 }
             }
 
+            // Alt kart – yeşilin üstüne taşan radius'lu beyaz kart
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
+                    .offset(y = -AppTheme.dimens.dp16) // yeşilin içine göm
                     .background(
                         color = AppTheme.colors.generalColors.foregroundWhite,
                         shape = RoundedCornerShape(
-                            topStart = AppTheme.dimens.dp16,
-                            topEnd = AppTheme.dimens.dp16,
+                            topStart = AppTheme.dimens.dp24,
+                            topEnd = AppTheme.dimens.dp24,
                             bottomStart = AppTheme.dimens.dp0,
                             bottomEnd = AppTheme.dimens.dp0,
                         ),
                     ),
             ) {
-                if (state.route.model.isEdit) {
-                    Text(
-                        text = "Tebrikler! Grubunu güncelledin", // TODO: Localize
-                        style = AppTheme.typography.heading05,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(top = AppTheme.dimens.dp42),
-                        textAlign = TextAlign.Center,
-                    )
-                } else if (state.route.model.clubName != null) {
-                    Text(
-                        text = state.route.model.clubName ?: "-", // TODO: Localize
-                        style = AppTheme.typography.heading05,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(top = AppTheme.dimens.dp42),
-                        textAlign = TextAlign.Center,
-                    )
-                }
+                Text(
+                    text = if (state.route.model.isEdit) {
+                        "Tebrikler! Grubunu güncelledin"
+                    } else {
+                        "Tebrikler! Grubunu oluşturdun"
+                    },
+                    style = AppTheme.typography.heading05,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(top = AppTheme.dimens.dp32),
+                    textAlign = TextAlign.Center,
+                )
 
                 Text(
-                    text = "Antrenman grubun hazır! Şimdi oyuncularını ve antrenör ekibini davet et ve güçlü bir topluluk oluşturmaya başla. \n" +
-                        "\n" +
-                        "Birlikte başarıya ulaşmak için takım ruhunu yakala! \uD83D\uDE80", // TODO: Localize
+                    text = "Antrenman grubun hazır! Şimdi oyuncularını ve antrenör ekibini davet et ve güçlü bir topluluk oluşturmaya başla.\n\nBirlikte başarıya ulaşmak için takım ruhunu yakala! 🚀",
                     style = AppTheme.typography.bodyMediumCompact,
                     modifier = Modifier
                         .fillMaxWidth()
@@ -160,19 +155,23 @@ internal fun SuccessAddTrainingGroupScreenContent(
                     textAlign = TextAlign.Center,
                 )
 
-                Spacer(
-                    modifier = Modifier
-                        .weight(1f),
-                )
+                Spacer(modifier = Modifier.weight(1f))
 
                 AppButton.PrimaryLarge(
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(all = AppTheme.spacing.spacingHuge)
-                        .padding(bottom = AppTheme.configuration.getSafeContentPaddingValues().calculateBottomPadding()),
-                    text = "Grup Üyelerini Davet Et", // TODO: Localize
+                        .padding(
+                            bottom = AppTheme.configuration
+                                .getSafeContentPaddingValues()
+                                .calculateBottomPadding(),
+                        ),
+                    text = "Grup Üyelerini Davet Et",
                     onClick = {
-                        setEvent(SuccessAddTrainingGroupScreenContract.Event.NavigateToInviteGroupMembersScreen)
+                        setEvent(
+                            SuccessAddTrainingGroupScreenContract.Event
+                                .NavigateToInviteGroupMembersScreen,
+                        )
                     },
                 )
             }

@@ -142,7 +142,7 @@ internal class PostDetailViewModel @Inject constructor(
         }
 
         val params = UserPostsUseCaseParams(
-            userId = viewState.userId,
+            userId = viewState.route.userId,
             page = viewState.paginationPage,
             pageSize = AppDefaults.LIST_PARAM_ITEMS_PER_PAGE,
         )

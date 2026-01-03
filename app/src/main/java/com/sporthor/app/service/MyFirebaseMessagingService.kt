@@ -46,7 +46,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
 
         val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
-        val channelId = this.getString(com.sporthor.app.R.string.defaultNotificationChannelId)
+        val channelId = this.getString(com.sporthor.`as`.R.string.defaultNotificationChannelId)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val channel = NotificationChannel(
                 channelId,

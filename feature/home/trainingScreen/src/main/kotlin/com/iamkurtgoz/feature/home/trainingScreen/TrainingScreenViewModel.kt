@@ -202,6 +202,7 @@ internal class TrainingScreenViewModel @Inject constructor(
                         getRecomendedGroupNames = response,
                     )
                 }
+                filterSuggestions()
             }
     }
 
@@ -258,6 +259,7 @@ internal class TrainingScreenViewModel @Inject constructor(
                     )
                 }
                 val model = HomeScreenSuccessAddTrainingGroupScreenNavigationModel(
+                    isEdit = false,
                     clubId = clubUIModel.teamId,
                     clubName = clubUIModel.teamName,
                     clubLogo = clubUIModel.logo,

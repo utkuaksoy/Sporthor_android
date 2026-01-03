@@ -27,6 +27,7 @@ import coil3.request.crossfade
 import coil3.util.DebugLogger
 import com.iamkurtgoz.core.common.contract.AppDefaults
 import com.sporthor.app.initializer.AppInitializer
+import com.sporthor.`as`.BuildConfig
 import dagger.hilt.android.HiltAndroidApp
 import javax.inject.Inject
 

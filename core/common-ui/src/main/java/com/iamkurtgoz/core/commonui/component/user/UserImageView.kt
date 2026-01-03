@@ -59,8 +59,8 @@ fun UserImageView(
     badgeBackgroundColor: Color = AppTheme.colors.generalColors.foregroundWhite,
     hasBorder: Boolean = false,
     borderIsGray: Boolean = true,
-    onClickAction: () -> Unit = {},
-    onClickBadgeAction: () -> Unit = {},
+    onClickAction: (() -> Unit)? = null,
+    onClickBadgeAction: (() -> Unit)? = null,
 ) {
     Box(
         modifier = modifier,
@@ -93,7 +93,9 @@ fun UserImageView(
                     )
                 }
                 .clip(shape)
-                .clickable(onClick = onClickAction),
+                .clickable(enabled = onClickAction != null, onClick = {
+                    onClickAction?.invoke()
+                }),
             contentAlignment = Alignment.Center,
         ) {
             if (data != null && data is String && !data.contains("http") && !data.contains("https")) {
@@ -139,7 +141,9 @@ fun UserImageView(
                         shape = badgeShape,
                     )
                     .clip(badgeShape)
-                    .clickable(onClick = onClickBadgeAction),
+                    .clickable(enabled = onClickBadgeAction != null, onClick = {
+                        onClickBadgeAction?.invoke()
+                    }),
                 contentAlignment = Alignment.Center,
             ) {
                 AppAsyncImageLoader.Load(

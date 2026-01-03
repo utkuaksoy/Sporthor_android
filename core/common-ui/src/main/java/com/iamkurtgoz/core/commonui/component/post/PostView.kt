@@ -236,7 +236,13 @@ private fun PostViewImpl(
                                     .aspectRatio(postRatio ?: AppDefaults.ASPECT_RATIO_SQUARE)
                                     .background(AppTheme.colors.generalColors.backgroundSoft200)
                                     .combinedClickable(
-                                        onClick = { },
+                                        onClick = {
+                                            if (isImage) {
+                                                onLongClickImage(url)
+                                            } else if (isVideo) {
+                                                onLongClickVideo(url)
+                                            }
+                                        },
                                         onLongClick = {
                                             if (isImage) {
                                                 onLongClickImage(url)

@@ -49,7 +49,10 @@ internal class MenuItemDomainMapper @Inject constructor(
                 iconPath = iconPath,
                 name = name,
                 url = url,
-                subMenus = subMenus?.filterNotNull()?.map(subMenuItemDomainMapper::map),
+                subMenus = subMenus
+                    ?.filterNotNull()
+                    ?.map(subMenuItemDomainMapper::map),
+                mainMenu = mainMenu,
             )
         }
     }
@@ -64,6 +67,9 @@ internal class SubMenuItemDomainMapper @Inject constructor() : IMapper<MenuRespo
                 name = name,
                 url = url,
                 menuKey = MenuKeyType.from(menuKey),
+                subMenus = subMenus
+                    ?.filterNotNull()
+                    ?.map { map(it) },
             )
         }
     }

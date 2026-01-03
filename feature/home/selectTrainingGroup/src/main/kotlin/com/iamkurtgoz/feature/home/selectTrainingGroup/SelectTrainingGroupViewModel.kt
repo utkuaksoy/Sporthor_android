@@ -73,9 +73,20 @@ internal class SelectTrainingGroupViewModel @Inject constructor(
                             username = user.username,
                         )
                     } ?: listOf(),
+                    coaches = event.model.coaches?.filterNotNull()?.map { user ->
+                        HomeScreenEditTrainingGroupScreenNavigationModelUser(
+                            id = user.id,
+                            imageUrl = user.imageUrl,
+                            isCurrentUser = user.isCurrentUser,
+                            isFollow = user.isFollow,
+                            name = user.name,
+                            summary = user.summary,
+                            username = user.username,
+                        )
+                    } ?: listOf(),
                 )
 
-                event.model.users
+                // event.model.users
                 setSideEffect(SelectTrainingGroupScreenContract.SideEffect.NavigateToEditTrainingGroupScreen(model))
             }
             is SelectTrainingGroupScreenContract.Event.ToggleDeleteMode -> toggleDeleteMode()

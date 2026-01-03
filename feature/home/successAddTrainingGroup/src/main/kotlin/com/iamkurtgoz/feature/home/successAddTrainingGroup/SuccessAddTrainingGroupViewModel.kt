@@ -48,6 +48,7 @@ internal class SuccessAddTrainingGroupViewModel @Inject constructor(
             is SuccessAddTrainingGroupScreenContract.Event.DismissDialogs -> dismissDialogs()
             is SuccessAddTrainingGroupScreenContract.Event.NavigateToInviteGroupMembersScreen -> {
                 val model = HomeScreenInviteGroupMemberScreenNavigationModel(
+                    isEdit = viewState.route.model.isEdit,
                     clubId = viewState.route.model.clubId,
                     clubName = viewState.route.model.clubName,
                     clubLogo = viewState.route.model.clubLogo,
@@ -62,6 +63,17 @@ internal class SuccessAddTrainingGroupViewModel @Inject constructor(
                             name = user.name,
                             summary = user.summary,
                             username = user.username,
+                        )
+                    },
+                    coaches = viewState.route.model.coaches.map { coach ->
+                        HomeScreenInviteGroupMemberScreenNavigationModelUser(
+                            id = coach.id,
+                            imageUrl = coach.imageUrl,
+                            isCurrentUser = coach.isCurrentUser,
+                            isFollow = coach.isFollow,
+                            name = coach.name,
+                            summary = coach.summary,
+                            username = coach.username,
                         )
                     },
                 )

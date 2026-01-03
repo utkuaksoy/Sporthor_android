@@ -23,6 +23,7 @@ import com.iamkurtgoz.domain.repository.SocialRepository
 import com.iamkurtgoz.feature.home.inviteGroupMembers.data.mapper.SocialSearchUIMapper
 import com.iamkurtgoz.feature.home.inviteGroupMembers.domain.model.SocialSearchUIModel
 import com.iamkurtgoz.feature.home.inviteGroupMembers.domain.useCase.SearchUseCase
+import com.iamkurtgoz.feature.home.inviteGroupMembers.domain.useCase.SearchUseCaseParams
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
@@ -33,8 +34,8 @@ internal class SearchUseCaseImpl @Inject constructor(
     private val socialSearchUIMapper: SocialSearchUIMapper,
 ) : SearchUseCase, CoreUseCase(coroutineDispatcher) {
 
-    override fun invoke(params: String): Flow<RestResult<SocialSearchUIModel>> = prepare {
-        repository.getSearch(searchTerm = params)
+    override fun invoke(params: SearchUseCaseParams): Flow<RestResult<SocialSearchUIModel>> = prepare {
+        repository.getSearch(searchTerm = params.params, role = params.role)
             .mapOnSuccess {
                 socialSearchUIMapper.map(
                     it,

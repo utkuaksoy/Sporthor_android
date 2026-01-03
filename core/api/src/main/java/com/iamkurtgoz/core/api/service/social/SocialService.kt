@@ -36,8 +36,8 @@ import com.iamkurtgoz.domain.model.request.FollowUserRequest
 import com.iamkurtgoz.domain.model.request.HidePostRequest
 import com.iamkurtgoz.domain.model.request.LikePostRequest
 import com.iamkurtgoz.domain.model.request.RemoveSearchHistoryRequest
-import com.iamkurtgoz.domain.model.request.WatchedStoryRequest
 import com.iamkurtgoz.domain.model.request.ReportPostRequest
+import com.iamkurtgoz.domain.model.request.WatchedStoryRequest
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
@@ -47,7 +47,7 @@ import retrofit2.http.Query
 @Keep
 interface SocialService {
     @GET("Social/Search")
-    suspend fun getSearch(@Query("SearchTerm") searchTerm: String): Response<BaseResponse<SearchSocialResponseModel>>
+    suspend fun getSearch(@Query("SearchTerm") searchTerm: String, @Query("Role") role: Int? = null): Response<BaseResponse<SearchSocialResponseModel>>
 
     @GET("Social/GetSearchHistory")
     suspend fun getSearchHistory(): Response<BaseResponse<SearchHistorySocialResponseModel>>
@@ -62,7 +62,11 @@ interface SocialService {
     suspend fun getFollowers(@Query("UserId") userId: String?): Response<BaseResponse<UserRelationResponseModel>>
 
     @GET("Social/GetFollowing")
-    suspend fun getFollowing(@Query("UserId") userId: String?): Response<BaseResponse<UserRelationResponseModel>>
+    suspend fun getFollowing(
+        @Query("UserId") userId: String?,
+        @Query("role") role: Int? = null,
+    ): Response<BaseResponse<UserRelationResponseModel>>
+
 
     @POST("Social/FollowUser")
     suspend fun followUser(@Body body: FollowUserRequest): Response<BaseResponse<FollowUserResponseModel>>
@@ -105,7 +109,7 @@ interface SocialService {
 
     @POST("Social/CreateStory")
     suspend fun createStory(@Body body: CreateStoryRequest): Response<BaseResponse<Unit>>
-    
+
     @POST("Social/WatchedStory")
     suspend fun watchedStory(@Body body: WatchedStoryRequest): Response<BaseResponse<Unit>>
 }

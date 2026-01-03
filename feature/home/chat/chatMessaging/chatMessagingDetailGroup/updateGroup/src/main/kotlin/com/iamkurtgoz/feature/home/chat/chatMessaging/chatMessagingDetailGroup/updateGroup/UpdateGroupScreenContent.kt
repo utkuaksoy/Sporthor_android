@@ -47,6 +47,9 @@ internal fun UpdateGroupScreenContent(
                 modifier = Modifier,
                 groupName = state.groupName,
                 groupImage = state.groupImage,
+                onGroupNameClick = {
+                    setEvent(UpdateGroupScreenContract.Event.SetShowEditNameDialog(true))
+                },
             )
         }
 

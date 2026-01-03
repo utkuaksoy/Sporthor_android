@@ -63,11 +63,11 @@ import com.iamkurtgoz.core.designsystem.theme.AppTheme
 import com.iamkurtgoz.core.designsystem.theme.AppThemeSurface
 import com.iamkurtgoz.core.navigation.HomeScreenEditEventRoute
 import com.iamkurtgoz.core.navigation.model.home.editEvent.HomeScreenEditEventScreenNavigationModel
-import com.iamkurtgoz.core.resources.R as resourcesR
 import com.iamkurtgoz.feature.home.editEvent.domain.model.mockGetTaskTypeUIModel
 import java.time.LocalDate
 import java.time.LocalTime
 import java.time.format.DateTimeFormatter
+import com.iamkurtgoz.core.resources.R as resourcesR
 
 @Composable
 internal fun EditEventScreenContent(
@@ -479,11 +479,17 @@ internal fun EditEventScreenContent(
                                 .padding(start = 8.dp),
                         )
 
-                        Text(
-                            text = "${state.addressDetail}, ${state.city}, ${state.country}", // TODO: Localize
-                            modifier = Modifier
-                                .padding(start = 8.dp),
-                        )
+                        val addressParts = listOfNotNull(state.addressDetail, state.city, state.country)
+                            .filter { it.isNotBlank() }
+                            .joinToString(", ")
+
+                        if (addressParts.isNotBlank()) {
+                            Text(
+                                text = addressParts, // TODO: Localize
+                                modifier = Modifier
+                                    .padding(start = 8.dp),
+                            )
+                        }
                     }
                 }
             }

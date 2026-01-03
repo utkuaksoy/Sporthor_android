@@ -34,6 +34,7 @@ data class MenuResponseModelItem(
     @SerialName("name") val name: String?,
     @SerialName("url") val url: String?,
     @SerialName("subMenus") val subMenus: List<MenuResponseModelSubItem?>?,
+    @SerialName("mainMenu") val mainMenu: Boolean,
 )
 
 @Serializable
@@ -43,4 +44,5 @@ data class MenuResponseModelSubItem(
     @SerialName("name") val name: String?,
     @SerialName("url") val url: String?,
     @SerialName("menuKey") val menuKey: Int?,
+    @SerialName("subMenus") val subMenus: List<MenuResponseModelSubItem?>?,
 )

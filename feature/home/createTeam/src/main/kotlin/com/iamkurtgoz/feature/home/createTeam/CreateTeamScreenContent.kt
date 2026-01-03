@@ -41,7 +41,6 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
-import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextOverflow
 import com.iamkurtgoz.core.common.contract.AppDefaults
@@ -54,8 +53,8 @@ import com.iamkurtgoz.core.designsystem.internal.PreviewAppWithNightMode
 import com.iamkurtgoz.core.designsystem.theme.AppTheme
 import com.iamkurtgoz.core.designsystem.theme.AppThemeSurface
 import com.iamkurtgoz.core.navigation.HomeScreenCreateTeamRoute
-import com.iamkurtgoz.core.resources.R as resourcesR
 import java.util.Locale
+import com.iamkurtgoz.core.resources.R as resourcesR
 
 @Suppress("LongMethod")
 @Composable
@@ -213,7 +212,6 @@ internal fun CreateTeamScreenContent(
                 keyboardOptions = KeyboardOptions(
                     keyboardType = KeyboardType.Text,
                     imeAction = ImeAction.Next,
-                    capitalization = KeyboardCapitalization.Words,
                 ),
                 modifier = Modifier
                     .padding(top = AppTheme.spacing.spacingHuge)
@@ -304,7 +302,6 @@ internal fun CreateTeamScreenContent(
                 keyboardOptions = KeyboardOptions(
                     keyboardType = KeyboardType.Text,
                     imeAction = ImeAction.Next,
-                    capitalization = KeyboardCapitalization.Words,
                 ),
                 modifier = Modifier
                     .padding(top = AppTheme.spacing.spacingMedium)
@@ -396,7 +393,6 @@ internal fun CreateTeamScreenContent(
                 keyboardOptions = KeyboardOptions(
                     keyboardType = KeyboardType.Text,
                     imeAction = ImeAction.Next,
-                    capitalization = KeyboardCapitalization.Words,
                 ),
                 modifier = Modifier
                     .padding(top = AppTheme.spacing.spacingMedium)

@@ -26,4 +26,17 @@ data class AddTrainingGroupUserRequest(
     val groupId: String?,
     @SerialName("users")
     val users: List<String?>?,
+    @SerialName("coaches")
+    val coaches: List<CoachesList>? = null,
+)
+
+@Keep
+@Serializable
+data class CoachesList(
+    @SerialName("val")
+    val valId: String? = null,
+    @SerialName("val2")
+    val val2: String? = null,
+    @SerialName("name")
+    val name: String? = null,
 )

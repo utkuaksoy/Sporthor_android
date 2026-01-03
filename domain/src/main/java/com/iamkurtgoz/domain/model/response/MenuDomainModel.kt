@@ -29,6 +29,7 @@ data class MenuDomainModelItem(
     val name: String?,
     val url: String?,
     val subMenus: List<MenuDomainModelSubItem>?,
+    val mainMenu: Boolean?,
 )
 
 data class MenuDomainModelSubItem(
@@ -36,4 +37,5 @@ data class MenuDomainModelSubItem(
     val name: String?,
     val url: String?,
     val menuKey: MenuKeyType?,
+    val subMenus: List<MenuDomainModelSubItem>?,
 )

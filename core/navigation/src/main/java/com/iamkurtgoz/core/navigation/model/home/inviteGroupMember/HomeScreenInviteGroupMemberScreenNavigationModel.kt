@@ -31,12 +31,14 @@ import kotlin.reflect.typeOf
 @Serializable
 @Parcelize
 data class HomeScreenInviteGroupMemberScreenNavigationModel(
+    val isEdit: Boolean = false,
     @Serializable(Base64StringSerializer::class) val clubId: String?,
     @Serializable(Base64StringSerializer::class) val clubName: String?,
     @Serializable(EncodedUrlSerializer::class) val clubLogo: String?,
     @Serializable(Base64StringSerializer::class) val groupId: String?,
     @Serializable(Base64StringSerializer::class) val groupName: String?,
     val users: List<HomeScreenInviteGroupMemberScreenNavigationModelUser> = listOf(),
+    val coaches: List<HomeScreenInviteGroupMemberScreenNavigationModelUser> = listOf(),
 ) : Parcelable
 
 @Keep

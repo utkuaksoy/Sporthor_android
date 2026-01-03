@@ -23,11 +23,24 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class UserRelationResponseModel(
     @SerialName("users") val users: List<UserRelationItemResponseModel?>?,
+    @SerialName("coaches") val coaches: List<CoachRelationItemResponseModel?>?,
 )
 
 @Keep
 @Serializable
 data class UserRelationItemResponseModel(
+    @SerialName("id") val id: String?,
+    @SerialName("name") val name: String?,
+    @SerialName("username") val username: String?,
+    @SerialName("summary") val summary: String?,
+    @SerialName("imageUrl") val imageUrl: String?,
+    @SerialName("isFollow") val isFollow: Boolean?,
+    @SerialName("isCurrentUser") val isCurrentUser: Boolean?,
+)
+
+@Keep
+@Serializable
+data class CoachRelationItemResponseModel(
     @SerialName("id") val id: String?,
     @SerialName("name") val name: String?,
     @SerialName("username") val username: String?,

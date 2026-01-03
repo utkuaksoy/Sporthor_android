@@ -22,6 +22,7 @@ import com.iamkurtgoz.core.navigation.model.home.calendarDetail.HomeScreenCalend
 import com.iamkurtgoz.core.navigation.model.home.editEvent.HomeScreenEditEventScreenNavigationModel
 import com.iamkurtgoz.core.navigation.model.home.editTeam.HomeScreenEditTeamScreenNavigationModel
 import com.iamkurtgoz.core.navigation.model.home.editTrainingGroup.HomeScreenEditTrainingGroupScreenNavigationModel
+import com.iamkurtgoz.core.navigation.model.home.inviteGroupMember.HomeScreenAddNewUserScreenNavigationModel
 import com.iamkurtgoz.core.navigation.model.home.inviteGroupMember.HomeScreenInviteGroupMemberScreenNavigationModel
 import com.iamkurtgoz.core.navigation.model.home.mediaViewer.HomeScreenMediaViewerScreenNavigateModel
 import com.iamkurtgoz.core.navigation.model.home.sendClubAuthDocument.HomeScreenSendClubAuthDocumentScreenNavigateModel
@@ -261,6 +262,13 @@ data class HomeScreenInviteGroupMemberRoute(
 
 @Keep
 @Serializable
+data class HomeScreenInviteGroupMemberAddNewUserRoute(
+    val model: HomeScreenAddNewUserScreenNavigationModel,
+    val fromTrainingGroup: Boolean = false,
+)
+
+@Keep
+@Serializable
 data class HomeScreenSuccessAddTrainingGroupRoute(
     val model: HomeScreenSuccessAddTrainingGroupScreenNavigationModel,
     val fromTrainingGroup: Boolean = false,
@@ -303,7 +311,7 @@ data object HomeScreenSelectSportClubScreenRoute
 @Keep
 @Serializable
 data class HomeScreenSelectTrainingGroupScreenRoute(
-    val fromTrainingGroup: Boolean = false
+    val fromTrainingGroup: Boolean = false,
 )
 
 @Keep

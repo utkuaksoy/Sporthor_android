@@ -57,6 +57,7 @@ internal class CalendarDetailScreenContract {
         data object NavigateToSelectEventDrafts : SideEffect()
         data object SyncScrollState : SideEffect()
         data class NavigateToEditEventScreen(val model: HomeScreenEditEventScreenNavigationModel) : SideEffect()
+        data class NavigateToMap(val location: com.iamkurtgoz.feature.home.calendarDetail.domain.model.CalendarDetailEventUIModelLocation) : SideEffect()
     }
 
     sealed class Event : CoreState.Event {
@@ -71,6 +72,7 @@ internal class CalendarDetailScreenContract {
         data object ShowSelectAddEventTypeDialog : Event()
         data object NavigateToSelectEventDrafts : Event()
         data class NavigateToEditEventScreen(val model: CalendarDetailEventUIModelTask) : Event()
+        data class OnMapClick(val location: com.iamkurtgoz.feature.home.calendarDetail.domain.model.CalendarDetailEventUIModelLocation) : Event()
     }
 
     object Static

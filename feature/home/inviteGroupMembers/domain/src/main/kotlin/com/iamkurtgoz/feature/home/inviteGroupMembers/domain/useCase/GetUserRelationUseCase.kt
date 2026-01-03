@@ -25,4 +25,5 @@ interface GetUserRelationUseCase : IUseCase<GetUserRelationUseCaseParams, RestRe
 data class GetUserRelationUseCaseParams(
     val userId: String?,
     val type: UserRelationUIItemType?,
+    val searchType: Int? = null, // 0 = sporcular, 1 = antrenörler
 )

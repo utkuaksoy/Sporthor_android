@@ -38,6 +38,7 @@ data class HomeScreenEditTrainingGroupScreenNavigationModel(
     @Serializable(EncodedUrlSerializer::class) val id: String?,
     @Serializable(Base64StringSerializer::class) val groupName: String?,
     val users: List<HomeScreenEditTrainingGroupScreenNavigationModelUser> = listOf(),
+    val coaches: List<HomeScreenEditTrainingGroupScreenNavigationModelUser> = listOf(),
 ) : Parcelable
 
 @Keep

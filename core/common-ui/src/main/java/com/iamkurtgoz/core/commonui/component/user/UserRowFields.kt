@@ -52,4 +52,27 @@ object UserRowFields {
             )
         }
     }
+
+    @Composable
+    fun rightArrow(
+        modifier: Modifier = Modifier,
+        size: Dp = AppTheme.dimens.dp18,
+        @DrawableRes icon: Int = resourcesR.drawable.img_arrow_right,
+        iconTint: Color = AppTheme.colors.generalColors.contentSoft600,
+        onClick: () -> Unit = { },
+    ) {
+        IconButton(
+            modifier = modifier
+                .safeClickable(onClick = onClick),
+            onClick = onClick,
+        ) {
+            Image(
+                painter = painterResource(icon),
+                contentDescription = "icon",
+                modifier = Modifier
+                    .size(size),
+                colorFilter = ColorFilter.tint(iconTint),
+            )
+        }
+    }
 }

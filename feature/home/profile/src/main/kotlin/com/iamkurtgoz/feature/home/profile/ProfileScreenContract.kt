@@ -75,7 +75,7 @@ internal class ProfileScreenContract {
         data class UpdateEventBusStatus(val eventBusState: ProfileEventBus.Event) : Event()
         data class UserPosts(val fetchParam: FetchParam) : Event()
         data object NavigateToSettings : Event()
-        data class NavigateToPostDetail(val userId: String?, val index: Int?) : Event()
+        data class NavigateToPostDetail(val index: Int?) : Event()
     }
 
     object Static {

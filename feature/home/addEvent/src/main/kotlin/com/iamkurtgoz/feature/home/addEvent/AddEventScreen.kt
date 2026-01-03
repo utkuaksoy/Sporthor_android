@@ -217,6 +217,18 @@ private fun AddEventScreenScaffold(
             )
         }
 
+        if (state.showRecurrenceEndDatePicker) {
+            DatePickerDialog(
+                initialSelectedDateMillis = state.recurrenceEndDate?.toEpochMilli(),
+                onDismissRequest = {
+                    setEvent.invoke(AddEventScreenContract.Event.DismissDialogs)
+                },
+                onSelectedDate = {
+                    setEvent.invoke(AddEventScreenContract.Event.SetRecurrenceEndDate(it))
+                },
+            )
+        }
+
         AddTaskTypeBottomSheet(
             showSheet = state.showAddTaskTypeDialog,
             state = state,
@@ -365,6 +377,7 @@ private fun Preview() {
                     eventStartTime = LocalTime.now(),
                     eventEndDate = LocalDate.now(),
                     eventEndTime = LocalTime.now().plusHours(2),
+                    recurrenceEndDate = LocalDate.now()
                 ),
                 setEvent = { },
             )

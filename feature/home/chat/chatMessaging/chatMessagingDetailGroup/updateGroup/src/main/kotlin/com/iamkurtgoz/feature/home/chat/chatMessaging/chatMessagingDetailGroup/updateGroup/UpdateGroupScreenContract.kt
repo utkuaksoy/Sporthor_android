@@ -39,6 +39,7 @@ internal class UpdateGroupScreenContract {
         val showPhotoPicker: Boolean = false,
         val selectedImage: File? = null,
         val onUploadProgress: Int? = null,
+        val showEditNameDialog: Boolean = false,
     ) : CoreState.ViewState
 
     sealed class SideEffect : CoreState.SideEffect {
@@ -55,6 +56,8 @@ internal class UpdateGroupScreenContract {
         data class SetShowStatePhotoPicker(val isShow: Boolean) : Event()
         data class SetSelectedImage(val imagePath: String?) : Event()
         data class UpdateChatGroup(val groupName: String?, val groupImage: String?) : Event()
+        data class SetShowEditNameDialog(val isShow: Boolean) : Event()
+        data class SetGroupName(val name: String) : Event()
     }
 
     data class GroupIconItem(

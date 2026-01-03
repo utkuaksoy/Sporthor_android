@@ -36,7 +36,10 @@ internal class UserRelationUseCaseImpl @Inject constructor(
 ) : GetUserRelationUseCase, CoreUseCase(coroutineDispatcher) {
     override fun invoke(params: GetUserRelationUseCaseParams): Flow<RestResult<UserRelationUIModel>> = prepare {
         val domainData = when (params.type) {
-            UserRelationUIItemType.FOLLOWING -> repository.getFollowing(userId = params.userId)
+            UserRelationUIItemType.FOLLOWING -> repository.getFollowing(
+                userId = params.userId,
+                role = params.searchType,
+            )
             UserRelationUIItemType.FOLLOWERS -> repository.getFollowers(userId = params.userId)
             else -> throw IllegalArgumentException("Invalid type")
         }

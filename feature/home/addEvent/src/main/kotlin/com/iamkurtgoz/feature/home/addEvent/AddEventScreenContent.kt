@@ -64,11 +64,11 @@ import com.iamkurtgoz.core.designsystem.theme.AppTheme
 import com.iamkurtgoz.core.designsystem.theme.AppThemeSurface
 import com.iamkurtgoz.core.navigation.HomeScreenAddEventRoute
 import com.iamkurtgoz.core.navigation.model.home.addEvent.HomeScreenAddEventScreenNavigationModel
-import com.iamkurtgoz.core.resources.R as resourcesR
 import com.iamkurtgoz.feature.home.addEvent.domain.model.mockGetTaskTypeUIModel
 import java.time.LocalDate
 import java.time.LocalTime
 import java.time.format.DateTimeFormatter
+import com.iamkurtgoz.core.resources.R as resourcesR
 
 @Composable
 internal fun AddEventScreenContent(
@@ -228,12 +228,39 @@ internal fun AddEventScreenContent(
                     }
 
                     if (state.switchEventRepeat) {
-                        RepeatOptionsFlow(
+                        Column(
                             modifier = Modifier
-                                .padding(bottom = AppTheme.spacing.spacingMedium),
-                            state = state,
-                            setEvent = setEvent,
-                        )
+                                .padding(top = AppTheme.spacing.spacingMedium),
+                        ) {
+                            RepeatOptionsFlow(
+                                modifier = Modifier
+                                    .padding(bottom = AppTheme.spacing.spacingMedium),
+                                state = state,
+                                setEvent = setEvent,
+                            )
+
+                            Row(
+                                modifier = Modifier
+                                    .fillMaxWidth(),
+                                verticalAlignment = Alignment.CenterVertically,
+                            ) {
+                                Text(
+                                    text = "Son Tekrarlanma Tarihi", // TODO: Localize
+                                    style = AppTheme.typography.bodyLargeCompact,
+                                )
+
+                                Spacer(modifier = Modifier.weight(1f))
+
+                                AppButton.SecondaryWhiteMedium(
+                                    text = state.recurrenceEndDate?.format(dateFormatter).toString(),
+                                    onClick = {
+                                        setEvent.invoke(AddEventScreenContract.Event.ShowRecurrenceEndDatePicker)
+                                    },
+                                    modifier = Modifier
+                                        .padding(end = AppTheme.spacing.spacingSmallest),
+                                )
+                            }
+                        }
                     }
                 }
             }
@@ -535,7 +562,7 @@ internal fun AddEventScreenContent(
                                         setEvent.invoke(AddEventScreenContract.Event.ShowAddDescriptionDialog)
                                     },
                             )
-                        }   
+                        }
                     }
                 }
 
@@ -588,7 +615,7 @@ internal fun AddEventScreenContent(
                         )
                     }
                 }
-            }   
+            }
         }
     }
 }
@@ -704,6 +731,7 @@ private fun Preview() {
                     switchEventRepeat = true,
                     selectedTaskType = mockGetTaskTypeUIModel.firstOrNull(),
                     textDescription = AppTextFieldValue(value = "asdasdasd"),
+                    recurrenceEndDate = LocalDate.now().plusDays(1),
                 ),
                 setEvent = { },
             )

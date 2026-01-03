@@ -17,9 +17,20 @@ package com.iamkurtgoz.domain.model.response
 
 data class UserRelationDomainModel(
     val users: List<UserRelationItemDomainModel?>?,
+    val coaches: List<CoachRelationItemDomainModel?>?,
 )
 
 data class UserRelationItemDomainModel(
+    val id: String?,
+    val name: String?,
+    val username: String?,
+    val summary: String?,
+    val imageUrl: String?,
+    val isFollow: Boolean?,
+    val isCurrentUser: Boolean?,
+)
+
+data class CoachRelationItemDomainModel(
     val id: String?,
     val name: String?,
     val username: String?,

@@ -38,6 +38,7 @@ data class HomeScreenSuccessAddTrainingGroupScreenNavigationModel(
     @Serializable(Base64StringSerializer::class) val groupId: String?,
     @Serializable(Base64StringSerializer::class) val groupName: String?,
     val users: List<HomeScreenSuccessAddTrainingGroupScreenNavigationModelUser> = listOf(),
+    val coaches: List<HomeScreenSuccessAddTrainingGroupScreenNavigationModelUser> = listOf(),
 ) : Parcelable
 
 @Keep

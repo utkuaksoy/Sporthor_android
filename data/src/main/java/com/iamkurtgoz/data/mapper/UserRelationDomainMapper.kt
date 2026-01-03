@@ -17,6 +17,7 @@ package com.iamkurtgoz.data.mapper
 
 import com.iamkurtgoz.core.common.mapper.IMapper
 import com.iamkurtgoz.data.model.UserRelationResponseModel
+import com.iamkurtgoz.domain.model.response.CoachRelationItemDomainModel
 import com.iamkurtgoz.domain.model.response.UserRelationDomainModel
 import com.iamkurtgoz.domain.model.response.UserRelationItemDomainModel
 import javax.inject.Inject
@@ -27,6 +28,17 @@ internal class UserRelationDomainMapper @Inject constructor() : IMapper<UserRela
             UserRelationDomainModel(
                 users = users?.map {
                     UserRelationItemDomainModel(
+                        id = it?.id,
+                        name = it?.name,
+                        username = it?.username,
+                        imageUrl = it?.imageUrl,
+                        summary = it?.summary,
+                        isFollow = it?.isFollow,
+                        isCurrentUser = it?.isCurrentUser,
+                    )
+                },
+                coaches = coaches?.map {
+                    CoachRelationItemDomainModel(
                         id = it?.id,
                         name = it?.name,
                         username = it?.username,

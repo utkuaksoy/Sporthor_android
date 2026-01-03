@@ -1,29 +1,21 @@
-/*
- * Copyright 2024 Sporthor Android
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
 package com.iamkurtgoz.feature.home.inviteGroupMembers
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.ModalBottomSheet
+import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -41,7 +33,9 @@ import com.iamkurtgoz.core.designsystem.theme.AppTheme
 import com.iamkurtgoz.core.designsystem.theme.AppThemeScaffold
 import com.iamkurtgoz.core.designsystem.theme.AppThemeSurface
 import com.iamkurtgoz.core.navigation.HomeScreenInviteGroupMemberRoute
+import com.iamkurtgoz.core.navigation.model.home.inviteGroupMember.HomeScreenAddNewUserScreenNavigationModel
 import com.iamkurtgoz.core.navigation.model.home.inviteGroupMember.HomeScreenInviteGroupMemberScreenNavigationModel
+import com.iamkurtgoz.feature.home.inviteGroupMembers.domain.model.InviteGroupMembersTab
 import com.iamkurtgoz.feature.home.inviteGroupMembers.domain.model.MockSocialSearchUIModel
 
 @Composable
@@ -49,13 +43,16 @@ internal fun InviteGroupMembersScreen(
     navigateUp: () -> Unit,
     popBackStack: () -> Unit,
     navigateToHome: () -> Unit,
+    navigateToSelectGroup: () -> Unit,
+    navigateToAddNewUserScreen: (HomeScreenAddNewUserScreenNavigationModel, fromTrainingGroup: Boolean) -> Unit,
     viewModel: InviteGroupMembersViewModel = hiltViewModel(),
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
+    val (showSheet, setShowSheet) = remember { mutableStateOf(false) }
 
     TrackedScreen("InviteGroupMembersScreen")
 
-    LaunchedEffect(key1 = Unit) {
+    LaunchedEffect(Unit) {
         viewModel.setEvent(InviteGroupMembersScreenContract.Event.Initialize)
     }
 
@@ -64,12 +61,20 @@ internal fun InviteGroupMembersScreen(
             is InviteGroupMembersScreenContract.SideEffect.NavigateUp -> navigateUp()
             is InviteGroupMembersScreenContract.SideEffect.PopBackStack -> popBackStack()
             is InviteGroupMembersScreenContract.SideEffect.NavigateToHome -> navigateToHome()
+            is InviteGroupMembersScreenContract.SideEffect.CloseBottomSheet -> setShowSheet(false)
+            is InviteGroupMembersScreenContract.SideEffect.NavigateToAddAddNewUserScreen ->
+                navigateToAddNewUserScreen(event.model, state.route.fromTrainingGroup)
+            InviteGroupMembersScreenContract.SideEffect.OpenBottomSheet -> setShowSheet(true)
+            InviteGroupMembersScreenContract.SideEffect.CloseBottomSheet -> setShowSheet(false)
+            InviteGroupMembersScreenContract.SideEffect.NavigateToSelectGroup -> navigateToSelectGroup()
         }
     }
 
     InviteGroupMembersScreenScaffold(
         state = state,
         setEvent = viewModel::setEvent,
+        showSheet = showSheet,
+        onChangeSheetState = setShowSheet,
     )
 }
 
@@ -78,7 +83,12 @@ internal fun InviteGroupMembersScreen(
 private fun InviteGroupMembersScreenScaffold(
     state: InviteGroupMembersScreenContract.State,
     setEvent: (InviteGroupMembersScreenContract.Event) -> Unit,
+    showSheet: Boolean,
+    onChangeSheetState: (Boolean) -> Unit,
 ) {
+
+    val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
+
     AppThemeScaffold(
         topBar = {
             AppToolbar.Toolbar(
@@ -91,29 +101,61 @@ private fun InviteGroupMembersScreenScaffold(
                 },
                 centerContent = {
                     AppToolbarFields.Title(
-                        text = "Grup Üyelerini Ekle", // TODO: Localize
+                        text = "Anasayfa", // TODO: Localize
                     )
                 },
             )
         },
         bottomBar = {
-            AppButton.PrimaryLarge(
-                text = "Grup Üyelerini Davet Et", // TODO: Localize
-                onClick = {
-                    setEvent.invoke(InviteGroupMembersScreenContract.Event.InviteClubMembers)
-                },
-                enabled = state.selectedUserList.isNotEmpty(),
+            Column(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(horizontal = AppTheme.spacing.spacingHuge)
-                    .padding(bottom = AppTheme.configuration.getSafeContentPaddingValues().calculateBottomPadding())
+                    .padding(
+                        bottom = AppTheme.configuration
+                            .getSafeContentPaddingValues()
+                            .calculateBottomPadding(),
+                    )
                     .padding(bottom = AppTheme.spacing.spacingHuge),
-            )
+            ) {
+                if (state.route.model.isEdit) {
+                    AppButton.OutlineLarge(
+                        text = if (state.selectedTab == InviteGroupMembersTab.PLAYERS) {
+                            "Yeni Oyuncu Ekle"
+                        } else {
+                            "Yeni Antrenör Ekle"
+                        },
+                        onClick = { onChangeSheetState(true) },
+                        modifier = Modifier.fillMaxWidth(),
+                    )
+
+                    Spacer(modifier = Modifier.height(AppTheme.spacing.spacingMedium))
+
+                    AppButton.PrimaryLarge(
+                        text = "Grup Üyelerini Davet Et",
+                        onClick = {
+                            setEvent(
+                                InviteGroupMembersScreenContract.Event.InviteClubMembersFromScreen,
+                            )
+                        },
+                        modifier = Modifier.fillMaxWidth(),
+                    )
+                } else {
+                    AppButton.PrimaryLarge(
+                        text = "Anasayfa",
+                        onClick = {
+                            setEvent(
+                                InviteGroupMembersScreenContract.Event.InviteClubMembersFromScreen,
+                            )
+                        },
+                        modifier = Modifier.fillMaxWidth(),
+                    )
+                }
+            }
         },
     ) { padding ->
         InviteGroupMembersScreenContent(
-            modifier = Modifier
-                .padding(padding),
+            modifier = Modifier.padding(padding),
             state = state,
             setEvent = setEvent,
         )
@@ -130,6 +172,29 @@ private fun InviteGroupMembersScreenScaffold(
             AppLoadingDialog()
         }
     }
+
+    if (showSheet) {
+        ModalBottomSheet(
+            onDismissRequest = { onChangeSheetState(false) },
+            sheetState = sheetState,
+            containerColor = AppTheme.colors.generalColors.backgroundPrimary,
+        ) {
+            InviteGroupMembersSelectUserBottomSheet(
+                state = state,
+                setEvent = setEvent,
+                onInviteClick = {
+                    if (!state.route.model.isEdit) {
+                        setEvent(InviteGroupMembersScreenContract.Event.NextCreateFlowStep)
+                    } else {
+                        setEvent(
+                            InviteGroupMembersScreenContract.Event
+                                .InviteClubMembersFromBottomSheet,
+                        )
+                    }
+                },
+            )
+        }
+    }
 }
 
 @PreviewAppWithNightMode
@@ -139,7 +204,7 @@ private fun Preview() {
         AppThemeSurface {
             InviteGroupMembersScreenScaffold(
                 state = InviteGroupMembersScreenContract.State(
-                    isLoading = true,
+                    isLoading = false,
                     appBuildConfigStatePack = AppBuildConfigStatePack(),
                     appRemoteConfigStatePack = AppRemoteConfigStatePack(),
                     route = HomeScreenInviteGroupMemberRoute(
@@ -155,6 +220,8 @@ private fun Preview() {
                     searchResultList = MockSocialSearchUIModel.list,
                 ),
                 setEvent = { },
+                showSheet = true,
+                onChangeSheetState = { },
             )
         }
     }

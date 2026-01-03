@@ -33,8 +33,8 @@ import com.iamkurtgoz.core.designsystem.theme.AppThemeSurface
 import com.iamkurtgoz.domain.dataStore.AppPreferences
 import com.iamkurtgoz.domain.eventbus.AppEventBus
 import com.iamkurtgoz.domain.state.AuthState
-import com.sporthor.app.BuildConfig
 import com.sporthor.app.MainActivity
+import com.sporthor.`as`.BuildConfig
 
 @Composable
 internal fun AppScreen(
