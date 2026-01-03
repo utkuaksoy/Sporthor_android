@@ -1,0 +1,6 @@
+xcassets:
+ inputs:
+  - Resources/Images.xcassets
+ outputs:
+  templatePath: assets-template.stencil
+  output: Gen/Images.swift

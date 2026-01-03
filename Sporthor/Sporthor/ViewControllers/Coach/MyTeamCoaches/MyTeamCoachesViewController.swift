@@ -1,0 +1,129 @@
+//
+//  MyTeamCoachesViewController.swift
+//  Sporthor
+//
+//  Created by derTurke on 21.07.2025.
+//
+//
+
+import UIKit
+import ComponentKit
+
+final class MyTeamCoachesViewController: BaseViewController {
+    // MARK: - VIPER Variables
+    var presenter: MyTeamCoachesPresenterProtocol {
+        get { return self.basePresenter as! MyTeamCoachesPresenterProtocol }
+        set { self.basePresenter = newValue }
+    }
+    
+    // MARK: - UI Elements
+    private lazy var tableView: UITableView = {
+        let tableView = UITableView()
+        tableView.delegate = self
+        tableView.dataSource = self
+        tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 16, right: 0)
+        tableView.backgroundColor = .clear
+        tableView.translatesAutoresizingMaskIntoConstraints = false
+        tableView.allowsSelection = true
+        tableView.separatorStyle = .none
+        tableView.removeEmptyCell()
+        return tableView
+    }()
+    
+    // MARK: - Members
+    
+    // MARK: - Lifecycles
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        presenter.viewDidLoad()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.navigationItem.setHidesBackButton(true, animated: false)
+        if let navCon = navigationController as? CustomNavigationController {
+            navCon.customDelegate = self
+        }
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        navigationController?.navigationItem.setHidesBackButton(false, animated: false)
+    }
+    
+    // MARK: - Custom Methods
+}
+
+// MARK: - MyTeamCoachesPresenterDelegate
+extension MyTeamCoachesViewController: MyTeamCoachesPresenterDelegate {
+    func prepareNavigationBar() {
+        if let navCon = navigationController as? CustomNavigationController {
+            navCon.isBackChevronLeft = true
+            navCon.navigationBar.titleTextAttributes = [
+                .foregroundColor: DesignKitColorName.contentStrong900.color,
+                .font: UIFont.bold03Compact
+            ]
+        }
+    }
+    
+    func prepareUI() {
+        view.addSubview(tableView)
+        NSLayoutConstraint.activate([
+            tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
+        ])
+    }
+    
+    func reloadData() {
+        DispatchQueue.main.async { [weak self] in
+            guard let self else { return }
+            self.tableView.reloadData()
+        }
+    }
+}
+
+// MARK: - UITableViewDataSource
+extension MyTeamCoachesViewController: UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return presenter.clubs.isEmpty ? 1 : presenter.clubs.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        if presenter.clubs.isEmpty {
+            let cell = EmptyTableViewCell.dequeue(from: tableView, at: indexPath)
+            cell.bind(image: Asset.infoAlert.image,
+                      description: "Kulüp sahibi olmadığınız için antrenörünüz bulunmamaktadır.")
+            return cell
+        } else {
+            let cell = ListClubTableViewCell.dequeue(from: tableView, at: indexPath)
+            cell.configureCoach(presenter.clubs[indexPath.row])
+            return cell
+        }
+    }
+}
+
+// MARK: - UITableViewDelegate
+extension MyTeamCoachesViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        presenter.didSelectRowAt(indexPath)
+    }
+    
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return presenter.clubs.isEmpty ? 0 : 24
+    }
+    
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        return CKHeaderView(text: "Kulüp Seç",
+                            leadingCons: 16,
+                            trailingCons: 16)
+    }
+}
+
+// MARK: - CustomNavigationControllerDelegate
+extension MyTeamCoachesViewController: CustomNavigationControllerDelegate {
+    func didTapButton(type: BarButtonItemType) {
+        presenter.didTappedNavigationButton(type)
+    }
+}

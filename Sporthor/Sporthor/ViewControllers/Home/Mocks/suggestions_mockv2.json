@@ -1,0 +1,43 @@
+{
+    "data": {
+        "suggestions": [
+            {
+                "id": 1,
+                "profileImage": "https://media.gettyimages.com/id/2160320696/photo/round-of-16-uefa-euro-2024.jpg?s=1024x1024&w=gi&k=20&c=XtefnDWbSlegwL1ddIecbQFCcEFxwnccHz1ktlG3IFU=",
+                "teamImage": "https://media.gettyimages.com/id/89416970/photo/official-logo-of-the-spanish-football-team-real-madrid.jpg?s=1024x1024&w=gi&k=20&c=s9b3KC8zy7cJkK6Ps4hwChQRoEKxSD0PlCEdoQZblr4=",
+                "name": "Arda Güler",
+                "isFollow": true
+            },
+            {
+                "id": 2,
+                "profileImage": "https://media.gettyimages.com/id/2177132223/photo/cedi-osman-of-panathinaikos-aktor-athens-plays-during-the-euroleague-round-2-match-between.jpg?s=612x612&w=0&k=20&c=50viN1P0iF-ueBibVmPWA1tpvs7kvV2qFLo2sKMRA3U=",
+                "teamImage": "https://media.gettyimages.com/id/52901796/photo/vereins-logo-panathinaikos-athen.jpg?s=1024x1024&w=gi&k=20&c=PBNlwXzg1x_hzP_v9ejEg6Dl5YJc_SFqWMKjx1v9wss=",
+                "name": "Cedi Osman",
+                "isFollow": false,
+            },
+            {
+                "id": 3,
+                "profileImage": "https://media.gettyimages.com/id/2185626923/photo/eda-erdem-of-fenerbahce-medicana-prepares-for-the-serve-during-the-match-fenerbahce-medicana.jpg?s=612x612&w=0&k=20&c=uY8U7AFEUkQuvp9F-cvWNPbKd_Y3WwhsXci2JcjTG7U=",
+                "teamImage": "https://www.freepnglogos.com/uploads/fenerbahce-logo-png/fenerbahce-dream-league-soccer-kits-logo-png-transparent--1.png",
+                "name": "Eda Erdem",
+                "isFollow": false,
+            },
+            {
+                "id": 4,
+                "profileImage": "https://media.gettyimages.com/id/2169638174/photo/paris-france-serkan-yildirim-of-team-turkiye-celebrates-winning-the-gold-medal-after.jpg?s=612x612&w=0&k=20&c=JXvhYJPfCHVjSaPQwAYQE19aoL7av6xuqlFeX87x1Ds=",
+                "teamImage": "",
+                "name": "Serkan Yıldırım",
+                "isFollow": false,
+            },
+            {
+                "id": 5,
+                "profileImage": "https://media.gettyimages.com/id/993047532/photo/las-vegas-nv-gokhan-saki-of-netherlands-prepares-to-step-on-the-scale-during-the-ufc-226-weigh.jpg?s=612x612&w=0&k=20&c=A7xBI3w1S8q8U0c09HMpGTQJ2EUnzvH1uh2Eu_nOuH4=",
+                "teamImage": "",
+                "name": "Gökhan Saki",
+                "isFollow": false
+            }
+        ]
+    },
+    "isSuccess": true,
+    "error": null
+}

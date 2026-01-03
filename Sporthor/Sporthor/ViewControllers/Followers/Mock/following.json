@@ -1,0 +1,67 @@
+{
+    "following": [
+        {
+            "id": "17",
+            "username": "emmaw",
+            "name": "Emma",
+            "surname": "Wilson",
+            "profileImage": "https://randomuser.me/api/portraits/women/3.jpg",
+            "isFollowing": true,
+            "role": "Smaçör"
+        },
+        {
+            "id": "18",
+            "username": "davidb",
+            "name": "David",
+            "surname": "Brown",
+            "profileImage": "https://randomuser.me/api/portraits/men/4.jpg",
+            "isFollowing": true,
+            "role": "Smaçör"
+        },
+        {
+            "id": "19",
+            "username": "oliviat",
+            "name": "Olivia",
+            "surname": "Taylor",
+            "profileImage": "https://randomuser.me/api/portraits/women/4.jpg",
+            "isFollowing": true,
+            "role": "Smaçör"
+        },
+        {
+            "id": "20",
+            "username": "jamesd",
+            "name": "James",
+            "surname": "Davis",
+            "profileImage": "https://randomuser.me/api/portraits/men/5.jpg",
+            "isFollowing": true,
+            "role": "Smaçör"
+        },
+        {
+            "id": "21",
+            "username": "sophiam",
+            "name": "Sophia",
+            "surname": "Miller",
+            "profileImage": "https://randomuser.me/api/portraits/women/5.jpg",
+            "isFollowing": true,
+            "role": "Smaçör"
+        },
+        {
+            "id": "22",
+            "username": "mcanbz",
+            "name": "Veli",
+            "surname": "Canbaz",
+            "profileImage": "https://randomuser.me/api/portraits/women/5.jpg",
+            "isFollowing": false,
+            "role": "Smaçör"
+        },
+        {
+            "id": "23",
+            "username": "tamercnbaz",
+            "name": "Tamer",
+            "surname": "Canbaz",
+            "profileImage": "https://randomuser.me/api/portraits/women/5.jpg",
+            "isFollowing": false,
+            "role": "Smaçör"
+        }
+    ]
+} 

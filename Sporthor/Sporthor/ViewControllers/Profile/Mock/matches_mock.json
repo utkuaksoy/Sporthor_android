@@ -1,0 +1,49 @@
+{
+    "title": "Yaklaşan Maçlar",
+    "matches": [
+        {
+            "matchId": 1,
+            "leagueInfo": {
+                "leagueLogoURL": "https://developer.apple.com/assets/elements/icons/swift/swift-64x64_2x.png",
+                "title": "TVF Vodafone Sultanlar Ligi",
+                "date": "18 Ocak 2025"
+            },
+            "teams": [
+                {
+                    "teamId": 1,
+                    "teamName": "Eczacıbaşı Spor Kulübü",
+                    "teamLogoImageUrl": "https://developer.apple.com/assets/elements/icons/swift/swift-64x64_2x.png",
+                    "score": 3
+                },
+                {
+                    "teamId": 2,
+                    "teamName": "VakıfBank SK",
+                    "teamLogoImageUrl": "https://developer.apple.com/assets/elements/icons/swift/swift-64x64_2x.png",
+                    "score": 1
+                }
+            ]
+        },
+        {
+            "matchId": 1,
+            "leagueInfo": {
+                "leagueLogoURL": "https://developer.apple.com/assets/elements/icons/swift/swift-64x64_2x.png",
+                "title": "TVF Vodafone Sultanlar Ligi",
+                "date": "18 Ocak 2025"
+            },
+            "teams": [
+                {
+                    "teamId": 1,
+                    "teamName": "Galatasaray Spor Kulübü",
+                    "teamLogoImageUrl": "https://tmssl.akamaized.net/images/wappen/head/141.png",
+                    "score": 7
+                },
+                {
+                    "teamId": 2,
+                    "teamName": "Fenerbahçe Spor Kulübü",
+                    "teamLogoImageUrl": "https://tmssl.akamaized.net/images/wappen/head/36.png",
+                    "score": 0
+                }
+            ]
+        }
+    ]
+} 

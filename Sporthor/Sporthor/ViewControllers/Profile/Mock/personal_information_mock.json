@@ -1,0 +1,162 @@
+{
+    "personalId": "adjasjd23432",
+    "components": [
+        {
+            "id": "profile_information_profile_card",
+            "type": "ProfileCard",
+            "typeId": 2,
+            "data": {
+                "imageUrl": "https://randomuser.me/api/portraits/men/32.jpg",
+                "name": "Mesut Canbaz",
+                "nationalityName": "Türkiye",
+                "flagIcon": "https://flagcdn.com/w80/tr.png",
+                "birthDate": "18.05.2008",
+                "height": "174 cm",
+                "weight": "68 kg"
+            }
+        },
+        {
+            "id": "current_teams_container_component",
+            "type": "CurrentTeams",
+            "data": {
+                "title": "Mevcut Kulüpler",
+                "teams": [
+                    {
+                        "teamId": 1,
+                        "teamName": "Galatasaray",
+                        "teamLogoImageUrl": "https://tmssl.akamaized.net/images/wappen/head/141.png"
+                    },
+                    {
+                        "teamId": 2,
+                        "teamName": "Real Madrid",
+                        "teamLogoImageUrl": "https://tmssl.akamaized.net/images/wappen/head/418.png"
+                    }
+                ]
+            }
+        },
+        {
+            "id": "featured_skills_component",
+            "type": "FeaturedSkills",
+            "data": {
+                "title": "Öne Çıkan Özellikler",
+                "skills": [
+                    {
+                        "id": "volleyball",
+                        "name": "Voleybol",
+                        "icon": "https://cdn-icons-png.flaticon.com/512/2148/2148775.png",
+                        "isSelected": true,
+                        "details": [
+                            {
+                                "title": "Blok Yüksekliği",
+                                "value": "210",
+                                "unit": "cm"
+                            },
+                            {
+                                "title": "Smaç Yüksekliği",
+                                "value": "230",
+                                "unit": "cm"
+                            },
+                            {
+                                "title": "Pozisyon",
+                                "value": "Smaçör",
+                                "unit": null
+                            },
+                            {
+                                "title": "Forma Numarası",
+                                "value": "14",
+                                "unit": null
+                            }
+                        ]
+                    },
+                    {
+                        "id": "football",
+                        "name": "Futbol",
+                        "icon": "https://cdn-icons-png.flaticon.com/512/1165/1165187.png",
+                        "isSelected": false,
+                        "details": [
+                            {
+                                "title": "Şut Gücü",
+                                "value": "85",
+                                "unit": "km/s"
+                            },
+                            {
+                                "title": "Sprint Hızı",
+                                "value": "32",
+                                "unit": "km/s"
+                            },
+                            {
+                                "title": "Pozisyon",
+                                "value": "Forvet",
+                                "unit": null
+                            },
+                            {
+                                "title": "Forma Numarası",
+                                "value": "9",
+                                "unit": null
+                            }
+                        ]
+                    }
+                ]
+            }
+        },
+        {
+            "id": "tournaments_container_component",
+            "type": "Tournaments",
+            "data": {
+                "title": "Turnuvalar",
+                "tournaments": [
+                    {
+                        "title": "UEFA Avrupa Şampiyonası",
+                        "stage": "Yarı Final",
+                        "icon": "https://tmssl.akamaized.net/images/wappen/head/418.png",
+                        "stageIcon": "https://cdn-icons-png.flaticon.com/512/3113/3113028.png"
+                    },
+                    {
+                        "title": "Dünya Kupası",
+                        "stage": null,
+                        "icon": "https://tmssl.akamaized.net/images/wappen/head/131.png"
+                    }
+                ]
+            }
+        },
+        {
+            "id": "carear_container_component",
+            "type": "CareerHistory",
+            "data": {
+                "title": "Kariyer Geçmişi",
+                "items": [
+                    {
+                        "teamName": "Real Madrid FC",
+                        "teamLogoURL": "https://tmssl.akamaized.net/images/wappen/head/418.png",
+                        "startDate": "12 Ekim 2023",
+                        "endDate": "Devam Ediyor"
+                    },
+                    {
+                        "teamName": "Barcelona FC",
+                        "teamLogoURL": "https://tmssl.akamaized.net/images/wappen/head/131.png",
+                        "startDate": "12 Ekim 2022",
+                        "endDate": "12 Ekim 2023"
+                    },
+                    {
+                        "teamName": "Manchester United FC",
+                        "teamLogoURL": "https://tmssl.akamaized.net/images/wappen/head/985.png",
+                        "startDate": "12 Ekim 2021",
+                        "endDate": "12 Ekim 2022"
+                    },
+                    {
+                        "teamName": "Bayern Munich FC",
+                        "teamLogoURL": "https://tmssl.akamaized.net/images/wappen/head/27.png",
+                        "startDate": "12 Ekim 2021",
+                        "endDate": "12 Ekim 2022"
+                    },
+                    {
+                        "teamName": "Liverpool FC",
+                        "teamLogoURL": "https://tmssl.akamaized.net/images/wappen/head/31.png",
+                        "startDate": "12 Ekim 2020",
+                        "endDate": "12 Ekim 2021"
+                    }
+                ]
+            }
+        }
+    ]
+}

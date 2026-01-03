@@ -1,0 +1,73 @@
+{
+    "groupName": "TABT",
+    "groupImage": "https://example.com/group_image.jpg",
+    "groupIcon": "person.2.fill",
+    "sportIcons": [
+        {
+            "id": "1",
+            "name": "Takım",
+            "icon": "person.2.fill",
+            "backgroundColor": "#000000"
+        },
+        {
+            "id": "2",
+            "name": "Koşu",
+            "icon": "figure.run",
+            "backgroundColor": "#90EE90"
+        },
+        {
+            "id": "3",
+            "name": "Kupa",
+            "icon": "trophy.fill",
+            "backgroundColor": "#8A2BE2"
+        },
+        {
+            "id": "4",
+            "name": "Tenis",
+            "icon": "sportscourt.fill",
+            "backgroundColor": "#FFC0CB"
+        },
+        {
+            "id": "5",
+            "name": "Futbol",
+            "icon": "soccerball",
+            "backgroundColor": "#4169E1"
+        },
+        {
+            "id": "6",
+            "name": "Voleybol",
+            "icon": "volleyball.fill",
+            "backgroundColor": "#FA8072"
+        },
+        {
+            "id": "7",
+            "name": "Basketbol",
+            "icon": "basketball.fill",
+            "backgroundColor": "#90EE90"
+        },
+        {
+            "id": "8",
+            "name": "Hedef",
+            "icon": "target",
+            "backgroundColor": "#8A2BE2"
+        },
+        {
+            "id": "9",
+            "name": "Yoga",
+            "icon": "figure.yoga",
+            "backgroundColor": "#FFC0CB"
+        },
+        {
+            "id": "10",
+            "name": "Kayak",
+            "icon": "figure.skiing.downhill",
+            "backgroundColor": "#4169E1"
+        },
+        {
+            "id": "11",
+            "name": "Badminton",
+            "icon": "figure.badminton",
+            "backgroundColor": "#FA8072"
+        }
+    ]
+} 

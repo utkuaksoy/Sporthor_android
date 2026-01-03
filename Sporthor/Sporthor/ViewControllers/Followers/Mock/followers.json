@@ -1,0 +1,76 @@
+{
+    "followers": [
+        {
+            "id": "1",
+            "username": "johndoe",
+            "name": "John",
+            "surname": "Doe",
+            "profileImage": "https://randomuser.me/api/portraits/men/1.jpg",
+            "isFollowing": true,
+            "role": "Smaçör"
+        },
+        {
+            "id": "2",
+            "username": "janedoe",
+            "name": "Jane",
+            "surname": "Doe",
+            "profileImage": "https://randomuser.me/api/portraits/women/1.jpg",
+            "isFollowing": false,
+            "role": "Smaçör"
+        },
+        {
+            "id": "3",
+            "username": "mikesmith",
+            "name": "Mike",
+            "surname": "Smith",
+            "profileImage": "https://randomuser.me/api/portraits/men/2.jpg",
+            "isFollowing": true,
+            "role": "Smaçör"
+        },
+        {
+            "id": "4",
+            "username": "sarahj",
+            "name": "Sarah",
+            "surname": "Johnson",
+            "profileImage": "https://randomuser.me/api/portraits/women/2.jpg",
+            "isFollowing": false,
+            "role": "Smaçör"
+        },
+        {
+            "id": "5",
+            "username": "robertw",
+            "name": "Robert",
+            "surname": "Williams",
+            "profileImage": "https://randomuser.me/api/portraits/men/3.jpg",
+            "isFollowing": true,
+            "role": "Smaçör"
+        },
+        {
+            "id": "19",
+            "username": "oliviat",
+            "name": "Olivia",
+            "surname": "Taylor",
+            "profileImage": "https://randomuser.me/api/portraits/women/4.jpg",
+            "isFollowing": true,
+            "role": "Smaçör"
+        },
+        {
+            "id": "20",
+            "username": "jamesd",
+            "name": "James",
+            "surname": "Davis",
+            "profileImage": "https://randomuser.me/api/portraits/men/5.jpg",
+            "isFollowing": true,
+            "role": "Smaçör"
+        },
+        {
+            "id": "21",
+            "username": "sophiam",
+            "name": "Sophia",
+            "surname": "Miller",
+            "profileImage": "https://randomuser.me/api/portraits/women/5.jpg",
+            "isFollowing": true,
+            "role": "Smaçör"
+        }
+    ]
+} 

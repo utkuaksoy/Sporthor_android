@@ -1,0 +1,44 @@
+{
+    "messages": [
+        {
+            "messageId": "1",
+            "channelId": "67b0f3b90b31c642567e44fc",
+            "image": "https://randomuser.me/api/portraits/men/32.jpg",
+            "name": "Mesut Canbaz",
+            "userName": "mesutcanbz",
+            "lastMessage": "Selam, nasılsın? Antrenman için hazır mısın? 🤩",
+            "unReadMessageCount": 2,
+            "messageDate": "21:32"
+        },
+        {
+            "messageId": "2",
+            "channelId": "67b0f3b90b31c642567e44fc",
+            "image": "https://randomuser.me/api/portraits/women/44.jpg",
+            "name": "Ayşe Doruk",
+            "userName": "ayse.doruk",
+            "lastMessage": "Bugün görüşebilecek miyiz? 🤩",
+            "unReadMessageCount": 1,
+            "messageDate": "10:44"
+        },
+        {
+            "messageId": "3",
+            "channelId": "67b0f3b90b31c642567e44fc",
+            "image": "https://randomuser.me/api/portraits/men/32.jpg",
+            "name": "Mehmet Altunbas",
+            "userName": "mehmet.altunbas",
+            "lastMessage": "Akşam halısaya gelebilecek misin?",
+            "unReadMessageCount": 0,
+            "messageDate": "9:54"
+        },
+        {
+            "messageId": "4",
+            "channelId": "67b0f3b90b31c642567e44fc",
+            "image": "https://randomuser.me/api/portraits/women/44.jpg",
+            "name": "Merve Aslan",
+            "userName": "merve.aslan",
+            "lastMessage": "Ne zaman gelirsin ?",
+            "unReadMessageCount": 4,
+            "messageDate": "18:54"
+        },
+    ]
+}

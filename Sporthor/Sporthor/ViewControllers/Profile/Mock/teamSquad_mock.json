@@ -1,0 +1,50 @@
+{
+  "team_members": [
+    {
+      "title": "Teknik Kadro",
+      "members": [
+        {
+          "name": "Mesut Canbaz",
+          "role": "Baş Antrenör",
+          "image_url": "https://randomuser.me/api/portraits/men/32.jpg",
+          "is_following": true
+        },
+        {
+          "name": "Emine Türk",
+          "role": "Antrenör",
+          "image_url": "https://randomuser.me/api/portraits/women/44.jpg",
+          "is_following": false
+        },
+        {
+          "name": "Hamdi Emre Yılmaz",
+          "role": "Antrenör",
+          "image_url": "https://randomuser.me/api/portraits/men/32.jpg",
+          "is_following": false
+        }
+      ]
+    },
+    {
+      "title": "Oyuncular",
+      "members": [
+        {
+          "name": "Cansu Bilgi",
+          "role": "Smaçör",
+          "image_url": "https://randomuser.me/api/portraits/men/32.jpg",
+          "is_following": true
+        },
+        {
+          "name": "Ayça Türkyılmaz",
+          "role": "Oyun Kurucu",
+          "image_url": "https://randomuser.me/api/portraits/women/44.jpg",
+          "is_following": false
+        },
+        {
+          "name": "Bade Belgin",
+          "role": "Libero",
+          "image_url": "https://randomuser.me/api/portraits/women/44.jpg",
+          "is_following": false
+        }
+      ]
+    }
+  ]
+}
