@@ -24,6 +24,7 @@ import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -274,7 +275,10 @@ private fun DashboardScreenScaffold(
                         ),
                     )
                 },
-                text = state.menuTitle
+                text = state.menuTitle,
+                onClose = {
+                    scope.launch { drawerState.close() }
+                },
             )
         },
     ) {
@@ -384,6 +388,7 @@ fun HomeDrawerContent(
     onMenuItemClick: (MenuClickModel) -> Unit,
     onMainMenuClick: (MenuUIModelItem) -> Unit,
     text: String,
+    onClose: () -> Unit = {},
 ) {
     var expandedMenuId by remember { mutableStateOf<String?>(null) }
 
@@ -394,18 +399,32 @@ fun HomeDrawerContent(
             .padding(top = AppTheme.appHomeSafeAreaPadding.calculateTopPadding()),
     ) {
         item {
-            Text(
-                text = text ?: "",
-                color = AppTheme.colors.generalColors.foregroundPrimary,
-                style = AppTheme.typography.subtitleLarge,
-                textAlign = TextAlign.Center,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Text(
+                    text = text ?: "",
+                    color = AppTheme.colors.generalColors.foregroundPrimary,
+                    style = AppTheme.typography.subtitleLarge,
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier.padding(
                         horizontal = AppTheme.spacing.spacingMedium,
                         vertical = AppTheme.spacing.spacingSmall,
-                    ),
-            )
+                    )
+                )
+
+                if (!showBack) {
+                    IconButton(onClick = onClose) {
+                        Icon(
+                            imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                            contentDescription = "Kapat",
+                            tint = AppTheme.colors.generalColors.foregroundPrimary,
+                        )
+                    }
+                }
+            }
 
             Spacer(modifier = Modifier.size(AppTheme.spacing.spacingSmall))
 

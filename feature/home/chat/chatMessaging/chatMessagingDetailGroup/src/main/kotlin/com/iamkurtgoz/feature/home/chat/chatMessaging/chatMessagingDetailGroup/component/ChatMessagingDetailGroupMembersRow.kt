@@ -96,24 +96,26 @@ internal fun LazyListScope.chatMessagingDetailGroupMembersRow(
             title = item.name,
             subTitle = item.summary?.let { arrayOf(it) },
             trailingContent = {
-                if (item.isFollow == true) {
-                    AppButton.OutlineMedium(
-                        text = "Takiptesin", // TODO: Localize
-                        onClick = {
-                            setEvent.invoke(ChatMessagingDetailGroupScreenContract.Event.OnClickActionButton(isFollow = item.isFollow == true, userId = item.id))
-                        },
-                        modifier = Modifier
-                            .weight(AppDefaults.WEIGHT_FULL),
-                    )
-                } else {
-                    AppButton.SecondaryMedium(
-                        text = "Takip Et", // TODO: Localize
-                        onClick = {
-                            setEvent.invoke(ChatMessagingDetailGroupScreenContract.Event.OnClickActionButton(isFollow = item.isFollow == true, userId = item.id))
-                        },
-                        modifier = Modifier
-                            .weight(AppDefaults.WEIGHT_FULL),
-                    )
+                if (item.isCurrentUser != true) {
+                    if (item.isFollow == true) {
+                        AppButton.OutlineMedium(
+                            text = "Takiptesin", // TODO: Localize
+                            onClick = {
+                                setEvent.invoke(ChatMessagingDetailGroupScreenContract.Event.OnClickActionButton(isFollow = item.isFollow == true, userId = item.id))
+                            },
+                            modifier = Modifier
+                                .weight(AppDefaults.WEIGHT_FULL),
+                        )
+                    } else {
+                        AppButton.SecondaryMedium(
+                            text = "Takip Et", // TODO: Localize
+                            onClick = {
+                                setEvent.invoke(ChatMessagingDetailGroupScreenContract.Event.OnClickActionButton(isFollow = item.isFollow == true, userId = item.id))
+                            },
+                            modifier = Modifier
+                                .weight(AppDefaults.WEIGHT_FULL),
+                        )
+                    }
                 }
             },
             onClickAction = {},

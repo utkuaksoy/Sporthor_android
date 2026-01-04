@@ -51,6 +51,7 @@ import com.iamkurtgoz.core.designsystem.theme.AppThemeSurface
 import com.iamkurtgoz.core.navigation.HomeScreenAddEventRoute
 import com.iamkurtgoz.core.navigation.model.home.addEvent.HomeScreenAddEventScreenNavigationModel
 import com.iamkurtgoz.feature.home.addEvent.AddEventScreenContract
+import com.iamkurtgoz.feature.home.addEvent.domain.model.GetTrainingGroupUserUIModelTeam
 import com.iamkurtgoz.feature.home.addEvent.domain.model.mockTrainingGroupUserUIModel
 import java.time.LocalDate
 import java.time.LocalTime
@@ -126,7 +127,7 @@ private fun AddUserBottomSheetContent(
             Spacer(modifier = Modifier.height(AppTheme.spacing.spacingSmall))
 
             AppTextField.SearchField(
-                placeholder = "Kişi Ara", // TODO: Localize
+                placeholder = "Kişi/Topluluk Ara", // TODO: Localize
                 value = state.textTaskName.value,
                 onValueChange = {
                     setEvent.invoke(AddEventScreenContract.Event.SetSearchUser(it))
@@ -167,7 +168,7 @@ private fun AddUserBottomSheetContent(
                             textAlign = TextAlign.Start,
                         )
 
-                        if (item.team?.value == state.selectedGetTrainingGroupUserUIModelTeam?.value) {
+                        if (item.groupId == state.selectedGetTrainingGroupUserUIModelTeam?.value) {
                             AppButton.PrimarySmall(
                                 text = "İptal", // TODO: Localize
                                 onClick = {
@@ -179,7 +180,7 @@ private fun AddUserBottomSheetContent(
                             AppButton.SecondarySmall(
                                 text = "Gönder", // TODO: Localize
                                 onClick = {
-                                    setEvent.invoke(AddEventScreenContract.Event.SetGetTrainingGroupUserUIModelTeam(item.team))
+                                    setEvent.invoke(AddEventScreenContract.Event.SetGetTrainingGroupUserUIModelTeam(value = GetTrainingGroupUserUIModelTeam(item.groupImage,item.groupName,item.groupId)))
                                 },
                                 modifier = Modifier,
                             )

@@ -61,7 +61,7 @@ internal fun SelectTrainingGroupScreenContent(
             itemContent = { index, item ->
                 Surface(
                     modifier = Modifier
-                        .padding(all = AppTheme.spacing.spacingMedium)
+                        .padding(all = AppTheme.spacing.spacingTiny)
                         .clip(AppTheme.shapes.radiusMedium)
                         .clickable {
                             if (state.isDeleteMode) {
@@ -71,7 +71,7 @@ internal fun SelectTrainingGroupScreenContent(
                             }
                         },
                     shape = AppTheme.shapes.radiusMedium,
-                    color = AppTheme.colors.generalColors.backgroundWeak100,
+                    color = AppTheme.colors.generalColors.backgroundSoft200,
                     shadowElevation = AppTheme.dimens.dp0dot5,
                 ) {
                     Row(

@@ -241,6 +241,71 @@ object AppTextField {
         leadingIconClick = leadingIconClick,
         trailingIconClick = trailingIconClick,
     )
+
+    @Composable
+    fun TextArea(
+        value: String,
+        onValueChange: (String) -> Unit,
+        modifier: Modifier = Modifier,
+        suggestions: List<String> = listOf(),
+        title: String = "",
+        placeholder: String? = null,
+        hint: String = "",
+        enabled: Boolean = true,
+        fillMaxWidth: Boolean = true,
+        colors: TextFieldColors = AppTextFieldColors.primaryColors(),
+        sizes: TextFieldSizes = AppTextFieldSizes.textAreaSizes(),
+        borders: TextFieldBorders = AppTextFieldBorders.primaryBorders(),
+        shapes: TextFieldShapes = AppTextFieldShapes.primaryShapes(),
+        styles: TextFieldStyles = AppTextFieldStyles.primaryStyles(),
+        @DrawableRes leadingIcon: Int? = null,
+        @DrawableRes trailingIcon: Int? = null,
+        isError: Boolean = false,
+        readOnly: Boolean = false,
+        keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
+        keyboardActions: KeyboardActions = KeyboardActions.Default,
+        singleLine: Boolean = false,
+        maxLines: Int = if (singleLine) AppDefaults.LINE_LIMIT_SINGLE else Int.MAX_VALUE,
+        minLines: Int = AppDefaults.LINE_LIMIT_SINGLE,
+        maxLength: Int = Int.MAX_VALUE,
+        visualTransformation: VisualTransformation = VisualTransformation.None,
+        onTextLayout: (TextLayoutResult) -> Unit = {},
+        interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
+        focusRequester: FocusRequester = remember { FocusRequester() },
+        leadingIconClick: () -> Unit = {},
+        trailingIconClick: () -> Unit = {},
+    ) = AppTextFieldImpl(
+        value = value,
+        onValueChange = onValueChange,
+        title = title,
+        placeholder = placeholder,
+        hint = hint,
+        modifier = modifier,
+        suggestions = suggestions,
+        enabled = enabled,
+        fillMaxWidth = fillMaxWidth,
+        colors = colors,
+        sizes = sizes,
+        borders = borders,
+        shapes = shapes,
+        styles = styles,
+        leadingIcon = leadingIcon,
+        trailingIcon = trailingIcon,
+        isError = isError,
+        readOnly = readOnly,
+        keyboardOptions = keyboardOptions,
+        keyboardActions = keyboardActions,
+        singleLine = singleLine,
+        maxLines = maxLines,
+        minLines = minLines,
+        maxLength = maxLength,
+        visualTransformation = visualTransformation,
+        onTextLayout = onTextLayout,
+        interactionSource = interactionSource,
+        focusRequester = focusRequester,
+        leadingIconClick = leadingIconClick,
+        trailingIconClick = trailingIconClick,
+    )
 }
 
 @Composable
@@ -349,7 +414,7 @@ internal fun AppTextFieldImpl(
                         )
                         .then(borderModifier)
                         .padding(sizes.contentPadding),
-                    verticalAlignment = Alignment.CenterVertically,
+                    verticalAlignment =  if (singleLine) Alignment.CenterVertically else Alignment.Top,
                 ) {
                     leadingIcon?.let {
                         IconButton(
@@ -547,6 +612,16 @@ private fun Preview() {
                     value = value,
                     onValueChange = { value = it },
                     trailingIcon = resourcesR.drawable.img_chat_message_send_disabled,
+                )
+
+                AppTextField.TextArea(
+                    placeholder = "Açıklama Yaz",
+                    value = value,
+                    suggestions = listOf(
+                        "iamkurtgoz",
+                        "test",
+                    ),
+                    onValueChange = { value = it },
                 )
             }
         }

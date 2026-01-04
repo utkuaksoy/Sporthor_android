@@ -82,7 +82,7 @@ internal fun TrainingGroupsScreenContent(
             if (coaches.isNotEmpty()) {
                 item {
                     Text(
-                        text = "Antrenman Grupları",
+                        text = "Antrenörler",
                         style = AppTheme.typography.subtitleLarge,
                         modifier = Modifier.padding(bottom = 8.dp),
                     )

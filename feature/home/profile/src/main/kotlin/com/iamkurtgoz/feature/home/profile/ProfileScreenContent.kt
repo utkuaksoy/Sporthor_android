@@ -15,14 +15,13 @@
  */
 package com.iamkurtgoz.feature.home.profile
 
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.grid.GridCells
-import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.foundation.lazy.grid.itemsIndexed
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -46,7 +45,6 @@ import com.iamkurtgoz.feature.home.profile.component.ProfileSegments
 import com.iamkurtgoz.feature.home.profile.component.ProfileTeams
 import com.iamkurtgoz.feature.home.profile.component.profileDetailCareerHistory
 import com.iamkurtgoz.feature.home.profile.component.profileDetailTournaments
-import com.iamkurtgoz.feature.home.profile.domain.model.MockPostModelData
 import com.iamkurtgoz.feature.home.profile.domain.types.ProfileComponents
 import com.iamkurtgoz.feature.home.profile.domain.types.ProfileDetailComponents
 import com.iamkurtgoz.feature.home.profile.domain.types.ProfileSegmentType
@@ -120,25 +118,16 @@ internal fun ProfileScreenContent(
         )
 
         if (state.selectedSegmentState?.type.toProfileSegmentType() == ProfileSegmentType.Posts) {
-            item {
-                val itemRatio = AppDefaults.ASPECT_RATIO_0_8
-                val rowCount = (MockPostModelData.list.size + AppDefaults.TWO) / AppDefaults.THREE
-                val itemRatioPercent = AppDefaults.ONE / itemRatio
-                val itemHeight = (AppTheme.configuration.getScreenWidthDp() / AppDefaults.THREE) * itemRatioPercent
-
-                LazyVerticalGrid(
-                    columns = GridCells.Fixed(AppDefaults.THREE),
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(itemHeight * rowCount),
-                    userScrollEnabled = false,
-                ) {
-                    itemsIndexed(
-                        items = state.userPostsList?.posts ?: persistentListOf(),
-                        key = { index, item ->
-                            "$index-$item"
-                        },
-                        itemContent = { index, item ->
+            val posts = state.userPostsList?.posts ?: persistentListOf()
+            val chunkedPosts = posts.chunked(AppDefaults.THREE)
+            itemsIndexed(
+                items = chunkedPosts,
+                key = { index, row -> "post_row_$index-${row.firstOrNull()?.id}" },
+            ) { rowIndex, rowItems ->
+                Row(Modifier.fillMaxWidth()) {
+                    rowItems.forEachIndexed { colIndex, item ->
+                        Box(modifier = Modifier.weight(1f)) {
+                            val index = rowIndex * AppDefaults.THREE + colIndex
                             ProfilePostImage(
                                 imageUrlData = item.media?.map {
                                     Pair(it.url, it.type ?: 0)
@@ -146,10 +135,15 @@ internal fun ProfileScreenContent(
                                 onClick = {
                                     setEvent.invoke(ProfileScreenContract.Event.NavigateToPostDetail(index = index))
                                 },
-                                itemRatio = itemRatio,
+                                itemRatio = AppDefaults.ASPECT_RATIO_0_8,
                             )
-                        },
-                    )
+                        }
+                    }
+                    if (rowItems.size < AppDefaults.THREE) {
+                        repeat(AppDefaults.THREE - rowItems.size) {
+                            Spacer(modifier = Modifier.weight(1f))
+                        }
+                    }
                 }
             }
         }

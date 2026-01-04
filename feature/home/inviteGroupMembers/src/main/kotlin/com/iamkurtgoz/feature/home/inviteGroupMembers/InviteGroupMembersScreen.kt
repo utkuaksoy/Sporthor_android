@@ -101,7 +101,7 @@ private fun InviteGroupMembersScreenScaffold(
                 },
                 centerContent = {
                     AppToolbarFields.Title(
-                        text = "Anasayfa", // TODO: Localize
+                        text = "Antreman Grubu", // TODO: Localize
                     )
                 },
             )
@@ -132,7 +132,7 @@ private fun InviteGroupMembersScreenScaffold(
                     Spacer(modifier = Modifier.height(AppTheme.spacing.spacingMedium))
 
                     AppButton.PrimaryLarge(
-                        text = "Grup Üyelerini Davet Et",
+                        text = "Anasayfa",
                         onClick = {
                             setEvent(
                                 InviteGroupMembersScreenContract.Event.InviteClubMembersFromScreen,

@@ -24,6 +24,7 @@ import com.iamkurtgoz.domain.core.CoreState
 import com.iamkurtgoz.domain.model.base.AlertDialogModel
 import com.iamkurtgoz.feature.home.addEvent.domain.model.GetTaskTypeUIModelType
 import com.iamkurtgoz.feature.home.addEvent.domain.model.GetTrainingGroupUserUIModel
+import com.iamkurtgoz.feature.home.addEvent.domain.model.GetTrainingGroupUserUIModelGroup
 import com.iamkurtgoz.feature.home.addEvent.domain.model.GetTrainingGroupUserUIModelTeam
 import com.iamkurtgoz.feature.home.addEvent.domain.model.GetTrainingGroupUserUIModelUser
 import java.time.LocalDate

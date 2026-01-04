@@ -136,8 +136,27 @@ internal fun InviteGroupMembersSelectUserBottomSheet(
 
                 if (state.route.fromTrainingGroup) {
                     if (isPlayersTab) {
+                        if (users.isNotEmpty()) {
+                            item {
+                                Row(
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .padding(horizontal = AppTheme.spacing.spacingMedium),
+                                ) {
+                                    Text(
+                                        text = "Oyuncular", // TODO: Localize
+                                        modifier = Modifier
+                                            .weight(AppDefaults.WEIGHT_FULL)
+                                            .padding(top = AppTheme.spacing.spacingHuge),
+                                        style = AppTheme.typography.labelMedium,
+                                    )
+
+                                    Spacer(modifier = Modifier.weight(1f))
+                                }
+                            }
+                        }
                         itemsIndexed(
-                            items = state.selectedUserList.filterNotNull(),
+                            items = users,
                             key = { index, item -> "${item.id}-$index" },
                         ) { index, item ->
                             UserRow(
@@ -149,7 +168,7 @@ internal fun InviteGroupMembersSelectUserBottomSheet(
                                             AppTheme.spacing.spacingNone,
                                     ),
                                 contentPadding = PaddingValues(horizontal = AppTheme.spacing.spacingMedium),
-                                userHeaderData = item.image ?: item.name.getUserNameFirstChar(),
+                                userHeaderData = item.imageUrl ?: item.name.getUserNameFirstChar(),
                                 isHeaderUser = true,
                                 title = item.name,
                                 subTitle = arrayOf(),

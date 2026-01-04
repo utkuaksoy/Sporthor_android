@@ -79,4 +79,20 @@ object AppTextFieldSizes {
             trailingIconSize = trailingIconSize,
         )
     }
+
+    @Composable
+    fun textAreaSizes(
+        height: Dp = AppTheme.dimens.dp160,
+        contentPadding: PaddingValues = PaddingValues(
+            vertical = AppTheme.dimens.dp12,
+            horizontal = AppTheme.dimens.dp16,
+        ),
+        trailingIconSize: Dp = AppTheme.dimens.dp18,
+    ): TextFieldSizes = remember(height, contentPadding, trailingIconSize) {
+        TextFieldSizes(
+            height = height,
+            contentPadding = contentPadding,
+            trailingIconSize = trailingIconSize,
+        )
+    }
 }

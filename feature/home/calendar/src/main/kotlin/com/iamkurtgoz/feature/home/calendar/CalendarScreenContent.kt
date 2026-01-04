@@ -114,11 +114,16 @@ internal fun CalendarScreenContent(
                             state.events.firstOrNull { it.date == dateOrNull.format(DateTimeFormatter.ofPattern("dd.MM.yyyy")) }?.let { tasks ->
                                 tasks.taks?.mapNotNull { it }?.forEach { item ->
                                     key(item) {
+                                        val colorString = if (item.length == 4 && item.startsWith("#")) {
+                                            "#${item[1]}${item[1]}${item[2]}${item[2]}${item[3]}${item[3]}"
+                                        } else {
+                                            item
+                                        }
                                         Box(
                                             modifier = Modifier
                                                 .size(4.dp)
                                                 .clip(AppTheme.shapes.radiusCircle)
-                                                .background(Color(item.toColorInt())),
+                                                .background(Color(colorString.toColorInt())),
                                         )
                                     }
                                 }

@@ -81,7 +81,7 @@ internal fun StoryViewerScreenContent(
                         modifier = Modifier
                             .fillMaxWidth()
                             .aspectRatio(AppDefaults.ASPECT_RATIO_0_56),
-                        contentScale = ContentScale.Crop,
+                        contentScale = ContentScale.FillBounds,
                     )
                 } else if (storyDetail.media?.type == CustomMediaType.VIDEO) {
                     StoryVideoPlayer(

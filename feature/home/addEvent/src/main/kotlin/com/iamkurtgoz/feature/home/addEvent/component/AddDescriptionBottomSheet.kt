@@ -114,14 +114,12 @@ private fun AddDescriptionBottomSheetContent(
 
             Spacer(modifier = Modifier.height(AppTheme.spacing.spacingSmall))
 
-            AppTextField.Primary(
+            AppTextField.TextArea(
                 placeholder = "Açıklama", // TODO: Localize
                 value = state.textDescription.value,
                 onValueChange = {
                     setEvent.invoke(AddEventScreenContract.Event.SetDescription(it))
-                },
-                singleLine = false,
-                maxLines = 15,
+                }
             )
         }
     }
