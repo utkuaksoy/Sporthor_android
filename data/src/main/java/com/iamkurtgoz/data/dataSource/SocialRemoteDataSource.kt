@@ -16,6 +16,7 @@
 package com.iamkurtgoz.data.dataSource
 
 import com.iamkurtgoz.core.network.model.BaseResponse
+import com.iamkurtgoz.data.model.BlockedUsersResponseModel
 import com.iamkurtgoz.data.model.CreatePostResponseModel
 import com.iamkurtgoz.data.model.FollowUserResponseModel
 import com.iamkurtgoz.data.model.GetCommentsResponseModel
@@ -60,4 +61,5 @@ interface SocialRemoteDataSource {
     suspend fun deleteStory(body: DeleteStoryRequest): BaseResponse<Unit>
     suspend fun createStory(body: CreateStoryRequest): BaseResponse<Unit>
     suspend fun watchedStory(body: WatchedStoryRequest): BaseResponse<Unit>
+    suspend fun getBlockedUsers(): BaseResponse<BlockedUsersResponseModel>
 }

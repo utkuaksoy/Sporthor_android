@@ -144,8 +144,11 @@ private fun CoachRoleSelectionContent(
         Spacer(modifier = Modifier.height(AppTheme.spacing.spacingLarge))
 
         Column(modifier = Modifier.fillMaxWidth()) {
+            val currentRole = state.selectedCoachRole ?: ""
+
             Text(
-                text = "Yardımcı Antrenör", // Title for the section, mimicking design
+                text = currentRole.ifBlank { "Antrenör" },
+                // Title for the section, mimicking design
                 style = MaterialTheme.typography.titleMedium,
                 fontWeight = FontWeight.Bold,
                 color = Color.Black,

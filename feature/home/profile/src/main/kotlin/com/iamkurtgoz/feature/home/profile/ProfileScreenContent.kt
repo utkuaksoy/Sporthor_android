@@ -22,8 +22,11 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.util.fastFirstOrNull
 import com.iamkurtgoz.core.common.contract.AppDefaults
@@ -51,7 +54,11 @@ import com.iamkurtgoz.feature.home.profile.domain.types.ProfileSegmentType
 import com.iamkurtgoz.feature.home.profile.domain.types.toProfileComponent
 import com.iamkurtgoz.feature.home.profile.domain.types.toProfileDetailComponents
 import com.iamkurtgoz.feature.home.profile.domain.types.toProfileSegmentType
+import com.iamkurtgoz.domain.model.enums.FetchParam
 import kotlinx.collections.immutable.persistentListOf
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.filter
+import kotlinx.coroutines.flow.map
 
 @Suppress("CyclomaticComplexMethod")
 @Composable
@@ -61,9 +68,30 @@ internal fun ProfileScreenContent(
     modifier: Modifier = Modifier,
     setEvent: (ProfileScreenContract.Event) -> Unit,
 ) {
+    val listState = rememberLazyListState()
+
+    LaunchedEffect(state.selectedSegmentState?.type, state.paginationHasNext) {
+        snapshotFlow { listState.layoutInfo }
+            .map { layoutInfo ->
+                val lastVisibleIndex = layoutInfo.visibleItemsInfo.lastOrNull()?.index
+                val totalCount = layoutInfo.totalItemsCount
+                lastVisibleIndex to totalCount
+            }
+            .filter { (lastVisibleIndex, totalCount) ->
+                state.selectedSegmentState?.type.toProfileSegmentType() == ProfileSegmentType.Posts &&
+                    lastVisibleIndex != null &&
+                    totalCount > 0 &&
+                    lastVisibleIndex >= totalCount - 1
+            }
+            .collectLatest {
+                setEvent(ProfileScreenContract.Event.UserPosts(FetchParam.NEXT_PAGE))
+            }
+    }
+
     LazyColumn(
         modifier = modifier
             .fillMaxWidth(),
+        state = listState,
         contentPadding = PaddingValues(
             bottom = contentPadding.calculateBottomPadding(),
         ),

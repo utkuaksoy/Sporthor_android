@@ -66,6 +66,7 @@ internal class InviteGroupMembersScreenContract {
         data object PopBackStack : Event()
         data object DismissDialogs : Event()
         data class ChangeSelectedUserState(val item: Any?, val tab: InviteGroupMembersTab) : Event()
+        data class RemoveGroupMember(val item: Any?, val tab: InviteGroupMembersTab) : Event()
         data class OnChangeTab(val tab: InviteGroupMembersTab) : Event()
         data class SetSearchText(val text: String) : Event()
         data object InviteClubMembersFromScreen : Event() // ANA EKRAN BUTON
@@ -77,6 +78,9 @@ internal class InviteGroupMembersScreenContract {
         data class SetCoachRole(val role: String) : Event()
         data object ConfirmCoachRoleSelection : Event()
         data object NavigateToSelectGroup : Event()
+
+
+
     }
 
     object Static {

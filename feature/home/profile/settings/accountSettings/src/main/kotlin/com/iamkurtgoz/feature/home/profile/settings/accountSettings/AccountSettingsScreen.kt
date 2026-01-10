@@ -28,6 +28,7 @@ import com.iamkurtgoz.core.designsystem.theme.AppThemeSurface
 internal fun AccountSettingsScreen(
     navigateUp: () -> Unit,
     popBackStack: () -> Unit,
+    navigateToBlockedUsers: () -> Unit,
     viewModel: AccountSettingsViewModel = hiltViewModel(),
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
@@ -42,6 +43,7 @@ internal fun AccountSettingsScreen(
         when (event) {
             is AccountSettingsScreenContract.SideEffect.NavigateUp -> navigateUp()
             is AccountSettingsScreenContract.SideEffect.PopBackStack -> popBackStack()
+            is AccountSettingsScreenContract.SideEffect.NavigateToBlockedUsers -> navigateToBlockedUsers()
         }
     }
 

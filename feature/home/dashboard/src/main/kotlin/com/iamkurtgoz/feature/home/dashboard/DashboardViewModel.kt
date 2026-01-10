@@ -325,6 +325,9 @@ internal class DashboardViewModel @Inject constructor(
             is DashboardEventBus.Event.FetchStoryFeed -> {
                 fetchStoryFeed(fetchAlsoDashboardFeed = false)
             }
+            is DashboardEventBus.Event.RefreshHome -> {
+                dashboardFeed(fetchParam = FetchParam.INITIAL)
+            }
         }
     }
 

@@ -33,6 +33,9 @@ internal class AccountSettingsViewModel @Inject constructor(
             is AccountSettingsScreenContract.Event.DismissDialogs -> dismissDialogs()
             is AccountSettingsScreenContract.Event.DeleteAccount -> deleteAccount()
             is AccountSettingsScreenContract.Event.UpdateProfilePublicPrivate -> updateProfilePublicPrivate(event.isPublic)
+            is AccountSettingsScreenContract.Event.NavigateToBlockedUsers ->
+                setSideEffect(AccountSettingsScreenContract.SideEffect.NavigateToBlockedUsers)
+
         }
     }
 

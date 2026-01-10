@@ -87,7 +87,7 @@ internal fun SelectAddressScreenContent(
                 mutableStateOf(MapUiSettings(zoomControlsEnabled = true))
             }
             val properties by remember {
-                mutableStateOf(MapProperties(mapType = MapType.SATELLITE))
+                mutableStateOf(MapProperties(mapType = MapType.NORMAL))
             }
 
             GoogleMap(

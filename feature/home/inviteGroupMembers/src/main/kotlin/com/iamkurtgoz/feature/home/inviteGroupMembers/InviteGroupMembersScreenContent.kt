@@ -3,15 +3,18 @@ package com.iamkurtgoz.feature.home.inviteGroupMembers
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.gestures.detectHorizontalDragGestures
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -19,6 +22,8 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
@@ -32,14 +37,23 @@ import androidx.compose.material3.TabRowDefaults
 import androidx.compose.material3.TabRowDefaults.tabIndicatorOffset
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableFloatStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.clipToBounds
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.zIndex
+import androidx.compose.ui.platform.LocalDensity
 import com.iamkurtgoz.core.common.contract.AppDefaults
 import com.iamkurtgoz.core.common.extensions.getUserNameFirstChar
 import com.iamkurtgoz.core.common.state.AppBuildConfigStatePack
@@ -172,29 +186,7 @@ internal fun InviteGroupMembersScreenContent(
             val relation = state.followingList
 
             if (relation != null) {
-                if (!state.route.fromTrainingGroup) {
-                    item {
-                        Row(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(horizontal = AppTheme.spacing.spacingMedium),
-                        ) {
-                            Text(
-                                text = if (state.selectedTab == InviteGroupMembersTab.PLAYERS) {
-                                    "Oyuncular" // TODO: Localize
-                                } else {
-                                    "Teknik Kadro" // TODO: Localize
-                                },
-                                modifier = Modifier
-                                    .weight(AppDefaults.WEIGHT_FULL)
-                                    .padding(top = AppTheme.spacing.spacingHuge),
-                                style = AppTheme.typography.labelMedium,
-                            )
 
-                            Spacer(modifier = Modifier.weight(1f))
-                        }
-                    }
-                }
 
                 when (state.selectedTab) {
                     InviteGroupMembersTab.PLAYERS -> {
@@ -209,69 +201,104 @@ internal fun InviteGroupMembersScreenContent(
                             }
 
                         val displayPlayers: List<Any> = baseUsers + extraUsersFromSelected
-
-                        itemsIndexed(
-                            items = displayPlayers,
-                            key = { index, item ->
+                        if (displayPlayers.isEmpty()) {
+                            item {
+                                EmptyPlayerInfoMessage(
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .padding(
+                                            horizontal = AppTheme.spacing.spacingHuge,
+                                            vertical = AppTheme.spacing.spacingHuge,
+                                        ),
+                                )
+                            }
+                        } else {
+                            itemsIndexed(
+                                items = displayPlayers,
+                                key = { index, item ->
+                                    when (item) {
+                                        is UserRelationUIItemModel -> "player-${item.id}-$index"
+                                        is SocialSearchUIItemModel -> "player-extra-${item.id}-$index"
+                                        else -> "player-unknown-$index"
+                                    }
+                                },
+                            ) { index, item ->
                                 when (item) {
-                                    is UserRelationUIItemModel -> "player-${item.id}-$index"
-                                    is SocialSearchUIItemModel -> "player-extra-${item.id}-$index"
-                                    else -> "player-unknown-$index"
-                                }
-                            },
-                        ) { index, item ->
-                            when (item) {
-                                is UserRelationUIItemModel -> {
-                                    UserRow(
-                                        modifier = Modifier
-                                            .padding(
+                                    is UserRelationUIItemModel -> {
+                                        SwipeToDeleteRow(
+                                            modifier = Modifier.padding(
                                                 top = if (index == AppDefaults.ZERO)
                                                     AppTheme.spacing.spacingMedium
                                                 else
                                                     AppTheme.spacing.spacingNone,
                                             ),
-                                        contentPadding = PaddingValues(horizontal = AppTheme.spacing.spacingMedium),
-                                        userHeaderData = item.imageUrl ?: item.name.getUserNameFirstChar(),
-                                        isHeaderUser = true,
-                                        title = item.name,
-                                        subTitle = arrayOf(),
-                                        onClickAction = {
-                                            setEvent(
-                                                InviteGroupMembersScreenContract.Event.ChangeSelectedUserState(
-                                                    item = item,
-                                                    tab = state.selectedTab,
-                                                ),
+                                            onDelete = {
+                                                setEvent(
+                                                    InviteGroupMembersScreenContract.Event.RemoveGroupMember(
+                                                        item = item,
+                                                        tab = InviteGroupMembersTab.PLAYERS,
+                                                    ),
+                                                )
+                                            },
+                                        ) { contentModifier ->
+                                            UserRow(
+                                                modifier = contentModifier,
+                                                contentPadding = PaddingValues(horizontal = AppTheme.spacing.spacingMedium),
+                                                userHeaderData = item.imageUrl ?: item.name.getUserNameFirstChar(),
+                                                isHeaderUser = true,
+                                                title = item.name,
+                                                subTitle = arrayOf("Sporcu"),
+                                                onClickAction = {
+                                                    setEvent(
+                                                        InviteGroupMembersScreenContract.Event.ChangeSelectedUserState(
+                                                            item = item,
+                                                            tab = state.selectedTab,
+                                                        ),
+                                                    )
+                                                },
                                             )
-                                        },
-                                    )
-                                }
+                                        }
+                                    }
 
-                                is SocialSearchUIItemModel -> {
-                                    UserRow(
-                                        modifier = Modifier
-                                            .padding(
+                                    is SocialSearchUIItemModel -> {
+                                        SwipeToDeleteRow(
+                                            modifier = Modifier.padding(
                                                 top = if (index == AppDefaults.ZERO)
                                                     AppTheme.spacing.spacingMedium
                                                 else
                                                     AppTheme.spacing.spacingNone,
                                             ),
-                                        contentPadding = PaddingValues(horizontal = AppTheme.spacing.spacingMedium),
-                                        userHeaderData = item.image ?: item.name.getUserNameFirstChar(),
-                                        isHeaderUser = true,
-                                        title = item.name,
-                                        subTitle = arrayOf(),
-                                        onClickAction = {
-                                            setEvent(
-                                                InviteGroupMembersScreenContract.Event.ChangeSelectedUserState(
-                                                    item = item,
-                                                    tab = state.selectedTab, // o anki tab
-                                                ),
+                                            onDelete = {
+                                                setEvent(
+                                                    InviteGroupMembersScreenContract.Event.RemoveGroupMember(
+                                                        item = item,
+                                                        tab = InviteGroupMembersTab.PLAYERS,
+                                                    ),
+                                                )
+                                            },
+                                        ) { contentModifier ->
+                                            UserRow(
+                                                modifier = contentModifier,
+                                                contentPadding = PaddingValues(horizontal = AppTheme.spacing.spacingMedium),
+                                                userHeaderData = item.image ?: item.name.getUserNameFirstChar(),
+                                                isHeaderUser = true,
+                                                title = item.name,
+                                                subTitle = arrayOf("Teknik Kadro"),
+                                                onClickAction = {
+                                                    setEvent(
+                                                        InviteGroupMembersScreenContract.Event.ChangeSelectedUserState(
+                                                            item = item,
+                                                            tab = state.selectedTab, // o anki tab
+                                                        ),
+                                                    )
+                                                },
                                             )
-                                        },
-                                    )
+                                        }
+                                    }
                                 }
                             }
                         }
+
                     }
 
                     InviteGroupMembersTab.STAFF -> {
@@ -318,30 +345,41 @@ internal fun InviteGroupMembersScreenContent(
                                             .find { it.id == item.id }
                                         val role = selectedItem?.attribute ?: item.summary ?: ""
 
-                                        UserRow(
-                                            modifier = Modifier
-                                                .padding(
-                                                    top = if (index == AppDefaults.ZERO)
-                                                        AppTheme.spacing.spacingMedium
-                                                    else
-                                                        AppTheme.spacing.spacingNone,
-                                                ),
-                                            contentPadding = PaddingValues(horizontal = AppTheme.spacing.spacingMedium),
-                                            userHeaderData = item.imageUrl ?: item.name.getUserNameFirstChar(),
-                                            isHeaderUser = true,
-                                            title = item.name,
-                                            subTitle = if (role.isNotEmpty()) arrayOf(role) else arrayOf(),
-                                            trailingContent = {
-                                                UserRowFields.rightArrow()
-                                            },
-                                            onClickAction = {
+                                        SwipeToDeleteRow(
+                                            modifier = Modifier.padding(
+                                                top = if (index == AppDefaults.ZERO)
+                                                    AppTheme.spacing.spacingMedium
+                                                else
+                                                    AppTheme.spacing.spacingNone,
+                                            ),
+                                            onDelete = {
                                                 setEvent(
-                                                    InviteGroupMembersScreenContract.Event.OpenCoachRoleSelection(
-                                                        coach = selectedItem ?: item,
+                                                    InviteGroupMembersScreenContract.Event.RemoveGroupMember(
+                                                        item = item,
+                                                        tab = InviteGroupMembersTab.STAFF,
                                                     ),
                                                 )
                                             },
-                                        )
+                                        ) { contentModifier ->
+                                            UserRow(
+                                                modifier = contentModifier,
+                                                contentPadding = PaddingValues(horizontal = AppTheme.spacing.spacingMedium),
+                                                userHeaderData = item.imageUrl ?: item.name.getUserNameFirstChar(),
+                                                isHeaderUser = true,
+                                                title = item.name,
+                                                subTitle = if (role.isNotEmpty()) arrayOf(role) else arrayOf(),
+                                                trailingContent = {
+                                                    UserRowFields.rightArrow()
+                                                },
+                                                onClickAction = {
+                                                    setEvent(
+                                                        InviteGroupMembersScreenContract.Event.OpenCoachRoleSelection(
+                                                            coach = selectedItem ?: item,
+                                                        ),
+                                                    )
+                                                },
+                                            )
+                                        }
                                     }
 
                                     is SocialSearchUIItemModel -> {
@@ -350,30 +388,41 @@ internal fun InviteGroupMembersScreenContent(
                                             .find { it.id == item.id }
                                         val role = selectedItem?.attribute ?: item.attribute ?: ""
 
-                                        UserRow(
-                                            modifier = Modifier
-                                                .padding(
-                                                    top = if (index == AppDefaults.ZERO)
-                                                        AppTheme.spacing.spacingMedium
-                                                    else
-                                                        AppTheme.spacing.spacingNone,
-                                                ),
-                                            contentPadding = PaddingValues(horizontal = AppTheme.spacing.spacingMedium),
-                                            userHeaderData = item.image ?: item.name.getUserNameFirstChar(),
-                                            isHeaderUser = true,
-                                            title = item.name,
-                                            subTitle = if (role.isNotEmpty()) arrayOf(role) else arrayOf(),
-                                            trailingContent = {
-                                                UserRowFields.rightArrow()
-                                            },
-                                            onClickAction = {
+                                        SwipeToDeleteRow(
+                                            modifier = Modifier.padding(
+                                                top = if (index == AppDefaults.ZERO)
+                                                    AppTheme.spacing.spacingMedium
+                                                else
+                                                    AppTheme.spacing.spacingNone,
+                                            ),
+                                            onDelete = {
                                                 setEvent(
-                                                    InviteGroupMembersScreenContract.Event.OpenCoachRoleSelection(
-                                                        coach = selectedItem ?: item,
+                                                    InviteGroupMembersScreenContract.Event.RemoveGroupMember(
+                                                        item = item,
+                                                        tab = InviteGroupMembersTab.STAFF,
                                                     ),
                                                 )
                                             },
-                                        )
+                                        ) { contentModifier ->
+                                            UserRow(
+                                                modifier = contentModifier,
+                                                contentPadding = PaddingValues(horizontal = AppTheme.spacing.spacingMedium),
+                                                userHeaderData = item.image ?: item.name.getUserNameFirstChar(),
+                                                isHeaderUser = true,
+                                                title = item.name,
+                                                subTitle = if (role.isNotEmpty()) arrayOf(role) else arrayOf(),
+                                                trailingContent = {
+                                                    UserRowFields.rightArrow()
+                                                },
+                                                onClickAction = {
+                                                    setEvent(
+                                                        InviteGroupMembersScreenContract.Event.OpenCoachRoleSelection(
+                                                            coach = selectedItem ?: item,
+                                                        ),
+                                                    )
+                                                },
+                                            )
+                                        }
                                     }
                                 }
                             }
@@ -388,6 +437,98 @@ internal fun InviteGroupMembersScreenContent(
         CoachRoleSelectionBottomSheet(
             state = state,
             setEvent = setEvent,
+        )
+    }
+}
+
+@Composable
+private fun SwipeToDeleteRow(
+    onDelete: () -> Unit,
+    modifier: Modifier = Modifier,
+    content: @Composable (Modifier) -> Unit,
+) {
+    val deleteWidth = 72.dp
+    val density = LocalDensity.current
+    val maxSwipe = with(density) { -deleteWidth.toPx() }
+    var offsetX by remember { mutableFloatStateOf(0f) }
+    val swipeThreshold = maxSwipe / 2f
+
+    Box(
+        modifier = modifier
+            .fillMaxWidth()
+            .clipToBounds(),
+    ) {
+        Box(
+            modifier = Modifier
+                .matchParentSize()
+                .background(Color.Red),
+            contentAlignment = Alignment.CenterEnd,
+        ) {
+            Box(
+                modifier = Modifier
+                    .width(deleteWidth)
+                    .fillMaxHeight()
+                    .clickable(onClick = onDelete),
+                contentAlignment = Alignment.Center,
+            ) {
+                Icon(
+                    imageVector = Icons.Default.Delete,
+                    contentDescription = "Sil",
+                    tint = Color.White,
+                )
+            }
+        }
+
+        content(
+            Modifier
+                .offset { IntOffset(offsetX.toInt(), 0) }
+                .zIndex(1f)
+                .fillMaxWidth()
+                .background(MaterialTheme.colorScheme.surface)
+                .pointerInput(Unit) {
+                    detectHorizontalDragGestures(
+                        onHorizontalDrag = { _, dragAmount ->
+                            val newOffset = offsetX + dragAmount
+                            offsetX = newOffset.coerceIn(maxSwipe, 0f)
+                        },
+                        onDragEnd = {
+                            offsetX = if (offsetX > swipeThreshold) 0f else maxSwipe
+                        },
+                    )
+                },
+        )
+    }
+}
+@Composable
+private fun EmptyPlayerInfoMessage(
+    modifier: Modifier = Modifier,
+) {
+    Column(
+        modifier = modifier,
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center,
+    ) {
+        Box(
+            modifier = Modifier
+                .size(56.dp)
+                .background(Color.Black, shape = CircleShape),
+            contentAlignment = Alignment.Center,
+        ) {
+            Text(
+                text = "i",
+                color = Color.White,
+                style = AppTheme.typography.bodyMedium,
+                fontWeight = FontWeight.SemiBold,
+            )
+        }
+
+        Spacer(modifier = Modifier.height(AppTheme.spacing.spacingLarge))
+
+        Text(
+            text = "Antrenman grubunuzda sporcu bulunmamaktadır. Sporcu eklemek için \"Yeni Sporcu Ekle\" butonuna tıklayınız.",
+            style = AppTheme.typography.bodyLarge,
+            textAlign = TextAlign.Center,
+            color = Color(0xFF4A4A4A),
         )
     }
 }

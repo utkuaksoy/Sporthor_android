@@ -10,11 +10,13 @@ import com.iamkurtgoz.feature.home.profile.settings.accountSettings.AccountSetti
 fun NavGraphBuilder.accountSettingsScreenNavigation(
     navigateUp: () -> Unit,
     popBackStack: () -> Unit,
+    navigateToBlockedUsers: () -> Unit,
 ) {
     composable<HomeScreenAccountSettingsScreenRoute> {
         AccountSettingsScreen(
             navigateUp = navigateUp,
             popBackStack = popBackStack,
+            navigateToBlockedUsers = navigateToBlockedUsers,
         )
     }
 }

@@ -19,6 +19,7 @@ import com.iamkurtgoz.core.common.model.RestResult
 import com.iamkurtgoz.core.common.model.mapOnSuccess
 import com.iamkurtgoz.data.core.CoreRepository
 import com.iamkurtgoz.data.dataSource.SocialRemoteDataSource
+import com.iamkurtgoz.data.mapper.BlockedUsersDomainMapper
 import com.iamkurtgoz.data.mapper.CommentsDomainMapper
 import com.iamkurtgoz.data.mapper.CreatePostDomainMapper
 import com.iamkurtgoz.data.mapper.DashboardFeedDomainMapper
@@ -40,6 +41,7 @@ import com.iamkurtgoz.domain.model.request.LikePostRequest
 import com.iamkurtgoz.domain.model.request.RemoveSearchHistoryRequest
 import com.iamkurtgoz.domain.model.request.ReportPostRequest
 import com.iamkurtgoz.domain.model.request.WatchedStoryRequest
+import com.iamkurtgoz.domain.model.response.BlockedUsersDomainModel
 import com.iamkurtgoz.domain.model.response.CommentsDomainModel
 import com.iamkurtgoz.domain.model.response.CreatePostDomainModel
 import com.iamkurtgoz.domain.model.response.DashboardFeedDomainModel
@@ -63,6 +65,7 @@ internal class SocialRepositoryImpl @Inject constructor(
     private val getCommentsDomainMapper: CommentsDomainMapper,
     private val createPostDomainMapper: CreatePostDomainMapper,
     private val likePostDomainMapper: LikePostDomainMapper,
+    private val blockedUsersDomainMapper: BlockedUsersDomainMapper,
 ) : SocialRepository, CoreRepository() {
     override suspend fun getSearch(searchTerm: String, role: Int?): RestResult<SearchSocialDomainModel> = mapToRestResult {
         socialRemoteDataSource.getSearch(searchTerm, role)
@@ -167,4 +170,10 @@ internal class SocialRepositoryImpl @Inject constructor(
     override suspend fun watchedStory(body: WatchedStoryRequest): RestResult<Unit> = mapToRestResult {
         socialRemoteDataSource.watchedStory(body)
     }.mapOnSuccess {}
+
+    override suspend fun getBlockedUsers(): RestResult<BlockedUsersDomainModel> = mapToRestResult {
+        socialRemoteDataSource.getBlockedUsers()
+    }.mapOnSuccess {
+        blockedUsersDomainMapper.map(it)
+    }
 }

@@ -20,6 +20,8 @@ internal class AccountSettingsScreenContract {
     sealed class SideEffect : CoreState.SideEffect {
         data object NavigateUp : SideEffect()
         data object PopBackStack : SideEffect()
+        data object NavigateToBlockedUsers : SideEffect()
+
     }
 
     sealed class Event : CoreState.Event {
@@ -29,6 +31,7 @@ internal class AccountSettingsScreenContract {
         data object DismissDialogs : Event()
         data object DeleteAccount : Event()
         data class UpdateProfilePublicPrivate(val isPublic: Boolean) : Event()
+        data object NavigateToBlockedUsers : Event()
     }
 
     object Static

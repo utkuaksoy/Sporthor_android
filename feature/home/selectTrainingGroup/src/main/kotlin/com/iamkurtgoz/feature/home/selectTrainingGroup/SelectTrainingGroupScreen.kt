@@ -19,6 +19,7 @@ import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Text
@@ -120,6 +121,7 @@ private fun SelectTrainingGroupScreenScaffold(
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(horizontal = 16.dp)
+                        .navigationBarsPadding()
                         .padding(bottom = 16.dp),
                     onClick = {
                         setEvent.invoke(SelectTrainingGroupScreenContract.Event.ShowDeleteTrainingGroupDialog)

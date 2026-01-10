@@ -8,10 +8,13 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Divider
+import androidx.compose.material3.Icon
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
@@ -41,6 +44,7 @@ internal fun AccountSettingsScreenContent(
     isPrivate: Boolean,
 ) {
     var showDeleteDialog by remember { mutableStateOf(false) }
+    var isDeleteEnabled by remember { mutableStateOf(false) }
     var localIsPrivate by remember(isPrivate) { mutableStateOf(isPrivate) }
 
     Column(
@@ -88,9 +92,6 @@ internal fun AccountSettingsScreenContent(
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .clickable {
-                    showDeleteDialog = true
-                }
                 .padding(vertical = 12.dp),
             verticalAlignment = Alignment.CenterVertically,
         ) {
@@ -99,14 +100,46 @@ internal fun AccountSettingsScreenContent(
                 fontSize = 16.sp,
                 fontWeight = FontWeight.Normal,
                 color = Color.Black,
+                modifier = Modifier.weight(1f),
+            )
+            Switch(
+                checked = isDeleteEnabled,
+                onCheckedChange = { isChecked ->
+                    isDeleteEnabled = isChecked
+                    if (isChecked) {
+                        showDeleteDialog = true
+                    }
+                },
+            )
+        }
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .clickable { setEvent(AccountSettingsScreenContract.Event.NavigateToBlockedUsers) }
+                .padding(vertical = 12.dp),
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            Text(
+                text = "Engellenen Kullanıcılar",
+                fontSize = 16.sp,
+                fontWeight = FontWeight.Bold,
+                color = Color.Black,
+                modifier = Modifier.weight(1f),
+            )
+            Icon(
+                imageVector = Icons.AutoMirrored.Filled.KeyboardArrowRight,
+                contentDescription = null,
+                tint = Color.Gray,
             )
         }
     }
-
     // Hesap Silme Onay Dialog'u
     if (showDeleteDialog) {
         AlertDialog(
-            onDismissRequest = { showDeleteDialog = false },
+            onDismissRequest = {
+                showDeleteDialog = false
+                isDeleteEnabled = false
+            },
             title = {
                 Text(
                     text = "Hesabınızı silmek istediğinizden emin misiniz?",
@@ -121,6 +154,7 @@ internal fun AccountSettingsScreenContent(
                 Button(
                     onClick = {
                         showDeleteDialog = false
+                        isDeleteEnabled = false
                         setEvent(AccountSettingsScreenContract.Event.DeleteAccount)
                     },
                     colors = ButtonDefaults.buttonColors(
@@ -138,7 +172,10 @@ internal fun AccountSettingsScreenContent(
             },
             dismissButton = {
                 TextButton(
-                    onClick = { showDeleteDialog = false },
+                    onClick = {
+                        showDeleteDialog = false
+                        isDeleteEnabled = false
+                    },
                     modifier = Modifier.fillMaxWidth(),
                 ) {
                     Text(

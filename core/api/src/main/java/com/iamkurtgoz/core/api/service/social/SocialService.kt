@@ -17,6 +17,7 @@ package com.iamkurtgoz.core.api.service.social
 
 import androidx.annotation.Keep
 import com.iamkurtgoz.core.network.model.BaseResponse
+import com.iamkurtgoz.data.model.BlockedUsersResponseModel
 import com.iamkurtgoz.data.model.CreatePostResponseModel
 import com.iamkurtgoz.data.model.FollowUserResponseModel
 import com.iamkurtgoz.data.model.GetCommentsResponseModel
@@ -112,4 +113,7 @@ interface SocialService {
 
     @POST("Social/WatchedStory")
     suspend fun watchedStory(@Body body: WatchedStoryRequest): Response<BaseResponse<Unit>>
+
+    @GET("Social/GetBlockUser")
+    suspend fun getBlockedUsers(): Response<BaseResponse<BlockedUsersResponseModel>>
 }
