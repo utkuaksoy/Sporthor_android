@@ -1,0 +1,12 @@
+<component name="libraryTable">
+  <library name="Gradle: io.github.takahirom.roborazzi:roborazzi-core-android:1.46.1@aar" external-system-id="GRADLE">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/8.14.3/transforms/495e34a8dd5a8ee58405454136e07656/transformed/roborazzi-core-release/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/8.14.3/transforms/495e34a8dd5a8ee58405454136e07656/transformed/roborazzi-core-release/AndroidManifest.xml" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/io.github.takahirom.roborazzi/roborazzi-core-android/1.46.1/5e73fa063f0dddf69d32940123ccb033197fc033/roborazzi-core-android-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

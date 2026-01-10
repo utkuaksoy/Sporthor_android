@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="Gradle: org.jlleitschuh.gradle:ktlint-gradle:13.0.0" type="java-imported" external-system-id="GRADLE">
+    <properties groupId="org.jlleitschuh.gradle" artifactId="ktlint-gradle" version="13.0.0" baseVersion="13.0.0" />
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jlleitschuh.gradle/ktlint-gradle/13.0.0/8c2c17890575691d8fa2badc8378902e7de0f49a/ktlint-gradle-13.0.0.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

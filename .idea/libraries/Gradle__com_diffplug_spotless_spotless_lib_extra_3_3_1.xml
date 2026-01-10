@@ -1,0 +1,12 @@
+<component name="libraryTable">
+  <library name="Gradle: com.diffplug.spotless:spotless-lib-extra:3.3.1" type="java-imported" external-system-id="GRADLE">
+    <properties groupId="com.diffplug.spotless" artifactId="spotless-lib-extra" version="3.3.1" baseVersion="3.3.1" />
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.diffplug.spotless/spotless-lib-extra/3.3.1/29b2725d65215e614c4feee1dcaa301e9318f850/spotless-lib-extra-3.3.1.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.diffplug.spotless/spotless-lib-extra/3.3.1/33922097d56bc29dbdd655f6eec48fcfb6e2c92b/spotless-lib-extra-3.3.1-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

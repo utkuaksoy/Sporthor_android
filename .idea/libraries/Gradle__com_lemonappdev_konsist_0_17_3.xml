@@ -1,0 +1,14 @@
+<component name="libraryTable">
+  <library name="Gradle: com.lemonappdev:konsist:0.17.3" type="java-imported" external-system-id="GRADLE">
+    <properties groupId="com.lemonappdev" artifactId="konsist" version="0.17.3" baseVersion="0.17.3" />
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.lemonappdev/konsist/0.17.3/b48221513e5fbd153a96f8ba4bc8b2eeb25e197e/konsist-0.17.3.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.lemonappdev/konsist/0.17.3/ab94a5a432db91713c2424103c305389aac3e410/konsist-0.17.3-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.lemonappdev/konsist/0.17.3/a43f975f815e2058ad8d8c68013b867f7ebdb4d5/konsist-0.17.3-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
