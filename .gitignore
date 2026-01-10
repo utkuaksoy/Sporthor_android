@@ -2936,3 +2936,19 @@ buildSrc/build/libs/buildSrc.jar
 buildSrc/build/tmp/jar/MANIFEST.MF
 
 local.properties
+
+.gradle/8.14.3/fileChanges/last-build.bin
+
+.gradle/8.14.3/gc.properties
+
+.gradle/config.properties
+
+.gradle/vcs-1/gc.properties
+
+.idea/caches/deviceStreaming.xml
+
+.idea/deploymentTargetSelector.xml
+
+.idea/kotlinc.xml
+
+build/reports/problems/problems-report.html
