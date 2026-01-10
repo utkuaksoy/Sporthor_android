@@ -51,6 +51,7 @@ internal class CreateTeamScreenContract {
         val isFieldErrorShow: Boolean = false,
         val createdClubModel: ClubUIModel? = null,
         val customUserRole: CustomUserRole = CustomUserRole.OTHER,
+        val showYearPicker: Boolean = false,
     ) : CoreState.ViewState {
         val isFieldsAnyError: Boolean
             get() = textClubName.isError || textClubCreateYear.isError || textAddressDetailName.isError
@@ -86,6 +87,8 @@ internal class CreateTeamScreenContract {
             val country: String?,
         ) : Event()
         data object NavigateToHome : Event()
+        data object ShowYearPicker : Event()
+        data object HideYearPicker : Event()
         data object NavigateToTrainingScreen : Event()
         data class UpdateEventBusStatus(val event: CreateTeamEventBus.Event) : Event()
         data object NavigateToCreateTeamSelectBranchScreen : Event()

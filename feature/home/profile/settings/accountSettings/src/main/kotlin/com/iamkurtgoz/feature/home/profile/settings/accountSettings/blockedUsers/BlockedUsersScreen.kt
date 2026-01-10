@@ -74,6 +74,9 @@ private fun BlockedUsersScreenScaffold(
         BlockedUsersScreenContent(
             modifier = Modifier.padding(padding),
             state = state,
+            onRemoveBlockedUser = { userId ->
+                setEvent.invoke(BlockedUsersScreenContract.Event.RemoveBlockedUser(userId))
+            },
         )
 
         state.alertDialogModel?.Alert {

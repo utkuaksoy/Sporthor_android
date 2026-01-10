@@ -14,6 +14,7 @@ internal class BlockedUsersScreenContract {
         val appRemoteConfigStatePack: AppRemoteConfigStatePack,
         val alertDialogModel: AlertDialogModel? = null,
         val blockedUsers: List<BlockedUserUiModel> = emptyList(),
+        val removingUserIds: Set<String> = emptySet(),
     ) : CoreState.ViewState
 
     sealed class SideEffect : CoreState.SideEffect {
@@ -26,6 +27,7 @@ internal class BlockedUsersScreenContract {
         data object NavigateUp : Event()
         data object PopBackStack : Event()
         data object DismissDialogs : Event()
+        data class RemoveBlockedUser(val userId: String) : Event()
     }
 }
 

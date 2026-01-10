@@ -1,6 +1,8 @@
 package com.iamkurtgoz.feature.home.profile.settings.accountSettings.blockedUsers
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -25,11 +27,11 @@ import com.iamkurtgoz.core.commonui.component.user.UserRow
 import com.iamkurtgoz.core.designsystem.internal.PreviewAppWithNightMode
 import com.iamkurtgoz.core.designsystem.theme.AppTheme
 import com.iamkurtgoz.core.designsystem.theme.AppThemeSurface
-import androidx.compose.foundation.layout.Column
 
 @Composable
 internal fun BlockedUsersScreenContent(
     state: BlockedUsersScreenContract.State,
+    onRemoveBlockedUser: (String) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     if (state.blockedUsers.isEmpty()) {
@@ -59,6 +61,17 @@ internal fun BlockedUsersScreenContent(
             items = state.blockedUsers,
             key = { it.id },
         ) { user ->
+            val isRemoving = state.removingUserIds.contains(user.id)
+            val iconBackground = if (isRemoving) {
+                AppTheme.colors.generalColors.backgroundDisabled
+            } else {
+                Color(0xFF9BEA57)
+            }
+            val iconTint = if (isRemoving) {
+                AppTheme.colors.generalColors.foregroundDisabled
+            } else {
+                Color.Black
+            }
             UserRow(
                 userHeaderData = user.imageUrl ?: user.name.firstOrNull()?.toString(),
                 isHeaderUser = true,
@@ -69,14 +82,17 @@ internal fun BlockedUsersScreenContent(
                     Row(
                         modifier = Modifier
                             .size(28.dp)
-                            .background(Color(0xFF9BEA57), CircleShape),
+                            .background(iconBackground, CircleShape)
+                            .clickable(enabled = !isRemoving) {
+                                onRemoveBlockedUser(user.id)
+                            },
                         horizontalArrangement = Arrangement.Center,
                         verticalAlignment = Alignment.CenterVertically,
                     ) {
                         Icon(
                             imageVector = Icons.Default.Check,
                             contentDescription = "Blocked",
-                            tint = Color.Black,
+                            tint = iconTint,
                             modifier = Modifier.size(16.dp),
                         )
                     }
@@ -104,8 +120,8 @@ private fun Preview() {
                         ),
                     ),
                 ),
+                onRemoveBlockedUser = {},
             )
         }
     }
 }
-

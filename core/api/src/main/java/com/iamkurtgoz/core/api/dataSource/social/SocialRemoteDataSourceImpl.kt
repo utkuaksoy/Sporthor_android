@@ -39,6 +39,7 @@ import com.iamkurtgoz.domain.model.request.DeleteStoryRequest
 import com.iamkurtgoz.domain.model.request.FollowUserRequest
 import com.iamkurtgoz.domain.model.request.HidePostRequest
 import com.iamkurtgoz.domain.model.request.LikePostRequest
+import com.iamkurtgoz.domain.model.request.RemoveBlockUserRequest
 import com.iamkurtgoz.domain.model.request.RemoveSearchHistoryRequest
 import com.iamkurtgoz.domain.model.request.ReportPostRequest
 import com.iamkurtgoz.domain.model.request.WatchedStoryRequest
@@ -137,5 +138,9 @@ internal class SocialRemoteDataSourceImpl @Inject constructor(
 
     override suspend fun getBlockedUsers(): BaseResponse<BlockedUsersResponseModel> = requestRetrofit {
         socialService.getBlockedUsers()
+    }
+
+    override suspend fun removeBlockUser(body: RemoveBlockUserRequest): BaseResponse<Unit> = requestRetrofit {
+        socialService.removeBlockUser(body)
     }
 }

@@ -15,6 +15,7 @@
  */
 package com.iamkurtgoz.feature.home.createTeam
 
+import android.widget.NumberPicker
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -32,17 +33,25 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.text.BasicText
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.viewinterop.AndroidView
 import com.iamkurtgoz.core.common.contract.AppDefaults
 import com.iamkurtgoz.core.common.state.AppBuildConfigStatePack
 import com.iamkurtgoz.core.common.state.AppRemoteConfigStatePack
@@ -63,6 +72,20 @@ internal fun CreateTeamScreenContent(
     modifier: Modifier = Modifier,
     setEvent: (CreateTeamScreenContract.Event) -> Unit,
 ) {
+
+    if (state.showYearPicker) {
+        val currentYear = state.textClubCreateYear.value.toIntOrNull()
+            ?: java.util.Calendar.getInstance().get(java.util.Calendar.YEAR)
+
+        YearPickerDialog(
+            currentYear = currentYear,
+            onDismiss = { setEvent(CreateTeamScreenContract.Event.HideYearPicker) },
+            onConfirm = { year ->
+                setEvent(CreateTeamScreenContract.Event.SetClubCreateYear(year.toString()))
+                setEvent(CreateTeamScreenContract.Event.HideYearPicker)
+            },
+        )
+    }
     LazyColumn(
         modifier = modifier
             .fillMaxSize(),
@@ -204,14 +227,14 @@ internal fun CreateTeamScreenContent(
                 placeholder = "Kulüp adı girin", // TODO: Localize
                 value = state.textClubName.value,
                 onValueChange = {
-                    val userName = it.lowercase(Locale.getDefault())
-                    setEvent.invoke(CreateTeamScreenContract.Event.SetClubName(userName))
+                    setEvent.invoke(CreateTeamScreenContract.Event.SetClubName(it))
                 },
                 isError = state.textClubName.isError && state.isFieldErrorShow,
                 hint = "Lütfen geçerli bir kulüp adını girin", // TODO: Localize
                 keyboardOptions = KeyboardOptions(
                     keyboardType = KeyboardType.Text,
                     imeAction = ImeAction.Next,
+                    capitalization = KeyboardCapitalization.Words, // kelime başları büyük
                 ),
                 modifier = Modifier
                     .padding(top = AppTheme.spacing.spacingHuge)
@@ -380,26 +403,65 @@ internal fun CreateTeamScreenContent(
         }
 
         item {
-            AppTextField.Primary(
-                title = "Kuruluş Tarihi (Opsiyonel)", // TODO: Localize
-                placeholder = "Kuruluş yılı (Opsiyonel)", // TODO: Localize
-                value = state.textClubCreateYear.value,
-                onValueChange = {
-                    val userName = it.lowercase(Locale.getDefault())
-                    setEvent.invoke(CreateTeamScreenContract.Event.SetClubCreateYear(userName))
-                },
-                isError = state.textClubCreateYear.isError && state.isFieldErrorShow,
-                hint = "Lütfen geçerli bir yıl girin", // TODO: Localize
-                keyboardOptions = KeyboardOptions(
-                    keyboardType = KeyboardType.Text,
-                    imeAction = ImeAction.Next,
-                ),
+            Box(
                 modifier = Modifier
                     .padding(top = AppTheme.spacing.spacingMedium)
                     .padding(horizontal = AppTheme.spacing.spacingHuge),
-            )
+            ) {
+                AppTextField.Primary(
+                    title = "Kuruluş Tarihi (Opsiyonel)",
+                    placeholder = "Kuruluş yılı (Opsiyonel)",
+                    value = state.textClubCreateYear.value,
+                    onValueChange = {},
+                    isError = state.textClubCreateYear.isError && state.isFieldErrorShow,
+                    hint = "Lütfen geçerli bir yıl girin",
+                    keyboardOptions = KeyboardOptions.Default,
+                    readOnly = true,
+                )
+                Box(
+                    modifier = Modifier
+                        .matchParentSize()
+                        .clickable { setEvent(CreateTeamScreenContract.Event.ShowYearPicker) },
+                )
+            }
         }
+
     }
+
+}
+@Composable
+private fun YearPickerDialog(
+    currentYear: Int,
+    onDismiss: () -> Unit,
+    onConfirm: (Int) -> Unit,
+    minYear: Int = 1900,
+    maxYear: Int = java.util.Calendar.getInstance().get(java.util.Calendar.YEAR),
+) {
+    var selectedYear by remember { mutableIntStateOf(currentYear) }
+
+    AlertDialog(
+        onDismissRequest = onDismiss,
+        confirmButton = {
+            TextButton(onClick = { onConfirm(selectedYear) }) { Text("Tamam") }
+        },
+        dismissButton = {
+            TextButton(onClick = onDismiss) { Text("İptal") }
+        },
+        text = {
+            AndroidView(
+                factory = { context ->
+                    NumberPicker(context).apply {
+                        minValue = minYear
+                        maxValue = maxYear
+                        value = currentYear
+                        setOnValueChangedListener { _, _, newVal ->
+                            selectedYear = newVal
+                        }
+                    }
+                },
+            )
+        },
+    )
 }
 
 @PreviewAppWithNightMode
