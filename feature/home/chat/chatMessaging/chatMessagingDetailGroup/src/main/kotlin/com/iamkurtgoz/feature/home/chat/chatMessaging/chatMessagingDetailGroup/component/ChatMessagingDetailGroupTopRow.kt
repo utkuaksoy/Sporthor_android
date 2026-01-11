@@ -17,19 +17,25 @@ package com.iamkurtgoz.feature.home.chat.chatMessaging.chatMessagingDetailGroup.
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.Image
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
 import com.iamkurtgoz.core.commonui.component.user.UserImageView
 import com.iamkurtgoz.core.designsystem.internal.PreviewAppWithNightMode
 import com.iamkurtgoz.core.designsystem.theme.AppTheme
 import com.iamkurtgoz.core.designsystem.theme.AppThemeScaffold
 import com.iamkurtgoz.feature.home.chat.chatMessaging.chatMessagingDetailGroup.ChatMessagingDetailGroupScreenContract
+import com.iamkurtgoz.core.resources.R as resourcesR
 
 @Composable
 internal fun ChatMessagingDetailGroupTopRow(
@@ -43,10 +49,32 @@ internal fun ChatMessagingDetailGroupTopRow(
     Column(
         modifier = modifier
             .fillMaxWidth()
-            .padding(top = AppTheme.spacing.spacingLarge),
+            .padding(
+                top = AppTheme.spacing.spacingLarge,
+                start = AppTheme.spacing.spacingMedium,
+                end = AppTheme.spacing.spacingMedium,
+            ),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = AppTheme.spacing.spacingSmall),
+            contentAlignment = Alignment.CenterStart,
+        ) {
+            Image(
+                painter = painterResource(resourcesR.drawable.img_back_arrow),
+                contentDescription = null,
+                colorFilter = ColorFilter.tint(AppTheme.colors.generalColors.textPrimary),
+                modifier = Modifier
+                    .size(AppTheme.dimens.dp24)
+                    .clickable {
+                        setEvent.invoke(ChatMessagingDetailGroupScreenContract.Event.NavigateUp)
+                    },
+            )
+        }
+
         UserImageView(
             data = imageUrlData,
             size = AppTheme.dimens.dp72,

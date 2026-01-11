@@ -122,7 +122,7 @@ private fun SearchScreenScaffold(
                                 vertical = AppTheme.dimens.dp8,
                             ),
                         ),
-                    placeholder = "Arama Yap", // TODO: Localize
+                    placeholder = "Sporthor’da Ara", // TODO: Localize
                     value = state.textSearch.value,
                     trailingIcon = if (state.textSearch.value.isNotEmpty()) resourcesR.drawable.img_close_circle else null,
                     trailingIconClick = {
