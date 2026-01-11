@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="GradleMigrationSettings" migrationVersion="1" />
+  <component name="GradleSettings">
+    <option name="linkedExternalProjectsSettings">
+      <GradleProjectSettings>
+        <compositeConfiguration>
+          <compositeBuild compositeDefinitionSource="SCRIPT">
+            <builds>
+              <build path="$PROJECT_DIR$/build-logic" name="BuildLogic">
+                <projects>
+                  <project path="$PROJECT_DIR$/build-logic" />
+                  <project path="$PROJECT_DIR$/build-logic/convention" />
+                </projects>
+              </build>
+              <build path="$PROJECT_DIR$/buildSrc" name="buildSrc">
+                <projects>
+                  <project path="$PROJECT_DIR$/buildSrc" />
+                </projects>
+              </build>
+            </builds>
+          </compositeBuild>
+        </compositeConfiguration>
+        <option name="testRunner" value="CHOOSE_PER_TEST" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="gradleJvm" value="#GRADLE_LOCAL_JAVA_HOME" />
+        <option name="modules">
+          <set>
+            <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/app" />
+            <option value="$PROJECT_DIR$/app/data" />
+            <option value="$PROJECT_DIR$/app/domain" />
+            <option value="$PROJECT_DIR$/build-logic" />
+            <option value="$PROJECT_DIR$/build-logic/convention" />
+            <option value="$PROJECT_DIR$/buildSrc" />
+            <option value="$PROJECT_DIR$/core" />
+            <option value="$PROJECT_DIR$/core/api" />
+            <option value="$PROJECT_DIR$/core/common" />
+            <option value="$PROJECT_DIR$/core/common-ui" />
+            <option value="$PROJECT_DIR$/core/connectivity" />
+            <option value="$PROJECT_DIR$/core/datastore" />
+            <option value="$PROJECT_DIR$/core/designsystem" />
+            <option value="$PROJECT_DIR$/core/firebase" />
+            <option value="$PROJECT_DIR$/core/navigation" />
+            <option value="$PROJECT_DIR$/core/network" />
+            <option value="$PROJECT_DIR$/core/resources" />
+            <option value="$PROJECT_DIR$/core/signalrlib" />
+            <option value="$PROJECT_DIR$/core/timber" />
+            <option value="$PROJECT_DIR$/data" />
+            <option value="$PROJECT_DIR$/domain" />
+            <option value="$PROJECT_DIR$/feature" />
+            <option value="$PROJECT_DIR$/feature/auth" />
+            <option value="$PROJECT_DIR$/feature/auth/forgetPassword" />
+            <option value="$PROJECT_DIR$/feature/auth/forgetPassword/data" />
+            <option value="$PROJECT_DIR$/feature/auth/forgetPassword/domain" />
+            <option value="$PROJECT_DIR$/feature/auth/login" />
+            <option value="$PROJECT_DIR$/feature/auth/login/data" />
+            <option value="$PROJECT_DIR$/feature/auth/login/domain" />
+            <option value="$PROJECT_DIR$/feature/auth/loginWithEmail" />
+            <option value="$PROJECT_DIR$/feature/auth/loginWithEmail/data" />
+            <option value="$PROJECT_DIR$/feature/auth/loginWithEmail/domain" />
+            <option value="$PROJECT_DIR$/feature/auth/otp" />
+            <option value="$PROJECT_DIR$/feature/auth/otp/data" />
+            <option value="$PROJECT_DIR$/feature/auth/otp/domain" />
+            <option value="$PROJECT_DIR$/feature/auth/register" />
+            <option value="$PROJECT_DIR$/feature/auth/register/data" />
+            <option value="$PROJECT_DIR$/feature/auth/register/domain" />
+            <option value="$PROJECT_DIR$/feature/auth/userInfo" />
+            <option value="$PROJECT_DIR$/feature/auth/userInfo/data" />
+            <option value="$PROJECT_DIR$/feature/auth/userInfo/domain" />
+            <option value="$PROJECT_DIR$/feature/auth/userName" />
+            <option value="$PROJECT_DIR$/feature/auth/userName/data" />
+            <option value="$PROJECT_DIR$/feature/auth/userName/domain" />
+            <option value="$PROJECT_DIR$/feature/auth/welcome" />
+            <option value="$PROJECT_DIR$/feature/auth/welcome/data" />
+            <option value="$PROJECT_DIR$/feature/auth/welcome/domain" />
+            <option value="$PROJECT_DIR$/feature/home" />
+            <option value="$PROJECT_DIR$/feature/home/addEvent" />
+            <option value="$PROJECT_DIR$/feature/home/addEvent/data" />
+            <option value="$PROJECT_DIR$/feature/home/addEvent/domain" />
+            <option value="$PROJECT_DIR$/feature/home/calendar" />
+            <option value="$PROJECT_DIR$/feature/home/calendar/data" />
+            <option value="$PROJECT_DIR$/feature/home/calendar/domain" />
+            <option value="$PROJECT_DIR$/feature/home/calendarDetail" />
+            <option value="$PROJECT_DIR$/feature/home/calendarDetail/data" />
+            <option value="$PROJECT_DIR$/feature/home/calendarDetail/domain" />
+            <option value="$PROJECT_DIR$/feature/home/camerax" />
+            <option value="$PROJECT_DIR$/feature/home/camerax/data" />
+            <option value="$PROJECT_DIR$/feature/home/camerax/domain" />
+            <option value="$PROJECT_DIR$/feature/home/chat" />
+            <option value="$PROJECT_DIR$/feature/home/chat/chatMessaging" />
+            <option value="$PROJECT_DIR$/feature/home/chat/chatMessaging/attachments" />
+            <option value="$PROJECT_DIR$/feature/home/chat/chatMessaging/attachments/data" />
+            <option value="$PROJECT_DIR$/feature/home/chat/chatMessaging/attachments/domain" />
+            <option value="$PROJECT_DIR$/feature/home/chat/chatMessaging/chatMessagingDetailGroup" />
+            <option value="$PROJECT_DIR$/feature/home/chat/chatMessaging/chatMessagingDetailGroup/addUser" />
+            <option value="$PROJECT_DIR$/feature/home/chat/chatMessaging/chatMessagingDetailGroup/addUser/data" />
+            <option value="$PROJECT_DIR$/feature/home/chat/chatMessaging/chatMessagingDetailGroup/addUser/domain" />
+            <option value="$PROJECT_DIR$/feature/home/chat/chatMessaging/chatMessagingDetailGroup/data" />
+            <option value="$PROJECT_DIR$/feature/home/chat/chatMessaging/chatMessagingDetailGroup/domain" />
+            <option value="$PROJECT_DIR$/feature/home/chat/chatMessaging/chatMessagingDetailGroup/updateGroup" />
+            <option value="$PROJECT_DIR$/feature/home/chat/chatMessaging/chatMessagingDetailGroup/updateGroup/data" />
+            <option value="$PROJECT_DIR$/feature/home/chat/chatMessaging/chatMessagingDetailGroup/updateGroup/domain" />
+            <option value="$PROJECT_DIR$/feature/home/chat/chatMessaging/chatMessagingDetailUserProfile" />
+            <option value="$PROJECT_DIR$/feature/home/chat/chatMessaging/chatMessagingDetailUserProfile/data" />
+            <option value="$PROJECT_DIR$/feature/home/chat/chatMessaging/chatMessagingDetailUserProfile/domain" />
+            <option value="$PROJECT_DIR$/feature/home/chat/chatMessaging/data" />
+            <option value="$PROJECT_DIR$/feature/home/chat/chatMessaging/domain" />
+            <option value="$PROJECT_DIR$/feature/home/chat/data" />
+            <option value="$PROJECT_DIR$/feature/home/chat/domain" />
+            <option value="$PROJECT_DIR$/feature/home/chat/newChat" />
+            <option value="$PROJECT_DIR$/feature/home/chat/newChat/data" />
+            <option value="$PROJECT_DIR$/feature/home/chat/newChat/domain" />
+            <option value="$PROJECT_DIR$/feature/home/chat/newChat/newGroupChat" />
+            <option value="$PROJECT_DIR$/feature/home/chat/newChat/newGroupChat/data" />
+            <option value="$PROJECT_DIR$/feature/home/chat/newChat/newGroupChat/domain" />
+            <option value="$PROJECT_DIR$/feature/home/coachList" />
+            <option value="$PROJECT_DIR$/feature/home/coachList/data" />
+            <option value="$PROJECT_DIR$/feature/home/coachList/domain" />
+            <option value="$PROJECT_DIR$/feature/home/coachList/trainingGroups" />
+            <option value="$PROJECT_DIR$/feature/home/coachList/trainingGroups/data" />
+            <option value="$PROJECT_DIR$/feature/home/coachList/trainingGroups/domain" />
+            <option value="$PROJECT_DIR$/feature/home/coachList/trainingGroups/updateCoach" />
+            <option value="$PROJECT_DIR$/feature/home/coachList/trainingGroups/updateCoach/data" />
+            <option value="$PROJECT_DIR$/feature/home/coachList/trainingGroups/updateCoach/domain" />
+            <option value="$PROJECT_DIR$/feature/home/createTeam" />
+            <option value="$PROJECT_DIR$/feature/home/createTeam/data" />
+            <option value="$PROJECT_DIR$/feature/home/createTeam/domain" />
+            <option value="$PROJECT_DIR$/feature/home/createTeam/selectBranch" />
+            <option value="$PROJECT_DIR$/feature/home/createTeam/selectBranch/data" />
+            <option value="$PROJECT_DIR$/feature/home/createTeam/selectBranch/domain" />
+            <option value="$PROJECT_DIR$/feature/home/customizeUserInfo" />
+            <option value="$PROJECT_DIR$/feature/home/customizeUserInfo/data" />
+            <option value="$PROJECT_DIR$/feature/home/customizeUserInfo/domain" />
+            <option value="$PROJECT_DIR$/feature/home/dashboard" />
+            <option value="$PROJECT_DIR$/feature/home/dashboard/data" />
+            <option value="$PROJECT_DIR$/feature/home/dashboard/domain" />
+            <option value="$PROJECT_DIR$/feature/home/dashboard/webview" />
+            <option value="$PROJECT_DIR$/feature/home/dashboard/webview/data" />
+            <option value="$PROJECT_DIR$/feature/home/dashboard/webview/domain" />
+            <option value="$PROJECT_DIR$/feature/home/editEvent" />
+            <option value="$PROJECT_DIR$/feature/home/editEvent/data" />
+            <option value="$PROJECT_DIR$/feature/home/editEvent/domain" />
+            <option value="$PROJECT_DIR$/feature/home/editTeam" />
+            <option value="$PROJECT_DIR$/feature/home/editTeam/data" />
+            <option value="$PROJECT_DIR$/feature/home/editTeam/domain" />
+            <option value="$PROJECT_DIR$/feature/home/editTeam/selectBranch" />
+            <option value="$PROJECT_DIR$/feature/home/editTeam/selectBranch/data" />
+            <option value="$PROJECT_DIR$/feature/home/editTeam/selectBranch/domain" />
+            <option value="$PROJECT_DIR$/feature/home/editTrainingGroup" />
+            <option value="$PROJECT_DIR$/feature/home/editTrainingGroup/data" />
+            <option value="$PROJECT_DIR$/feature/home/editTrainingGroup/domain" />
+            <option value="$PROJECT_DIR$/feature/home/inviteGroupMembers" />
+            <option value="$PROJECT_DIR$/feature/home/inviteGroupMembers/addNewUser" />
+            <option value="$PROJECT_DIR$/feature/home/inviteGroupMembers/addNewUser/data" />
+            <option value="$PROJECT_DIR$/feature/home/inviteGroupMembers/addNewUser/domain" />
+            <option value="$PROJECT_DIR$/feature/home/inviteGroupMembers/data" />
+            <option value="$PROJECT_DIR$/feature/home/inviteGroupMembers/domain" />
+            <option value="$PROJECT_DIR$/feature/home/mediaViewer" />
+            <option value="$PROJECT_DIR$/feature/home/mediaViewer/data" />
+            <option value="$PROJECT_DIR$/feature/home/mediaViewer/domain" />
+            <option value="$PROJECT_DIR$/feature/home/notifications" />
+            <option value="$PROJECT_DIR$/feature/home/notifications/data" />
+            <option value="$PROJECT_DIR$/feature/home/notifications/domain" />
+            <option value="$PROJECT_DIR$/feature/home/onboarding" />
+            <option value="$PROJECT_DIR$/feature/home/onboarding/data" />
+            <option value="$PROJECT_DIR$/feature/home/onboarding/domain" />
+            <option value="$PROJECT_DIR$/feature/home/profile" />
+            <option value="$PROJECT_DIR$/feature/home/profile/data" />
+            <option value="$PROJECT_DIR$/feature/home/profile/domain" />
+            <option value="$PROJECT_DIR$/feature/home/profile/postDetail" />
+            <option value="$PROJECT_DIR$/feature/home/profile/postDetail/data" />
+            <option value="$PROJECT_DIR$/feature/home/profile/postDetail/domain" />
+            <option value="$PROJECT_DIR$/feature/home/profile/profileEdit" />
+            <option value="$PROJECT_DIR$/feature/home/profile/profileEdit/data" />
+            <option value="$PROJECT_DIR$/feature/home/profile/profileEdit/domain" />
+            <option value="$PROJECT_DIR$/feature/home/profile/profileEdit/selectBranch" />
+            <option value="$PROJECT_DIR$/feature/home/profile/profileEdit/selectBranch/data" />
+            <option value="$PROJECT_DIR$/feature/home/profile/profileEdit/selectBranch/domain" />
+            <option value="$PROJECT_DIR$/feature/home/profile/profileEdit/selectUserRole" />
+            <option value="$PROJECT_DIR$/feature/home/profile/profileEdit/selectUserRole/data" />
+            <option value="$PROJECT_DIR$/feature/home/profile/profileEdit/selectUserRole/domain" />
+            <option value="$PROJECT_DIR$/feature/home/profile/settings" />
+            <option value="$PROJECT_DIR$/feature/home/profile/settings/aboutUs" />
+            <option value="$PROJECT_DIR$/feature/home/profile/settings/aboutUs/data" />
+            <option value="$PROJECT_DIR$/feature/home/profile/settings/aboutUs/domain" />
+            <option value="$PROJECT_DIR$/feature/home/profile/settings/accountSettings" />
+            <option value="$PROJECT_DIR$/feature/home/profile/settings/accountSettings/data" />
+            <option value="$PROJECT_DIR$/feature/home/profile/settings/accountSettings/domain" />
+            <option value="$PROJECT_DIR$/feature/home/profile/settings/data" />
+            <option value="$PROJECT_DIR$/feature/home/profile/settings/domain" />
+            <option value="$PROJECT_DIR$/feature/home/profile/userRelation" />
+            <option value="$PROJECT_DIR$/feature/home/profile/userRelation/data" />
+            <option value="$PROJECT_DIR$/feature/home/profile/userRelation/domain" />
+            <option value="$PROJECT_DIR$/feature/home/search" />
+            <option value="$PROJECT_DIR$/feature/home/search/data" />
+            <option value="$PROJECT_DIR$/feature/home/search/domain" />
+            <option value="$PROJECT_DIR$/feature/home/selectAddress" />
+            <option value="$PROJECT_DIR$/feature/home/selectAddress/data" />
+            <option value="$PROJECT_DIR$/feature/home/selectAddress/domain" />
+            <option value="$PROJECT_DIR$/feature/home/selectEventDrafts" />
+            <option value="$PROJECT_DIR$/feature/home/selectEventDrafts/data" />
+            <option value="$PROJECT_DIR$/feature/home/selectEventDrafts/domain" />
+            <option value="$PROJECT_DIR$/feature/home/selectSportClub" />
+            <option value="$PROJECT_DIR$/feature/home/selectSportClub/data" />
+            <option value="$PROJECT_DIR$/feature/home/selectSportClub/domain" />
+            <option value="$PROJECT_DIR$/feature/home/selectTeam" />
+            <option value="$PROJECT_DIR$/feature/home/selectTeam/data" />
+            <option value="$PROJECT_DIR$/feature/home/selectTeam/domain" />
+            <option value="$PROJECT_DIR$/feature/home/selectTrainingGroup" />
+            <option value="$PROJECT_DIR$/feature/home/selectTrainingGroup/data" />
+            <option value="$PROJECT_DIR$/feature/home/selectTrainingGroup/domain" />
+            <option value="$PROJECT_DIR$/feature/home/sendClubAuthDocument" />
+            <option value="$PROJECT_DIR$/feature/home/sendClubAuthDocument/data" />
+            <option value="$PROJECT_DIR$/feature/home/sendClubAuthDocument/domain" />
+            <option value="$PROJECT_DIR$/feature/home/share" />
+            <option value="$PROJECT_DIR$/feature/home/share/complete" />
+            <option value="$PROJECT_DIR$/feature/home/share/complete/data" />
+            <option value="$PROJECT_DIR$/feature/home/share/complete/domain" />
+            <option value="$PROJECT_DIR$/feature/home/share/data" />
+            <option value="$PROJECT_DIR$/feature/home/share/domain" />
+            <option value="$PROJECT_DIR$/feature/home/storyViewer" />
+            <option value="$PROJECT_DIR$/feature/home/storyViewer/data" />
+            <option value="$PROJECT_DIR$/feature/home/storyViewer/domain" />
+            <option value="$PROJECT_DIR$/feature/home/successAddTrainingGroup" />
+            <option value="$PROJECT_DIR$/feature/home/successAddTrainingGroup/data" />
+            <option value="$PROJECT_DIR$/feature/home/successAddTrainingGroup/domain" />
+            <option value="$PROJECT_DIR$/feature/home/successDocumentUploadScreen" />
+            <option value="$PROJECT_DIR$/feature/home/successDocumentUploadScreen/data" />
+            <option value="$PROJECT_DIR$/feature/home/successDocumentUploadScreen/domain" />
+            <option value="$PROJECT_DIR$/feature/home/trainingScreen" />
+            <option value="$PROJECT_DIR$/feature/home/trainingScreen/data" />
+            <option value="$PROJECT_DIR$/feature/home/trainingScreen/domain" />
+            <option value="$PROJECT_DIR$/konsist-test" />
+          </set>
+        </option>
+      </GradleProjectSettings>
+    </option>
+  </component>
+</project>

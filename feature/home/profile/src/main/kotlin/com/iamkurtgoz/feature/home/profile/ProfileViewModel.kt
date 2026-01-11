@@ -27,9 +27,11 @@ import com.iamkurtgoz.domain.core.CoreViewModel
 import com.iamkurtgoz.domain.dataStore.AppPreferences
 import com.iamkurtgoz.domain.eventbus.impl.ProfileEventBus
 import com.iamkurtgoz.domain.extensions.toAlertDialog
+import com.iamkurtgoz.domain.model.enums.FetchParam
 import com.iamkurtgoz.domain.model.enums.UserActionFollowType
 import com.iamkurtgoz.feature.home.profile.domain.model.ProfileComponentDataSegmentUIModel
 import com.iamkurtgoz.feature.home.profile.domain.model.ProfileDetailComponentDataSkillUIModel
+import com.iamkurtgoz.feature.home.profile.domain.model.UserPostsUIModel
 import com.iamkurtgoz.feature.home.profile.domain.types.ProfileActionButtonType
 import com.iamkurtgoz.feature.home.profile.domain.types.ProfileComponents
 import com.iamkurtgoz.feature.home.profile.domain.types.ProfileDetailComponents
@@ -73,7 +75,7 @@ internal class ProfileViewModel @Inject constructor(
             is ProfileScreenContract.Event.OnClickActionButton -> onClickActionButton(actionButtonType = event.actionButtonType, userId = event.userId)
             is ProfileScreenContract.Event.OnUserRelation -> onClickUserRelation(userRelationFollowingCount = event.userRelationFollowingCount, userRelationFollowerCount = event.userRelationFollowerCount, userId = event.userId)
             is ProfileScreenContract.Event.UpdateEventBusStatus -> updateEventBusStatus(status = event.eventBusState)
-            is ProfileScreenContract.Event.UserPosts -> getUserPosts()
+            is ProfileScreenContract.Event.UserPosts -> getUserPosts(event.fetchParam)
             is ProfileScreenContract.Event.NavigateToSettings -> setSideEffect(ProfileScreenContract.SideEffect.NavigateToSettings)
             is ProfileScreenContract.Event.NavigateToPostDetail -> {
                 viewModelScope.launch {
@@ -86,7 +88,7 @@ internal class ProfileViewModel @Inject constructor(
     // Events functions
     private fun initialize() = viewModelScope.launch {
         getProfile()
-        getUserPosts()
+        getUserPosts(fetchParam = FetchParam.INITIAL)
     }
 
     private fun dismissDialogs() {
@@ -157,8 +159,51 @@ internal class ProfileViewModel @Inject constructor(
             }
     }
 
-    private fun getUserPosts() = viewModelScope.launch {
+    private fun getUserPosts(fetchParam: FetchParam) = viewModelScope.launch {
         if (viewState.paginationInitialing || viewState.paginationLoading || viewState.paginationReloading) {
+            return@launch
+        }
+
+        when (fetchParam) {
+            FetchParam.INITIAL -> {
+                updateState { state ->
+                    state.copy(
+                        paginationPage = AppDefaults.LIST_PARAM_PAGE,
+                        paginationInitialing = true,
+                        paginationLoading = false,
+                        paginationReloading = false,
+                        paginationHasNext = true,
+                        userPostsList = UserPostsUIModel(posts = emptyList()),
+                    )
+                }
+            }
+            FetchParam.RELOAD -> {
+                updateState { state ->
+                    state.copy(
+                        paginationPage = AppDefaults.LIST_PARAM_PAGE,
+                        paginationInitialing = false,
+                        paginationLoading = false,
+                        paginationReloading = true,
+                        paginationHasNext = true,
+                        userPostsList = UserPostsUIModel(posts = emptyList()),
+                    )
+                }
+            }
+            FetchParam.NEXT_PAGE -> {
+                if (viewState.paginationHasNext) {
+                    updateState { state ->
+                        state.copy(
+                            paginationPage = viewState.paginationPage.plus(AppDefaults.ONE),
+                            paginationInitialing = false,
+                            paginationLoading = true,
+                            paginationReloading = false,
+                        )
+                    }
+                }
+            }
+        }
+
+        if (!viewState.paginationHasNext) {
             return@launch
         }
 
@@ -171,18 +216,44 @@ internal class ProfileViewModel @Inject constructor(
             .requester
             .onLoading {
                 updateState { state ->
-                    state.copy()
+                    state.copy(
+                        isLoading = fetchParam == FetchParam.INITIAL || fetchParam == FetchParam.RELOAD,
+                        paginationInitialing = fetchParam == FetchParam.INITIAL,
+                        paginationLoading = fetchParam == FetchParam.NEXT_PAGE,
+                        paginationReloading = fetchParam == FetchParam.RELOAD,
+                    )
                 }
             }
             .onError {
                 updateState {
-                    it.copy()
+                    it.copy(
+                        isLoading = false,
+                        paginationInitialing = false,
+                        paginationLoading = false,
+                        paginationReloading = false,
+                    )
                 }
             }
             .callWithSuccess {
+                val responseList = it.posts ?: emptyList()
+                val currentList = when (fetchParam) {
+                    FetchParam.INITIAL -> responseList
+                    FetchParam.RELOAD -> responseList
+                    FetchParam.NEXT_PAGE -> {
+                        val list = viewState.userPostsList?.posts?.toMutableList() ?: mutableListOf()
+                        list.apply { addAll(responseList) }
+                    }
+                }
+                val paginationHasNext = responseList.isNotEmpty()
+
                 updateState { state ->
                     state.copy(
-                        userPostsList = it,
+                        isLoading = false,
+                        paginationInitialing = false,
+                        paginationLoading = false,
+                        paginationReloading = false,
+                        paginationHasNext = paginationHasNext,
+                        userPostsList = UserPostsUIModel(posts = currentList),
                     )
                 }
             }

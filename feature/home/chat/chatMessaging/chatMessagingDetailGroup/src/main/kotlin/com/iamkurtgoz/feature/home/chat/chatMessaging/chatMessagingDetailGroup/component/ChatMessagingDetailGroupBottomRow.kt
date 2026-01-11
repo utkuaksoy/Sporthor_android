@@ -29,6 +29,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.painterResource
 import com.iamkurtgoz.core.common.contract.AppDefaults
 import com.iamkurtgoz.core.designsystem.internal.PreviewAppWithNightMode
@@ -105,8 +106,9 @@ internal fun ChatMessagingDetailGroupBottomRow(
             verticalAlignment = Alignment.CenterVertically,
         ) {
             Image(
-                painter = painterResource(resourcesR.drawable.img_comment_version_three),
+                painter = painterResource(resourcesR.drawable.img_power),
                 contentDescription = null,
+                colorFilter = ColorFilter.tint(AppTheme.colors.generalColors.primitivesRed500),
                 modifier = Modifier
                     .size(AppTheme.dimens.dp24),
             )
@@ -114,7 +116,7 @@ internal fun ChatMessagingDetailGroupBottomRow(
             Text(
                 text = "Gruptan Ayrıl", // TODO: Localize
                 style = AppTheme.typography.subtitleSmall,
-                color = AppTheme.colors.generalColors.textPrimary,
+                color = AppTheme.colors.generalColors.primitivesRed500,
                 modifier = Modifier
                     .padding(horizontal = AppTheme.spacing.spacingSmall)
                     .weight(AppDefaults.WEIGHT_FULL),

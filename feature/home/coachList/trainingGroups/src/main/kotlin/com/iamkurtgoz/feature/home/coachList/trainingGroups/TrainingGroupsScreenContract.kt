@@ -3,6 +3,7 @@ package com.iamkurtgoz.feature.home.coachList.trainingGroups
 import androidx.compose.runtime.Immutable
 import com.iamkurtgoz.core.common.state.AppBuildConfigStatePack
 import com.iamkurtgoz.core.common.state.AppRemoteConfigStatePack
+import com.iamkurtgoz.core.navigation.model.home.inviteGroupMember.HomeScreenInviteGroupMemberScreenNavigationModel
 import com.iamkurtgoz.core.navigation.screenRoute.HomeCoachListTrainingGroupsScreenRoute
 import com.iamkurtgoz.domain.core.CoreState
 import com.iamkurtgoz.domain.model.base.AlertDialogModel
@@ -28,6 +29,8 @@ internal class TrainingGroupsScreenContract {
         data object NavigateUp : SideEffect()
         data object PopBackStack : SideEffect()
         data class NavigateToUpdateCoachScreen(val clubId: String?, val trainingGroupId: String?) : SideEffect()
+        data class NavigateToInviteGroupMembersScreen(val model: HomeScreenInviteGroupMemberScreenNavigationModel) : SideEffect()
+
     }
 
     sealed class Event : CoreState.Event {
@@ -40,6 +43,8 @@ internal class TrainingGroupsScreenContract {
         data object ShowDeleteCoachDialog : Event()
         data object DeleteCoach : Event()
         data class NavigateToUpdateCoachScreen(val clubId: String?, val trainingGroupId: String?) : Event()
+        data class OnTrainingGroupClicked(val groupId: String) : Event()
+
     }
 
     object Static

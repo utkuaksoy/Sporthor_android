@@ -182,6 +182,10 @@ data object HomeScreenAccountSettingsScreenRoute
 
 @Keep
 @Serializable
+data object HomeScreenBlockedUsersRoute
+
+@Keep
+@Serializable
 data object HomeScreenProfileEditSelectBranchRoute
 
 @Keep

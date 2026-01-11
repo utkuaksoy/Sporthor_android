@@ -15,6 +15,10 @@
  */
 package com.iamkurtgoz.feature.home.bottomNavigation
 
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
@@ -23,20 +27,25 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.platform.LocalInspectionMode
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.layout.ContentScale
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.iamkurtgoz.core.common.contract.AppDefaults
+import com.iamkurtgoz.core.designsystem.component.image.AppAsyncImageLoader
 import com.iamkurtgoz.core.designsystem.internal.PreviewAppWithNightMode
 import com.iamkurtgoz.core.designsystem.theme.AppTheme
 import com.iamkurtgoz.core.designsystem.theme.AppThemeScaffold
+import com.iamkurtgoz.domain.eventbus.impl.DashboardEventBus
 
 private const val SHADOW_SIZE = -12f
 
@@ -46,6 +55,8 @@ internal fun HomeBottomNavigationComponent(
     scrollToTop: (Any) -> Unit = { },
 ) {
     val navBackStackEntry by homeNavController.currentBackStackEntryAsState()
+    val appEventBus = AppTheme.appEventBus
+    val currentPreferenceState by AppTheme.appPreferences.currentPreferenceState.collectAsStateWithLifecycle(initialValue = null)
     val topLevelRoutes = remember {
         listOf(
             TopLevelRoutes.Dashboard,
@@ -92,6 +103,9 @@ internal fun HomeBottomNavigationComponent(
                 NavigationBarItem(
                     selected = isSelected,
                     onClick = {
+                        if (topLevelRoute == TopLevelRoutes.Dashboard) {
+                            appEventBus.dashboardEventBus.trySend(DashboardEventBus.Event.RefreshHome)
+                        }
                         if (topLevelRoute == TopLevelRoutes.Share) {
                             homeNavController.navigate(TopLevelRoutes.Share.route)
                         } else {
@@ -110,10 +124,26 @@ internal fun HomeBottomNavigationComponent(
                         }
                     },
                     icon = {
-                        Icon(
-                            painter = painterResource(id = iconRes),
-                            contentDescription = "",
-                        )
+                        if (topLevelRoute == TopLevelRoutes.Profile && !currentPreferenceState?.profilePhoto.isNullOrBlank()) {
+                            Box(
+                                modifier = Modifier
+                                    .size(AppTheme.dimens.dp28)
+                                    .clip(CircleShape),
+                            ) {
+                                AppAsyncImageLoader.Load(
+                                    data = currentPreferenceState?.profilePhoto,
+                                    modifier = Modifier
+                                        .fillMaxSize()
+                                        .clip(CircleShape),
+                                    contentScale = ContentScale.Crop,
+                                )
+                            }
+                        } else {
+                            Icon(
+                                painter = painterResource(id = iconRes),
+                                contentDescription = "",
+                            )
+                        }
                     },
                     colors = NavigationBarItemDefaults.colors(
                         selectedIconColor = AppTheme.colors.barColors.navigationBarColors.navigationBarIconSelectedColor,

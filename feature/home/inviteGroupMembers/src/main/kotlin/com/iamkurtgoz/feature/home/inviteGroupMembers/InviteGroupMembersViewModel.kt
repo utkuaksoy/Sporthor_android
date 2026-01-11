@@ -74,6 +74,7 @@ internal class InviteGroupMembersViewModel @Inject constructor(
             is InviteGroupMembersScreenContract.Event.PopBackStack -> setSideEffect(InviteGroupMembersScreenContract.SideEffect.PopBackStack)
             is InviteGroupMembersScreenContract.Event.DismissDialogs -> dismissDialogs()
             is InviteGroupMembersScreenContract.Event.ChangeSelectedUserState -> changeSelectedUserState(event.item, event.tab)
+            is InviteGroupMembersScreenContract.Event.RemoveGroupMember -> removeGroupMember(event.item, event.tab)
             is InviteGroupMembersScreenContract.Event.OnChangeTab -> onChangeTab(event.tab)
             is InviteGroupMembersScreenContract.Event.SetSearchText -> setSearchText(event.text)
             is InviteGroupMembersScreenContract.Event.InviteClubMembersFromScreen ->
@@ -257,6 +258,88 @@ internal class InviteGroupMembersViewModel @Inject constructor(
                 selectedUserIdList = selectedUserIdList.toPersistentList(),
             )
         }
+    }
+
+    private fun removeGroupMember(
+        item: Any?,
+        tab: InviteGroupMembersTab,
+    ) {
+        val itemId = when (item) {
+            is UserRelationUIItemModel -> item.id
+            is CoachRelationUIItemModel -> item.id
+            is SocialSearchUIItemModel -> item.id
+            else -> null
+        } ?: return
+
+        val updatedSelectedUserList = viewState.selectedUserList
+            .filterNotNull()
+            .filterNot { it.id == itemId }
+
+        val updatedSelectedUserIdList = viewState.selectedUserIdList
+            .filterNot { it == itemId }
+
+        val updatedFollowingList = viewState.followingList?.let { current ->
+            when (tab) {
+                InviteGroupMembersTab.PLAYERS -> current.copy(
+                    users = current.users?.filterNot { it.id == itemId },
+                )
+                InviteGroupMembersTab.STAFF -> current.copy(
+                    coaches = current.coaches?.filterNot { it.id == itemId },
+                )
+            }
+        }
+
+        updateState { state ->
+            state.copy(
+                selectedUserList = updatedSelectedUserList.toPersistentList(),
+                selectedUserIdList = updatedSelectedUserIdList.toPersistentList(),
+                followingList = updatedFollowingList,
+            )
+        }
+
+        syncGroupMembers(updatedSelectedUserList)
+    }
+
+    private fun syncGroupMembers(updatedSelectedUserList: List<SocialSearchUIItemModel>) {
+        val groupId = viewState.route.model.groupId ?: return
+
+        val playerIds = updatedSelectedUserList
+            .filter { it.role == InviteGroupMembersTab.PLAYERS }
+            .mapNotNull { it.id }
+
+        val coachItems: List<CoachesList> = updatedSelectedUserList
+            .filter { it.role == InviteGroupMembersTab.STAFF }
+            .mapNotNull { coachUi ->
+                val coachId = coachUi.id ?: return@mapNotNull null
+                CoachesList(
+                    valId = coachId,
+                    val2 = coachUi.attribute,
+                    name = coachUi.name,
+                )
+            }
+
+        val params = AddTrainingGroupUserRequest(
+            groupId = groupId,
+            users = playerIds,
+            coaches = coachItems,
+        )
+
+        addTrainingGroupUserUseCase.invoke(params)
+            .requester
+            .onLoading {
+                updateState { it.copy(isLoading = true) }
+            }
+            .onError {
+                updateState { state ->
+                    state.copy(
+                        isLoading = false,
+                        alertDialogModel = it.toAlertDialog,
+                    )
+                }
+            }
+            .callWithSuccess {
+                updateState { it.copy(isLoading = false) }
+            }
     }
 
     private fun setSearchText(text: String) {

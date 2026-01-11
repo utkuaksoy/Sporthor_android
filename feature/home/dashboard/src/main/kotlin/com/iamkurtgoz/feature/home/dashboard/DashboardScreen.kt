@@ -33,6 +33,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
@@ -82,6 +83,7 @@ import com.iamkurtgoz.core.designsystem.theme.AppThemeSurface
 import com.iamkurtgoz.core.navigation.model.home.mediaViewer.HomeScreenMediaViewerScreenNavigateModel
 import com.iamkurtgoz.core.navigation.model.home.share.HomeScreenShareRouteScreenNavigateModel
 import com.iamkurtgoz.core.navigation.model.home.webview.HomeScreenWebViewScreenNavigateModel
+import com.iamkurtgoz.domain.eventbus.impl.DashboardEventBus
 import com.iamkurtgoz.domain.model.enums.MenuKeyType.AddDocument
 import com.iamkurtgoz.domain.model.enums.MenuKeyType.CoachList
 import com.iamkurtgoz.domain.model.enums.MenuKeyType.GenerateClub
@@ -120,6 +122,8 @@ internal fun DashboardScreen(
     val currentPreferenceState by AppTheme.appPreferences.currentPreferenceState.collectAsStateWithLifecycle(
         initialValue = null,
     )
+    val listState = rememberLazyListState()
+    val scope = rememberCoroutineScope()
     val notificationPermissionState = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
         rememberPermissionState(
             permission = Manifest.permission.POST_NOTIFICATIONS,
@@ -144,8 +148,13 @@ internal fun DashboardScreen(
         }
     }
 
-    AppTheme.appEventBus.dashboardEventBus.observeEventBus {
-        viewModel.setEvent(DashboardScreenContract.Event.UpdateEventBusStatus(it))
+    AppTheme.appEventBus.dashboardEventBus.observeEventBus { event ->
+        if (event is DashboardEventBus.Event.RefreshHome) {
+            scope.launch {
+                listState.scrollToItem(0)
+            }
+        }
+        viewModel.setEvent(DashboardScreenContract.Event.UpdateEventBusStatus(event))
     }
 
     viewModel.sideEffect.observeSideEffect { event ->
@@ -169,6 +178,7 @@ internal fun DashboardScreen(
     DashboardScreenScaffold(
         state = state,
         setEvent = viewModel::setEvent,
+        listState = listState,
     )
 }
 
@@ -176,6 +186,7 @@ internal fun DashboardScreen(
 private fun DashboardScreenScaffold(
     state: DashboardScreenContract.State,
     setEvent: (DashboardScreenContract.Event) -> Unit,
+    listState: androidx.compose.foundation.lazy.LazyListState,
 ) {
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val scope = rememberCoroutineScope()
@@ -349,6 +360,7 @@ private fun DashboardScreenScaffold(
                 contentPadding = contentPadding,
                 state = state,
                 setEvent = setEvent,
+                listState = listState,
             )
 
             state.alertDialogModel?.Alert {
@@ -623,6 +635,7 @@ private fun Preview() {
                     appRemoteConfigStatePack = AppRemoteConfigStatePack(),
                 ),
                 setEvent = { },
+                listState = rememberLazyListState(),
             )
         }
     }

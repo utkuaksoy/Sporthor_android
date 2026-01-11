@@ -15,12 +15,16 @@
  */
 package com.iamkurtgoz.feature.home.dashboard
 
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.ui.Alignment
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.OutlinedTextField
@@ -28,11 +32,13 @@ import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.ui.unit.dp
 import com.iamkurtgoz.core.common.contract.AppDefaults
 import com.iamkurtgoz.core.common.state.AppBuildConfigStatePack
 import com.iamkurtgoz.core.common.state.AppRemoteConfigStatePack
 import com.iamkurtgoz.core.commonui.component.post.PostView
+import com.iamkurtgoz.core.designsystem.component.animation.AppLoadingView
 import com.iamkurtgoz.core.designsystem.component.button.AppButton
 import com.iamkurtgoz.core.designsystem.component.infiniteList.InfiniteList
 import com.iamkurtgoz.core.designsystem.internal.PreviewAppWithNightMode
@@ -51,12 +57,28 @@ internal fun DashboardScreenContent(
     state: DashboardScreenContract.State,
     contentPadding: PaddingValues,
     setEvent: (DashboardScreenContract.Event) -> Unit,
+    listState: LazyListState,
     modifier: Modifier = Modifier,
 ) {
+    val isInitialLoading = state.isShimmerLoading && state.dashboardFeedList.isEmpty()
+
+    if (isInitialLoading) {
+        Box(
+            modifier = modifier
+                .fillMaxSize()
+                .padding(contentPadding),
+            contentAlignment = Alignment.Center,
+        ) {
+            AppLoadingView()
+        }
+        return
+    }
+
     InfiniteList(
         modifier = modifier,
         itemList = state.dashboardFeedList,
         contentPadding = contentPadding,
+        listState = listState,
         loadMore = {
             setEvent.invoke(DashboardScreenContract.Event.DashboardFeed(FetchParam.NEXT_PAGE))
         },
@@ -244,6 +266,7 @@ private fun Preview() {
                     appRemoteConfigStatePack = AppRemoteConfigStatePack(),
                 ),
                 contentPadding = PaddingValues(),
+                listState = rememberLazyListState(),
                 setEvent = { },
             )
         }

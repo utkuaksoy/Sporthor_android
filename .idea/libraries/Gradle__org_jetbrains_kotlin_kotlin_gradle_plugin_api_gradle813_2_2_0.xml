@@ -1,0 +1,12 @@
+<component name="libraryTable">
+  <library name="Gradle: org.jetbrains.kotlin:kotlin-gradle-plugin-api:gradle813:2.2.0" type="java-imported" external-system-id="GRADLE">
+    <properties groupId="org.jetbrains.kotlin" artifactId="kotlin-gradle-plugin-api" version="2.2.0" baseVersion="2.2.0" />
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-gradle-plugin-api/2.2.0/8befb10c80a6df018682102e628f3499c19d5f0c/kotlin-gradle-plugin-api-2.2.0-gradle813.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-gradle-plugin-api/2.2.0/718d168cad6023826d38f678ac7c77786e732926/kotlin-gradle-plugin-api-2.2.0-gradle813-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

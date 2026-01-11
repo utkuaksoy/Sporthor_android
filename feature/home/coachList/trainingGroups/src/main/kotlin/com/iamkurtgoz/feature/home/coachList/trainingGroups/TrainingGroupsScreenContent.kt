@@ -70,7 +70,9 @@ internal fun TrainingGroupsScreenContent(
                         trainingGroup = trainingGroup,
                         isDeleteMode = state.isDeleteMode,
                         onClick = {
-                            setEvent(TrainingGroupsScreenContract.Event.NavigateToUpdateCoachScreen(state.route.clubId, trainingGroup.id))
+                                trainingGroup.id?.let {
+                                setEvent(TrainingGroupsScreenContract.Event.OnTrainingGroupClicked(it))
+                            }
                         },
                     )
                     Spacer(modifier = Modifier.height(8.dp))
@@ -197,3 +199,4 @@ private fun Preview() {
         }
     }
 }
+

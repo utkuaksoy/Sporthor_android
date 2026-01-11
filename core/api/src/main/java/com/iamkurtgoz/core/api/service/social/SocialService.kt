@@ -17,6 +17,7 @@ package com.iamkurtgoz.core.api.service.social
 
 import androidx.annotation.Keep
 import com.iamkurtgoz.core.network.model.BaseResponse
+import com.iamkurtgoz.data.model.BlockedUsersResponseModel
 import com.iamkurtgoz.data.model.CreatePostResponseModel
 import com.iamkurtgoz.data.model.FollowUserResponseModel
 import com.iamkurtgoz.data.model.GetCommentsResponseModel
@@ -37,6 +38,7 @@ import com.iamkurtgoz.domain.model.request.HidePostRequest
 import com.iamkurtgoz.domain.model.request.LikePostRequest
 import com.iamkurtgoz.domain.model.request.RemoveSearchHistoryRequest
 import com.iamkurtgoz.domain.model.request.ReportPostRequest
+import com.iamkurtgoz.domain.model.request.RemoveBlockUserRequest
 import com.iamkurtgoz.domain.model.request.WatchedStoryRequest
 import retrofit2.Response
 import retrofit2.http.Body
@@ -112,4 +114,10 @@ interface SocialService {
 
     @POST("Social/WatchedStory")
     suspend fun watchedStory(@Body body: WatchedStoryRequest): Response<BaseResponse<Unit>>
+
+    @GET("Social/GetBlockUser")
+    suspend fun getBlockedUsers(): Response<BaseResponse<BlockedUsersResponseModel>>
+
+    @POST("Social/RemoveBlockUser")
+    suspend fun removeBlockUser(@Body body: RemoveBlockUserRequest): Response<BaseResponse<Unit>>
 }

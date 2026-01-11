@@ -26,5 +26,6 @@ object DashboardEventBus : CoreEventBus<DashboardEventBus.Event>() {
             val likeCount: Int,
         ) : Event()
         data object FetchStoryFeed : Event()
+        data object RefreshHome : Event()
     }
 }

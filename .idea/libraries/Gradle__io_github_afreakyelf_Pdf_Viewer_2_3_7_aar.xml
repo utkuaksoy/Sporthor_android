@@ -1,0 +1,15 @@
+<component name="libraryTable">
+  <library name="Gradle: io.github.afreakyelf:Pdf-Viewer:2.3.7@aar" external-system-id="GRADLE">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/8.14.3/transforms/95abe46b6855fd141763296e43508f6e/transformed/Pdf-Viewer-2.3.7/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/8.14.3/transforms/95abe46b6855fd141763296e43508f6e/transformed/Pdf-Viewer-2.3.7/res" />
+      <root url="file://$USER_HOME$/.gradle/caches/8.14.3/transforms/95abe46b6855fd141763296e43508f6e/transformed/Pdf-Viewer-2.3.7/AndroidManifest.xml" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/io.github.afreakyelf/Pdf-Viewer/2.3.7/802727fb9b4ccef312edd5283e5d9a3264e1f7ed/Pdf-Viewer-2.3.7-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/io.github.afreakyelf/Pdf-Viewer/2.3.7/1ae77109fec07f7247b86d3391243fca493328ed/Pdf-Viewer-2.3.7-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

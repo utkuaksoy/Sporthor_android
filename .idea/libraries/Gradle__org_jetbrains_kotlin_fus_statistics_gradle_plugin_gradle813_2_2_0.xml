@@ -1,0 +1,12 @@
+<component name="libraryTable">
+  <library name="Gradle: org.jetbrains.kotlin:fus-statistics-gradle-plugin:gradle813:2.2.0" type="java-imported" external-system-id="GRADLE">
+    <properties groupId="org.jetbrains.kotlin" artifactId="fus-statistics-gradle-plugin" version="2.2.0" baseVersion="2.2.0" />
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/fus-statistics-gradle-plugin/2.2.0/b278a6f702f07ca5c63d5268c1f723726fdb2511/fus-statistics-gradle-plugin-2.2.0-gradle813.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/fus-statistics-gradle-plugin/2.2.0/64eb311f64fb2b1dd5884019b24151060a4ff2da/fus-statistics-gradle-plugin-2.2.0-gradle813-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

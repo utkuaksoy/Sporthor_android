@@ -20,6 +20,7 @@ import com.iamkurtgoz.core.api.service.social.SocialService
 import com.iamkurtgoz.core.common.state.AppBuildConfigStatePack
 import com.iamkurtgoz.core.network.model.BaseResponse
 import com.iamkurtgoz.data.dataSource.SocialRemoteDataSource
+import com.iamkurtgoz.data.model.BlockedUsersResponseModel
 import com.iamkurtgoz.data.model.CreatePostResponseModel
 import com.iamkurtgoz.data.model.FollowUserResponseModel
 import com.iamkurtgoz.data.model.GetCommentsResponseModel
@@ -38,6 +39,7 @@ import com.iamkurtgoz.domain.model.request.DeleteStoryRequest
 import com.iamkurtgoz.domain.model.request.FollowUserRequest
 import com.iamkurtgoz.domain.model.request.HidePostRequest
 import com.iamkurtgoz.domain.model.request.LikePostRequest
+import com.iamkurtgoz.domain.model.request.RemoveBlockUserRequest
 import com.iamkurtgoz.domain.model.request.RemoveSearchHistoryRequest
 import com.iamkurtgoz.domain.model.request.ReportPostRequest
 import com.iamkurtgoz.domain.model.request.WatchedStoryRequest
@@ -132,5 +134,13 @@ internal class SocialRemoteDataSourceImpl @Inject constructor(
 
     override suspend fun watchedStory(body: WatchedStoryRequest): BaseResponse<Unit> = requestRetrofit {
         socialService.watchedStory(body)
+    }
+
+    override suspend fun getBlockedUsers(): BaseResponse<BlockedUsersResponseModel> = requestRetrofit {
+        socialService.getBlockedUsers()
+    }
+
+    override suspend fun removeBlockUser(body: RemoveBlockUserRequest): BaseResponse<Unit> = requestRetrofit {
+        socialService.removeBlockUser(body)
     }
 }

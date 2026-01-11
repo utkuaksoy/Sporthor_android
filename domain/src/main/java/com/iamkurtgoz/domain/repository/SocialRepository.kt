@@ -25,12 +25,14 @@ import com.iamkurtgoz.domain.model.request.DeleteStoryRequest
 import com.iamkurtgoz.domain.model.request.FollowUserRequest
 import com.iamkurtgoz.domain.model.request.HidePostRequest
 import com.iamkurtgoz.domain.model.request.LikePostRequest
+import com.iamkurtgoz.domain.model.request.RemoveBlockUserRequest
 import com.iamkurtgoz.domain.model.request.RemoveSearchHistoryRequest
 import com.iamkurtgoz.domain.model.request.ReportPostRequest
 import com.iamkurtgoz.domain.model.request.WatchedStoryRequest
 import com.iamkurtgoz.domain.model.response.CommentsDomainModel
 import com.iamkurtgoz.domain.model.response.CreatePostDomainModel
 import com.iamkurtgoz.domain.model.response.DashboardFeedDomainModel
+import com.iamkurtgoz.domain.model.response.BlockedUsersDomainModel
 import com.iamkurtgoz.domain.model.response.FollowUserDomainModel
 import com.iamkurtgoz.domain.model.response.LikePostDomainModel
 import com.iamkurtgoz.domain.model.response.SearchHistorySocialDomainModel
@@ -60,4 +62,6 @@ interface SocialRepository {
     suspend fun deleteStory(body: DeleteStoryRequest): RestResult<Unit>
     suspend fun createStory(body: CreateStoryRequest): RestResult<Unit>
     suspend fun watchedStory(body: WatchedStoryRequest): RestResult<Unit>
+    suspend fun getBlockedUsers(): RestResult<BlockedUsersDomainModel>
+    suspend fun removeBlockUser(body: RemoveBlockUserRequest): RestResult<Unit>
 }

@@ -1,8 +1,12 @@
 package com.iamkurtgoz.feature.home.profile.settings.accountSettings.data.di
 
 import com.iamkurtgoz.feature.home.profile.settings.accountSettings.data.useCase.DeleteAccountUseCaseImpl
+import com.iamkurtgoz.feature.home.profile.settings.accountSettings.data.useCase.GetBlockedUsersUseCaseImpl
+import com.iamkurtgoz.feature.home.profile.settings.accountSettings.data.useCase.RemoveBlockedUserUseCaseImpl
 import com.iamkurtgoz.feature.home.profile.settings.accountSettings.data.useCase.UpdateProfilePublicPrivateUseCaseImpl
 import com.iamkurtgoz.feature.home.profile.settings.accountSettings.domain.useCase.DeleteAccountUseCase
+import com.iamkurtgoz.feature.home.profile.settings.accountSettings.domain.useCase.GetBlockedUsersUseCase
+import com.iamkurtgoz.feature.home.profile.settings.accountSettings.domain.useCase.RemoveBlockedUserUseCase
 import com.iamkurtgoz.feature.home.profile.settings.accountSettings.domain.useCase.UpdateProfilePublicPrivateUseCase
 import dagger.Binds
 import dagger.Module
@@ -24,4 +28,16 @@ internal abstract class UseCaseModule {
     abstract fun bindUpdateProfilePublicPrivateUseCase(
         impl: UpdateProfilePublicPrivateUseCaseImpl,
     ): UpdateProfilePublicPrivateUseCase
+
+    @Binds
+    @Singleton
+    abstract fun bindGetBlockedUsersUseCase(
+        impl: GetBlockedUsersUseCaseImpl,
+    ): GetBlockedUsersUseCase
+
+    @Binds
+    @Singleton
+    abstract fun bindRemoveBlockedUserUseCase(
+        impl: RemoveBlockedUserUseCaseImpl,
+    ): RemoveBlockedUserUseCase
 }

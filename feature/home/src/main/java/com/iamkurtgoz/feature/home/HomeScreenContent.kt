@@ -1,18 +1,3 @@
-/*
- * Copyright 2024 Sporthor Android
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
 package com.iamkurtgoz.feature.home
 
 import androidx.compose.runtime.Composable
@@ -106,6 +91,8 @@ import com.iamkurtgoz.feature.home.profile.profileEdit.selectUserRole.navigation
 import com.iamkurtgoz.feature.home.profile.settings.aboutUs.navigation.navigateToAboutUsScreen
 import com.iamkurtgoz.feature.home.profile.settings.aboutUs.navigation.profileSettingAboutUsScreenNavigation
 import com.iamkurtgoz.feature.home.profile.settings.accountSettings.navigation.accountSettingsScreenNavigation
+import com.iamkurtgoz.feature.home.profile.settings.accountSettings.blockedUsers.navigation.blockedUsersScreenNavigation
+import com.iamkurtgoz.feature.home.profile.settings.accountSettings.blockedUsers.navigation.navigateToBlockedUsersScreen
 import com.iamkurtgoz.feature.home.profile.settings.accountSettings.navigation.navigateToAccountSettingsScreen
 import com.iamkurtgoz.feature.home.profile.settings.navigation.navigateToProfileSettingScreen
 import com.iamkurtgoz.feature.home.profile.settings.navigation.profileSettingScreenNavigation
@@ -402,6 +389,12 @@ internal fun HomeScreenContent(
         accountSettingsScreenNavigation(
             navigateUp = homeNavController::navigateUp,
             popBackStack = homeNavController::popBackStack,
+            navigateToBlockedUsers = homeNavController::navigateToBlockedUsersScreen,
+        )
+
+        blockedUsersScreenNavigation(
+            navigateUp = homeNavController::navigateUp,
+            popBackStack = homeNavController::popBackStack,
         )
 
         profileEditSelectBranchScreenNavigation(
@@ -540,7 +533,7 @@ internal fun HomeScreenContent(
             navigateToHomeScreenSendClubAuthDocumentScreen = { model ->
                 val option = NavOptions.Builder()
                 option.setPopUpTo(
-                    route = HomeScreenSelectTeamRoute,
+                    route = HomeScreenSelectTeamRoute::class,
                     inclusive = false,
                 )
 
@@ -555,7 +548,7 @@ internal fun HomeScreenContent(
             navigateToTrainingScreen = { model ->
                 val option = NavOptions.Builder()
                 option.setPopUpTo(
-                    route = HomeScreenSelectTeamRoute,
+                    route = HomeScreenSelectTeamRoute::class,
                     inclusive = false,
                 )
 
@@ -793,6 +786,9 @@ internal fun HomeScreenContent(
             navigateUp = homeNavController::navigateUp,
             popBackStack = homeNavController::popBackStack,
             navigateToUpdateCoachScreen = homeNavController::navigateToUpdateCoachScreen,
+            navigateToInviteGroupMembersScreen = { model ->
+                homeNavController.navigateToInviteGroupMembersScreen(model = model)
+            }
         )
 
         updateCoachScreenNavigation(

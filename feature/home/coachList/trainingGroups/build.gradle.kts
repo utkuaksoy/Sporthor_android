@@ -18,4 +18,7 @@ dependencies {
 
     // Projects
     implementation(projects.feature.home.coachList.trainingGroups.domain)
+    implementation(projects.feature.home.selectTrainingGroup.domain)
+
+    implementation(projects.feature.home.inviteGroupMembers)
 }

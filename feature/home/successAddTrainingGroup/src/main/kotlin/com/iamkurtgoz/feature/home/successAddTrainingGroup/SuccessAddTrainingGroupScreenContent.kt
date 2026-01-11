@@ -26,7 +26,9 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -51,87 +53,93 @@ internal fun SuccessAddTrainingGroupScreenContent(
     modifier: Modifier = Modifier,
     setEvent: (SuccessAddTrainingGroupScreenContract.Event) -> Unit,
 ) {
-    Box(
+    Column(
         modifier = modifier
             .fillMaxSize()
             .background(AppTheme.colors.generalColors.backgroundPrimary),
     ) {
-        Column {
-            // Üst bölüm – butonla aynı yeşil ton
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .background(Color(0xFF212A1D))
-                    .padding(bottom = AppTheme.dimens.dp72),
-                contentAlignment = Alignment.Center,
-            ) {
-                Column(
-                    modifier = Modifier
-                        .padding(top = AppTheme.dimens.dp72),
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                ) {
-                    Box(
-                        modifier = Modifier
-                            .clip(AppTheme.shapes.radiusCircle)
-                            .size(AppTheme.dimens.dp72)
-                            .border(
-                                width = AppTheme.dimens.dp2,
-                                color = AppTheme.colors.generalColors.foregroundWhite,
-                                shape = AppTheme.shapes.radiusCircle,
-                            ),
-                        contentAlignment = Alignment.Center,
-                    ) {
-                        AppAsyncImageLoader.Load(
-                            modifier = Modifier
-                                .clip(AppTheme.shapes.radiusCircle)
-                                .size(AppTheme.dimens.dp64),
-                            data = state.route.model.clubLogo
-                                ?: resourcesR.drawable.temp_img_profile_women,
-                        )
-                    }
-
-                    Spacer(modifier = Modifier.height(AppTheme.dimens.dp16))
-
-                    Text(
-                        text = state.route.model.clubName ?: "Sporthor Voleybol Klubü",
-                        style = AppTheme.typography.bodyMedium,
-                        color = AppTheme.colors.generalColors.foregroundWhite,
-                        textAlign = TextAlign.Center,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(horizontal = AppTheme.spacing.spacingHuge),
-                    )
-
-                    Text(
-                        text = state.route.model.groupName ?: "Başlangıç Minik Erkek",
-                        style = AppTheme.typography.bodyMedium,
-                        color = AppTheme.colors.generalColors.foregroundWhite,
-                        textAlign = TextAlign.Center,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(
-                                top = AppTheme.dimens.dp4,
-                                start = AppTheme.spacing.spacingHuge,
-                                end = AppTheme.spacing.spacingHuge,
-                            ),
-                    )
-                }
-            }
-
-            // Alt kart – yeşilin üstüne taşan radius'lu beyaz kart
+        // Üst bölüm – butonla aynı yeşil ton
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .background(Color(0xFF212A1D))
+                .padding(bottom = AppTheme.dimens.dp72),
+            contentAlignment = Alignment.Center,
+        ) {
             Column(
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .offset(y = -AppTheme.dimens.dp16) // yeşilin içine göm
-                    .background(
-                        color = AppTheme.colors.generalColors.foregroundWhite,
-                        shape = RoundedCornerShape(
-                            topStart = AppTheme.dimens.dp24,
-                            topEnd = AppTheme.dimens.dp24,
-                            bottomStart = AppTheme.dimens.dp0,
-                            bottomEnd = AppTheme.dimens.dp0,
+                    .padding(top = AppTheme.dimens.dp72),
+                horizontalAlignment = Alignment.CenterHorizontally,
+            ) {
+                Box(
+                    modifier = Modifier
+                        .clip(AppTheme.shapes.radiusCircle)
+                        .size(AppTheme.dimens.dp72)
+                        .border(
+                            width = AppTheme.dimens.dp2,
+                            color = AppTheme.colors.generalColors.foregroundWhite,
+                            shape = AppTheme.shapes.radiusCircle,
                         ),
+                    contentAlignment = Alignment.Center,
+                ) {
+                    AppAsyncImageLoader.Load(
+                        modifier = Modifier
+                            .clip(AppTheme.shapes.radiusCircle)
+                            .size(AppTheme.dimens.dp64),
+                        data = state.route.model.clubLogo
+                            ?: resourcesR.drawable.temp_img_profile_women,
+                    )
+                }
+
+                Spacer(modifier = Modifier.height(AppTheme.dimens.dp16))
+
+                Text(
+                    text = state.route.model.clubName ?: "Sporthor Voleybol Klubü",
+                    style = AppTheme.typography.bodyMedium,
+                    color = AppTheme.colors.generalColors.foregroundWhite,
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = AppTheme.spacing.spacingHuge),
+                )
+
+                Text(
+                    text = state.route.model.groupName ?: "Başlangıç Minik Erkek",
+                    style = AppTheme.typography.bodyMedium,
+                    color = AppTheme.colors.generalColors.foregroundWhite,
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(
+                            top = AppTheme.dimens.dp4,
+                            start = AppTheme.spacing.spacingHuge,
+                            end = AppTheme.spacing.spacingHuge,
+                        ),
+                )
+            }
+        }
+
+        // Alt kart – yeşilin üstüne taşan radius'lu beyaz kart
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .weight(1f)
+                .offset(y = -AppTheme.dimens.dp16) // yeşilin içine göm
+                .background(
+                    color = AppTheme.colors.generalColors.foregroundWhite,
+                    shape = RoundedCornerShape(
+                        topStart = AppTheme.dimens.dp24,
+                        topEnd = AppTheme.dimens.dp24,
+                        bottomStart = AppTheme.dimens.dp0,
+                        bottomEnd = AppTheme.dimens.dp0,
                     ),
+                ),
+        ) {
+            Column(
+                modifier = Modifier
+                    .weight(1f)
+                    .verticalScroll(rememberScrollState()),
+                horizontalAlignment = Alignment.CenterHorizontally,
             ) {
                 Text(
                     text = if (state.route.model.isEdit) {
@@ -154,27 +162,25 @@ internal fun SuccessAddTrainingGroupScreenContent(
                         .padding(all = AppTheme.spacing.spacingHuge),
                     textAlign = TextAlign.Center,
                 )
-
-                Spacer(modifier = Modifier.weight(1f))
-
-                AppButton.PrimaryLarge(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(all = AppTheme.spacing.spacingHuge)
-                        .padding(
-                            bottom = AppTheme.configuration
-                                .getSafeContentPaddingValues()
-                                .calculateBottomPadding(),
-                        ),
-                    text = "Grup Üyelerini Davet Et",
-                    onClick = {
-                        setEvent(
-                            SuccessAddTrainingGroupScreenContract.Event
-                                .NavigateToInviteGroupMembersScreen,
-                        )
-                    },
-                )
             }
+
+            AppButton.PrimaryLarge(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(all = AppTheme.spacing.spacingHuge)
+                    .padding(
+                        bottom = AppTheme.configuration
+                            .getSafeContentPaddingValues()
+                            .calculateBottomPadding(),
+                    ),
+                text = "Grup Üyelerini Davet Et",
+                onClick = {
+                    setEvent(
+                        SuccessAddTrainingGroupScreenContract.Event
+                            .NavigateToInviteGroupMembersScreen,
+                    )
+                },
+            )
         }
     }
 }

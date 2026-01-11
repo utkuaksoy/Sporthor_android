@@ -4,6 +4,7 @@ import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Text
@@ -29,14 +30,19 @@ import com.iamkurtgoz.core.designsystem.internal.PreviewAppWithNightMode
 import com.iamkurtgoz.core.designsystem.theme.AppTheme
 import com.iamkurtgoz.core.designsystem.theme.AppThemeScaffold
 import com.iamkurtgoz.core.designsystem.theme.AppThemeSurface
+// 1. GEREKLİ IMPORT'LARI EKLE
+import com.iamkurtgoz.core.navigation.model.home.inviteGroupMember.HomeScreenInviteGroupMemberScreenNavigationModel
 import com.iamkurtgoz.core.navigation.screenRoute.HomeCoachListTrainingGroupsScreenRoute
 import com.iamkurtgoz.domain.model.response.GetClubsAndDetailsDomainModelMock
+// 2. GÜVENLİ YÖNLENDİRME FONKSİYONUNU İÇERİ AKTAR
+import com.iamkurtgoz.feature.home.inviteGroupMembers.navigation.navigateToInviteGroupMembersScreen
 
 @Composable
 internal fun TrainingGroupsScreen(
     navigateUp: () -> Unit,
     popBackStack: () -> Unit,
     navigateToUpdateCoachScreen: (clubId: String?, trainingGroupId: String?) -> Unit,
+    navigateToInviteGroupMembersScreen: (model: HomeScreenInviteGroupMemberScreenNavigationModel) -> Unit,
     viewModel: TrainingGroupsViewModel = hiltViewModel(),
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
@@ -52,6 +58,10 @@ internal fun TrainingGroupsScreen(
             is TrainingGroupsScreenContract.SideEffect.NavigateUp -> navigateUp()
             is TrainingGroupsScreenContract.SideEffect.PopBackStack -> popBackStack()
             is TrainingGroupsScreenContract.SideEffect.NavigateToUpdateCoachScreen -> navigateToUpdateCoachScreen(event.clubId, event.trainingGroupId)
+            // 4. YENİ SIDE EFFECT'İ YAKALA VE NAVİGASYONU TETİKLE
+            is TrainingGroupsScreenContract.SideEffect.NavigateToInviteGroupMembersScreen -> {
+                navigateToInviteGroupMembersScreen(event.model)
+            }
         }
     }
 
@@ -107,6 +117,7 @@ private fun TrainingGroupsScreenScaffold(
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(horizontal = 16.dp)
+                        .navigationBarsPadding()
                         .padding(bottom = 16.dp),
                     onClick = {
                         setEvent.invoke(TrainingGroupsScreenContract.Event.ShowDeleteCoachDialog)

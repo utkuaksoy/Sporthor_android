@@ -31,6 +31,8 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.key
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
@@ -112,8 +114,10 @@ private fun AddUserBottomSheetContent(
         Column(
             modifier = modifier
                 .fillMaxWidth()
+                .padding(padding)
                 .padding(horizontal = AppTheme.spacing.spacingMedium)
-                .padding(bottom = AppTheme.spacing.spacingMedium),
+                .padding(bottom = AppTheme.spacing.spacingMedium)
+                .verticalScroll(rememberScrollState()),
         ) {
             Text(
                 text = "Kişi/Topluluk Ekle", // TODO: Localize
@@ -127,7 +131,7 @@ private fun AddUserBottomSheetContent(
 
             AppTextField.SearchField(
                 placeholder = "Kişi Ara", // TODO: Localize
-                value = state.textTaskName.value,
+                value = state.textSearchUser.value,
                 onValueChange = {
                     setEvent.invoke(EditEventScreenContract.Event.SetSearchUser(it))
                 },

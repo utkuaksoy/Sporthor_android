@@ -72,6 +72,8 @@ internal class CreateTeamViewModel @Inject constructor(
             is CreateTeamScreenContract.Event.SetAddressDetailName -> setAddressDetailName(event.value)
             is CreateTeamScreenContract.Event.SetClubCreateYear -> setClubCreateYear(event.value)
             is CreateTeamScreenContract.Event.CreateClub -> createClub()
+            is CreateTeamScreenContract.Event.ShowYearPicker -> setShowYearPicker(true)
+            is CreateTeamScreenContract.Event.HideYearPicker -> setShowYearPicker(false)
             is CreateTeamScreenContract.Event.NavigateToSelectAddress -> setSideEffect(CreateTeamScreenContract.SideEffect.NavigateToSelectAddress)
             is CreateTeamScreenContract.Event.SelectedAddressChanged -> selectedAddressChanged(
                 title = event.title,
@@ -101,6 +103,9 @@ internal class CreateTeamViewModel @Inject constructor(
             is CreateTeamScreenContract.Event.NavigateToCreateTeamSelectBranchScreen -> setSideEffect(CreateTeamScreenContract.SideEffect.NavigateToCreateTeamSelectBranchScreen)
             is CreateTeamScreenContract.Event.UpdateEventBusStatus -> updateEventBusStatus(event.event)
         }
+    }
+    private fun setShowYearPicker(isShow: Boolean) {
+        updateState { it.copy(showYearPicker = isShow) }
     }
 
     // Events functions
