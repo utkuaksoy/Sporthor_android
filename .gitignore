@@ -2952,3 +2952,4 @@ local.properties
 .idea/kotlinc.xml
 
 build/reports/problems/problems-report.html
+.gradle/
