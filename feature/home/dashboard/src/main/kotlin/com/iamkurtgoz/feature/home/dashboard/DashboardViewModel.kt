@@ -200,12 +200,29 @@ internal class DashboardViewModel @Inject constructor(
                 }
             }
             .callWithSuccess {
-                updateState { state ->
-                    state.copy(
-                        isLoading = false,
-                        menuList = it,
-                        menuTitle = "Hızlı Menü",
-                    )
+                val menuItems = it.menu.orEmpty()
+                if (menuItems.size <= 1) {
+                    val mainMenu = menuItems.firstOrNull()
+                    updateState { state ->
+                        state.copy(
+                            isLoading = false,
+                            menuList = it.copy(
+                                menu = mainMenu?.subMenus
+                                    ?.toMenuUIModelItemList(mainMenu?.menuUserType)
+                                    ?.map { item -> item.copy() }
+                                    .orEmpty(),
+                            ),
+                            menuTitle = "Hızlı Menü",
+                        )
+                    }
+                } else {
+                    updateState { state ->
+                        state.copy(
+                            isLoading = false,
+                            menuList = it,
+                            menuTitle = "Hızlı Menü",
+                        )
+                    }
                 }
             }
     }
