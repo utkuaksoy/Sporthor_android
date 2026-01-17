@@ -21,8 +21,10 @@ import androidx.lifecycle.viewModelScope
 import com.iamkurtgoz.core.common.state.AppBuildConfigStatePack
 import com.iamkurtgoz.core.common.state.AppRemoteConfigStatePack
 import com.iamkurtgoz.domain.core.CoreViewModel
+import com.iamkurtgoz.domain.dataStore.AppPreferences
 import com.iamkurtgoz.domain.extensions.toAlertDialog
 import com.iamkurtgoz.domain.model.request.LoginWithUserNameRequest
+import com.iamkurtgoz.domain.notification.INotificationSettingsManager
 import com.iamkurtgoz.feature.auth.login.domain.useCase.LoginWithUserNameUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -33,6 +35,8 @@ internal class LoginViewModel @Inject constructor(
     private val appBuildConfigStatePack: AppBuildConfigStatePack,
     appRemoteConfigStatePack: AppRemoteConfigStatePack,
     private val loginWithEmailUseCase: LoginWithUserNameUseCase,
+    private val notificationSettingsManager: INotificationSettingsManager,
+    private val appPreferences: AppPreferences,
 ) : CoreViewModel<LoginScreenContract.State, LoginScreenContract.SideEffect, LoginScreenContract.Event>(
     initialState = LoginScreenContract.State(
         isLoading = false,
@@ -138,7 +142,17 @@ internal class LoginViewModel @Inject constructor(
                 }
             }
             .callWithSuccess {
+                refreshFirebaseToken()
                 setSideEffect(LoginScreenContract.SideEffect.NavigateToHome)
             }
+    }
+
+    private fun refreshFirebaseToken() {
+        viewModelScope.launch {
+            val token = notificationSettingsManager.getRegisterFcmToken()
+            if (!token.isNullOrBlank()) {
+                appPreferences.setFirebaseToken(firebaseToken = token)
+            }
+        }
     }
 }

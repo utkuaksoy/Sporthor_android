@@ -144,7 +144,7 @@ internal fun NotificationRow(
 ) {
     val lowerMessage = item.message?.lowercase()
     val lowerTitle = item.title?.lowercase()
-    val isFollowRequestConfirm = filterType == NotifListFilterType.Confirm &&
+    val isFollowRequestConfirm = (filterType == NotifListFilterType.Confirm || filterType == NotifListFilterType.All) &&
         ((lowerMessage?.contains("takip") == true && lowerMessage.contains("istiyor")) ||
             (lowerTitle?.contains("takipçi") == true))
     Row(

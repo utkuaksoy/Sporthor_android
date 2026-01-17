@@ -25,10 +25,12 @@ import com.iamkurtgoz.core.navigation.model.auth.otp.AuthOtpScreenFromPage
 import com.iamkurtgoz.core.navigation.model.auth.otp.toAuthOtpScreenRoute
 import com.iamkurtgoz.core.navigation.model.auth.userInfo.AuthUserInfoScreenNavigateModel
 import com.iamkurtgoz.domain.core.CoreViewModel
+import com.iamkurtgoz.domain.dataStore.AppPreferences
 import com.iamkurtgoz.domain.extensions.toAlertDialog
 import com.iamkurtgoz.domain.model.request.GenerateOtpRequest
 import com.iamkurtgoz.domain.model.request.LoginWithPhoneRequest
 import com.iamkurtgoz.domain.model.request.ValidateOtpRequest
+import com.iamkurtgoz.domain.notification.INotificationSettingsManager
 import com.iamkurtgoz.feature.auth.otp.domain.useCase.GenerateOtpUseCase
 import com.iamkurtgoz.feature.auth.otp.domain.useCase.LoginWithPhoneUseCase
 import com.iamkurtgoz.feature.auth.otp.domain.useCase.ValidateOtpUseCase
@@ -46,6 +48,8 @@ internal class OtpViewModel @Inject constructor(
     private val generateOtpUseCase: GenerateOtpUseCase,
     private val validateOtpUseCase: ValidateOtpUseCase,
     private val loginWithPhoneUseCase: LoginWithPhoneUseCase,
+    private val notificationSettingsManager: INotificationSettingsManager,
+    private val appPreferences: AppPreferences,
 ) : CoreViewModel<OtpScreenContract.State, OtpScreenContract.SideEffect, OtpScreenContract.Event>(
     initialState = OtpScreenContract.State(
         isLoading = false,
@@ -170,8 +174,18 @@ internal class OtpViewModel @Inject constructor(
                 }
             }
             .callWithSuccess {
+                refreshFirebaseToken()
                 setSideEffect(OtpScreenContract.SideEffect.NavigateToHome)
             }
+    }
+
+    private fun refreshFirebaseToken() {
+        viewModelScope.launch {
+            val token = notificationSettingsManager.getRegisterFcmToken()
+            if (!token.isNullOrBlank()) {
+                appPreferences.setFirebaseToken(firebaseToken = token)
+            }
+        }
     }
 
     private fun reSendOtpCode() {
