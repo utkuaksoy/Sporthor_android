@@ -115,6 +115,7 @@ internal class DashboardViewModel @Inject constructor(
                 updateState { state ->
                     state.copy(
                         menuTitle = "${event.mainMenuItem.name} Menüsü",
+                        isSingleMainMenu = false,
                         menuList = state.menuList?.copy(
                             menu = event.mainMenuItem.subMenus
                                 ?.toMenuUIModelItemList(event.mainMenuItem.menuUserType)
@@ -206,6 +207,7 @@ internal class DashboardViewModel @Inject constructor(
                     updateState { state ->
                         state.copy(
                             isLoading = false,
+                            isSingleMainMenu = true,
                             menuList = it.copy(
                                 menu = mainMenu?.subMenus
                                     ?.toMenuUIModelItemList(mainMenu?.menuUserType)
@@ -219,6 +221,7 @@ internal class DashboardViewModel @Inject constructor(
                     updateState { state ->
                         state.copy(
                             isLoading = false,
+                            isSingleMainMenu = false,
                             menuList = it,
                             menuTitle = "Hızlı Menü",
                         )

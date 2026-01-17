@@ -196,7 +196,7 @@ private fun DashboardScreenScaffold(
         ?.menu
         .orEmpty()
         .any { it.mainMenu == true }
-        .not()
+        .not() && !state.isSingleMainMenu
 
     BackHandler(drawerState.isOpen) {
         if (isOnSubMenu) {

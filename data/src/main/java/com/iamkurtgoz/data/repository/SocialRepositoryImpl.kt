@@ -31,6 +31,7 @@ import com.iamkurtgoz.data.mapper.StoryFeedDomainMapper
 import com.iamkurtgoz.data.mapper.UserRelationDomainMapper
 import com.iamkurtgoz.domain.model.request.AddCommentRequest
 import com.iamkurtgoz.domain.model.request.AddSearchHistoryRequest
+import com.iamkurtgoz.domain.model.request.ConfirmationFollowRequest
 import com.iamkurtgoz.domain.model.request.CreatePostRequest
 import com.iamkurtgoz.domain.model.request.CreateStoryRequest
 import com.iamkurtgoz.domain.model.request.DeletePostRequest
@@ -107,6 +108,10 @@ internal class SocialRepositoryImpl @Inject constructor(
     override suspend fun unFollowUser(body: FollowUserRequest): RestResult<FollowUserDomainModel> = mapToRestResult {
         socialRemoteDataSource.unFollowUser(body)
     }.mapOnSuccess(followUserDomainMapper::map)
+
+    override suspend fun confirmationFollow(body: ConfirmationFollowRequest): RestResult<Unit> = mapToRestResult {
+        socialRemoteDataSource.confirmationFollow(body)
+    }.mapOnSuccess { }
 
     override suspend fun getFeedAsync(page: Int?, pageSize: Int?): RestResult<DashboardFeedDomainModel> = mapToRestResult {
         socialRemoteDataSource.getFeedAsync(page, pageSize)

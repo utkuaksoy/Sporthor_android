@@ -94,7 +94,7 @@ internal fun WelcomeScreenContent(
                 },
             )
 
-            TextButton(
+            /*TextButton(
                 modifier = Modifier
                     .padding(top = AppTheme.spacing.spacingSmall),
                 content = {
@@ -107,7 +107,7 @@ internal fun WelcomeScreenContent(
                 onClick = {
                     setEvent.invoke(WelcomeScreenContract.Event.NavigateToHome)
                 },
-            )
+            )*/
         }
     }
 }

@@ -62,6 +62,12 @@ internal fun ChatMessagingScreenContent(
     val currentPreferenceState by AppTheme.appPreferences.currentPreferenceState.collectAsStateWithLifecycle(
         initialValue = null,
     )
+    val otherUserId = state.route.userId
+    val currentUserId = currentPreferenceState?.userId
+        ?: state.users.firstOrNull { it.isCurrentUser == true }?.id
+    val currentUserName = state.users.firstOrNull { it.id == currentUserId }?.name
+        ?: state.users.firstOrNull { it.isCurrentUser == true }?.name
+    val otherUserName = state.users.firstOrNull { it.id == otherUserId }?.name ?: state.route.title
 
     InfiniteList(
         modifier = modifier
@@ -95,11 +101,26 @@ internal fun ChatMessagingScreenContent(
                         .fillMaxWidth(),
                     textAlign = TextAlign.Center,
                 )
-            } else if (item is ChatListItem.MessageItem && item.message.from?.id == currentPreferenceState?.userId) {
+            } else if (item is ChatListItem.MessageItem) {
+                val fromId = item.message.from?.id
+                val fromName = item.message.from?.name
+                val isOutgoing = if (state.route.isGroup) {
+                    currentUserId != null && fromId == currentUserId
+                } else {
+                    when {
+                        currentUserId != null && !fromId.isNullOrBlank() -> fromId == currentUserId
+                        currentUserId != null && !currentUserName.isNullOrBlank() && !fromName.isNullOrBlank() -> {
+                            fromName == currentUserName
+                        }
+                        currentUserId == null && otherUserId != null && !fromId.isNullOrBlank() -> fromId != otherUserId
+                        else -> false
+                    }
+                }
+                if (isOutgoing) {
                 ChatRowOutgoing(
                     isParentMessageRow = item.isParentMessageRow,
                     imageData = item.message.from?.image,
-                    userName = item.message.from?.name,
+                    userName = currentUserName ?: item.message.from?.name,
                     message = item.message.content,
                     time = item.message.sendDate?.toString(format = DateFormat.TIME),
                     messageType = item.message.messageType,
@@ -109,7 +130,7 @@ internal fun ChatMessagingScreenContent(
                         .padding(end = AppTheme.spacing.spacingMedium)
                         .padding(vertical = AppTheme.spacing.spacingSmallest),
                 )
-            } else if (item is ChatListItem.MessageItem && item.message.from?.id != currentPreferenceState?.userId) {
+                } else {
                 ChatRowIncoming(
                     isParentMessageRow = item.isParentMessageRow,
                     imageData = item.message.from?.image,
@@ -123,6 +144,7 @@ internal fun ChatMessagingScreenContent(
                         .padding(start = AppTheme.spacing.spacingMedium)
                         .padding(vertical = AppTheme.spacing.spacingSmallest),
                 )
+                }
             }
         },
     )

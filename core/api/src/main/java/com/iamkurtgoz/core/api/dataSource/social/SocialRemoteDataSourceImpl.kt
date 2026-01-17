@@ -32,6 +32,7 @@ import com.iamkurtgoz.data.model.SearchSocialResponseModel
 import com.iamkurtgoz.data.model.UserRelationResponseModel
 import com.iamkurtgoz.domain.model.request.AddCommentRequest
 import com.iamkurtgoz.domain.model.request.AddSearchHistoryRequest
+import com.iamkurtgoz.domain.model.request.ConfirmationFollowRequest
 import com.iamkurtgoz.domain.model.request.CreatePostRequest
 import com.iamkurtgoz.domain.model.request.CreateStoryRequest
 import com.iamkurtgoz.domain.model.request.DeletePostRequest
@@ -82,6 +83,10 @@ internal class SocialRemoteDataSourceImpl @Inject constructor(
 
     override suspend fun unFollowUser(body: FollowUserRequest): BaseResponse<FollowUserResponseModel> = requestRetrofit {
         socialService.unFollowUser(body)
+    }
+
+    override suspend fun confirmationFollow(body: ConfirmationFollowRequest): BaseResponse<Unit> = requestRetrofit {
+        socialService.confirmationFollow(body)
     }
 
     override suspend fun getFeedAsync(page: Int?, pageSize: Int?): BaseResponse<GetFeedAsyncResponseModel> = requestRetrofit {

@@ -44,6 +44,7 @@ internal class CalendarViewModel @Inject constructor(
     override fun setEvent(event: CalendarScreenContract.Event) {
         when (event) {
             is CalendarScreenContract.Event.Initialize -> handleOneTimeEvent(event, ::initialize)
+            is CalendarScreenContract.Event.RefreshCalendar -> getCalendar()
             is CalendarScreenContract.Event.NavigateUp -> setSideEffect(CalendarScreenContract.SideEffect.NavigateUp)
             is CalendarScreenContract.Event.PopBackStack -> setSideEffect(CalendarScreenContract.SideEffect.PopBackStack)
             is CalendarScreenContract.Event.DismissDialogs -> dismissDialogs()

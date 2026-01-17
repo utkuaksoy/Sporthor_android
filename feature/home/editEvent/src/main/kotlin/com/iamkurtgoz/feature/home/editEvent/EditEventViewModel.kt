@@ -22,6 +22,8 @@ import com.iamkurtgoz.core.common.state.AppRemoteConfigStatePack
 import com.iamkurtgoz.core.navigation.model.home.editEvent.toHomeScreenEditEventRouteTypeMap
 import com.iamkurtgoz.domain.core.CoreViewModel
 import com.iamkurtgoz.domain.extensions.toAlertDialog
+import com.iamkurtgoz.domain.eventbus.AppEventBus
+import com.iamkurtgoz.domain.eventbus.impl.CalendarEventBus
 import com.iamkurtgoz.domain.model.base.AnyAlertDialogModel
 import com.iamkurtgoz.domain.model.request.AddTaskTypeRequest
 import com.iamkurtgoz.domain.model.request.UpdateTaskRequest
@@ -36,6 +38,7 @@ import com.iamkurtgoz.feature.home.editEvent.domain.useCase.GetTrainingGroupUser
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import java.time.LocalDate
+import java.time.LocalDateTime
 import java.time.LocalTime
 import javax.inject.Inject
 
@@ -48,6 +51,7 @@ internal class EditEventViewModel @Inject constructor(
     private val addTaskTypeUseCase: AddTaskTypeUseCase,
     private val getTrainingGroupUserUseCase: GetTrainingGroupUserUseCase,
     private val editTaskUseCase: EditTaskUseCase,
+    private val appEventBus: AppEventBus,
 ) : CoreViewModel<EditEventScreenContract.State, EditEventScreenContract.SideEffect, EditEventScreenContract.Event>(
     initialState = EditEventScreenContract.State(
         isLoading = false,
@@ -60,6 +64,7 @@ internal class EditEventViewModel @Inject constructor(
         eventEndTime = LocalTime.now().plusHours(2),
     ),
 ) {
+    private var isInitializingFromRoute: Boolean = false
     override fun setEvent(event: EditEventScreenContract.Event) {
         when (event) {
             is EditEventScreenContract.Event.Initialize -> handleOneTimeEvent(event, ::initialize)
@@ -181,6 +186,7 @@ internal class EditEventViewModel @Inject constructor(
     }
 
     private fun initRoutedData() {
+        isInitializingFromRoute = true
         viewState.route.model.task?.let { task ->
             task.title?.let {
                 setEventName(it)
@@ -242,6 +248,7 @@ internal class EditEventViewModel @Inject constructor(
                 setDescription(it)
             }
         }
+        isInitializingFromRoute = false
     }
 
     private fun addTaskType() {
@@ -325,6 +332,28 @@ internal class EditEventViewModel @Inject constructor(
     }
 
     private fun setEventStartDate(date: LocalDate) {
+        if (isInitializingFromRoute) {
+            updateState { state ->
+                state.copy(
+                    eventStartDate = date,
+                )
+            }
+            return
+        }
+        val endDate = viewState.eventEndDate
+        if (date.isAfter(endDate)) {
+            updateState { state ->
+                state.copy(
+                    alertDialogModel = AnyAlertDialogModel(
+                        title = null,
+                        message = "Başlangıç, bitişten sonra olamaz!", // TODO: Localize,
+                        confirmButton = "Tamam", // TODO: Localize,
+                        dismissButton = null,
+                    ),
+                )
+            }
+            return
+        }
         updateState { state ->
             state.copy(
                 eventStartDate = date,
@@ -357,6 +386,28 @@ internal class EditEventViewModel @Inject constructor(
     }
 
     private fun setEventEndDate(date: LocalDate) {
+        if (isInitializingFromRoute) {
+            updateState { state ->
+                state.copy(
+                    eventEndDate = date,
+                )
+            }
+            return
+        }
+        val startDate = viewState.eventStartDate
+        if (date.isBefore(startDate)) {
+            updateState { state ->
+                state.copy(
+                    alertDialogModel = AnyAlertDialogModel(
+                        title = null,
+                        message = "Bitiş, başlangıçtan önce olamaz!", // TODO: Localize,
+                        confirmButton = "Tamam", // TODO: Localize,
+                        dismissButton = null,
+                    ),
+                )
+            }
+            return
+        }
         updateState { state ->
             state.copy(
                 eventEndDate = date,
@@ -600,6 +651,7 @@ internal class EditEventViewModel @Inject constructor(
                 }
             }
             .callWithSuccess { response ->
+                appEventBus.calendarEventBus.trySend(CalendarEventBus.Event.Refresh)
                 setSideEffect(EditEventScreenContract.SideEffect.PopBackStack)
             }
     }

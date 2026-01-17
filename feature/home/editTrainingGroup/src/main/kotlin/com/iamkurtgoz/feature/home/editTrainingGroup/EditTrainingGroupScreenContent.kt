@@ -186,7 +186,7 @@ internal fun EditTrainingGroupScreenContent(
         item {
             AppTextField.Primary(
                 title = "Grup Adı", // TODO: Localize
-                placeholder = "Grup adı girin", // TODO: Localize
+                placeholder = "Grup Adı", // TODO: Localize
                 value = state.textGroupName.value,
                 onValueChange = {
                     setEvent.invoke(EditTrainingGroupScreenContract.Event.SetGroupName(it))

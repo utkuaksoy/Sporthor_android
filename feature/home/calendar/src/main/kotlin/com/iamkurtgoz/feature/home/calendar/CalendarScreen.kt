@@ -58,6 +58,7 @@ import com.iamkurtgoz.core.common.state.AppRemoteConfigStatePack
 import com.iamkurtgoz.core.commonui.component.SelectAddEventTypeDialog
 import com.iamkurtgoz.core.commonui.component.log.TrackedScreen
 import com.iamkurtgoz.core.commonui.extension.Alert
+import com.iamkurtgoz.core.commonui.extension.observeEventBus
 import com.iamkurtgoz.core.commonui.extension.observeSideEffect
 import com.iamkurtgoz.core.designsystem.component.animation.AppLoadingDialog
 import com.iamkurtgoz.core.designsystem.component.circlebutton.AppCircleButton
@@ -68,6 +69,7 @@ import com.iamkurtgoz.core.designsystem.theme.AppThemeScaffold
 import com.iamkurtgoz.core.designsystem.theme.AppThemeSurface
 import com.iamkurtgoz.core.navigation.model.home.addEvent.HomeScreenAddEventScreenNavigationModel
 import com.iamkurtgoz.core.navigation.model.home.calendarDetail.HomeScreenCalendarDetailScreenNavigationModel
+import com.iamkurtgoz.domain.eventbus.impl.CalendarEventBus
 import com.iamkurtgoz.core.resources.R as resourcesR
 import java.time.LocalDate
 
@@ -86,6 +88,14 @@ internal fun CalendarScreen(
 
     LaunchedEffect(key1 = Unit) {
         viewModel.setEvent(CalendarScreenContract.Event.Initialize)
+    }
+
+    AppTheme.appEventBus.calendarEventBus.observeEventBus { event ->
+        when (event) {
+            is CalendarEventBus.Event.Refresh -> {
+                viewModel.setEvent(CalendarScreenContract.Event.RefreshCalendar)
+            }
+        }
     }
 
     viewModel.sideEffect.observeSideEffect { event ->

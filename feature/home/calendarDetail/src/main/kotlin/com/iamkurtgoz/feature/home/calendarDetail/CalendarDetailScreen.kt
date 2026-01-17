@@ -57,6 +57,7 @@ import com.iamkurtgoz.core.common.state.AppRemoteConfigStatePack
 import com.iamkurtgoz.core.commonui.component.SelectAddEventTypeDialog
 import com.iamkurtgoz.core.commonui.component.log.TrackedScreen
 import com.iamkurtgoz.core.commonui.extension.Alert
+import com.iamkurtgoz.core.commonui.extension.observeEventBus
 import com.iamkurtgoz.core.commonui.extension.observeSideEffect
 import com.iamkurtgoz.core.designsystem.component.animation.AppLoadingDialog
 import com.iamkurtgoz.core.designsystem.component.circlebutton.AppCircleButton
@@ -70,6 +71,7 @@ import com.iamkurtgoz.core.navigation.HomeScreenCalendarDetailRoute
 import com.iamkurtgoz.core.navigation.model.home.addEvent.HomeScreenAddEventScreenNavigationModel
 import com.iamkurtgoz.core.navigation.model.home.calendarDetail.HomeScreenCalendarDetailScreenNavigationModel
 import com.iamkurtgoz.core.navigation.model.home.editEvent.HomeScreenEditEventScreenNavigationModel
+import com.iamkurtgoz.domain.eventbus.impl.CalendarEventBus
 import com.iamkurtgoz.feature.home.calendarDetail.domain.model.DayItem
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -97,6 +99,14 @@ internal fun CalendarDetailScreen(
         viewModel.setEvent(CalendarDetailScreenContract.Event.Initialize)
         withContext(Dispatchers.Main) {
             viewModel.setEvent(CalendarDetailScreenContract.Event.SyncScrollState)
+        }
+    }
+
+    AppTheme.appEventBus.calendarEventBus.observeEventBus { event ->
+        when (event) {
+            is CalendarEventBus.Event.Refresh -> {
+                viewModel.setEvent(CalendarDetailScreenContract.Event.RefreshCalendarDetail)
+            }
         }
     }
 

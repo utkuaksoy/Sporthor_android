@@ -16,6 +16,7 @@
 package com.iamkurtgoz.domain.eventbus
 
 import com.iamkurtgoz.domain.eventbus.impl.AddEventTaskEventBus
+import com.iamkurtgoz.domain.eventbus.impl.CalendarEventBus
 import com.iamkurtgoz.domain.eventbus.impl.ChatDetailUserEventBus
 import com.iamkurtgoz.domain.eventbus.impl.ChatEventBus
 import com.iamkurtgoz.domain.eventbus.impl.ChatMessagingEventBus
@@ -49,6 +50,7 @@ object AppEventBus {
     val chatDetailUserEventBus: ChatDetailUserEventBus = ChatDetailUserEventBus
     val createClubEventBus: CreateClubEventBus = CreateClubEventBus
     val addEventTaskEventBus: AddEventTaskEventBus = AddEventTaskEventBus
+    val calendarEventBus: CalendarEventBus = CalendarEventBus
     val editEventTaskEventBus: EditEventTaskEventBus = EditEventTaskEventBus
     val createStoryComponent: CreateStoryComponent = CreateStoryComponent
     val editTeamEventBus: EditTeamEventBus = EditTeamEventBus

@@ -64,6 +64,7 @@ internal class ProfileViewModel @Inject constructor(
         navigateRoute = savedStateHandle.toRoute(),
     ),
 ) {
+    private var isFollowRequestPending: Boolean = false
     override fun setEvent(event: ProfileScreenContract.Event) {
         when (event) {
             is ProfileScreenContract.Event.Initialize -> handleOneTimeEvent(event, ::initialize)
@@ -124,6 +125,9 @@ internal class ProfileViewModel @Inject constructor(
                         profileModel = response,
                         selectedSegmentState = response.components?.find { it.type == ProfileComponents.Segments.type }?.data?.segments?.getOrNull(selectedSegmentIndex),
                     )
+                }
+                if (isFollowRequestPending) {
+                    setFollowButtonState(ProfileActionButtonType.FollowRequestSent)
                 }
                 getProfileDetail()
             }
@@ -280,6 +284,7 @@ internal class ProfileViewModel @Inject constructor(
         if (actionButtonType == ProfileActionButtonType.EditProfile) {
             setSideEffect(ProfileScreenContract.SideEffect.NavigateToEditProfile)
         } else if (actionButtonType == ProfileActionButtonType.Follow || actionButtonType == ProfileActionButtonType.Following) {
+            isFollowRequestPending = actionButtonType == ProfileActionButtonType.Follow
             val followType: UserActionFollowType = when (actionButtonType) {
                 ProfileActionButtonType.Follow -> UserActionFollowType.Follow
                 ProfileActionButtonType.Following -> UserActionFollowType.UnFollow
@@ -299,7 +304,30 @@ internal class ProfileViewModel @Inject constructor(
                 },
             )
 
-            changeFollowStatus(actionButtonType)
+            setFollowButtonState(
+                target = if (actionButtonType == ProfileActionButtonType.Follow) {
+                    ProfileActionButtonType.FollowRequestSent
+                } else {
+                    ProfileActionButtonType.Follow
+                },
+            )
+        } else if (actionButtonType == ProfileActionButtonType.FollowRequestSent) {
+            isFollowRequestPending = false
+            userActionController.changeFollowStatus(
+                scope = viewModelScope,
+                targetUserId = userId,
+                followType = UserActionFollowType.UnFollow,
+                onErrorAction = {
+                    updateState { state ->
+                        state.copy(
+                            alertDialogModel = it.toAlertDialog,
+                        )
+                    }
+                },
+            )
+
+            setFollowButtonState(ProfileActionButtonType.Follow)
+            return
         } else if (actionButtonType == ProfileActionButtonType.Message) {
             val effect = ProfileScreenContract.SideEffect.NavigateToChatMessaging(
                 isGroup = false,
@@ -321,37 +349,44 @@ internal class ProfileViewModel @Inject constructor(
         setSideEffect(effect)
     }
 
-    private fun changeFollowStatus(actionButtonType: ProfileActionButtonType) {
+    private fun setFollowButtonState(target: ProfileActionButtonType) {
         val profileModel = viewState.profileModel
-        var profileActionButtons = profileModel?.components?.firstOrNull { it.type == ProfileScreenContract.Static.ACTION_BUTTON_COMPONENTS_TYPE }
+        var profileActionButtons = profileModel?.components?.firstOrNull {
+            it.type == ProfileScreenContract.Static.ACTION_BUTTON_COMPONENTS_TYPE ||
+                it.id == ProfileComponents.ProfileActionButtons.id
+        }
 
-        val newButtons: MutableList<String> = mutableListOf()
-        if (actionButtonType == ProfileActionButtonType.Follow) {
-            profileActionButtons?.data?.buttons?.map { it.toProfileActionButtonType() }?.fastForEach {
-                if (it == ProfileActionButtonType.Follow) {
-                    newButtons.add(ProfileActionButtonType.Following.type)
-                    newButtons.add(ProfileActionButtonType.Message.type)
-                } else {
-                    newButtons.add(it.type)
-                }
-            }
-        } else if (actionButtonType == ProfileActionButtonType.Following) {
-            profileActionButtons?.data?.buttons?.map { it.toProfileActionButtonType() }?.fastForEach {
-                when (it) {
-                    ProfileActionButtonType.Following -> {
-                        newButtons.add(ProfileActionButtonType.Follow.type)
-                    }
-                    ProfileActionButtonType.Message -> {}
-                    else -> {
-                        newButtons.add(it.type)
+        val currentButtons = profileActionButtons?.data?.buttons
+            ?.map { it.toProfileActionButtonType() }
+            .orEmpty()
+
+        val newButtons: MutableList<ProfileActionButtonType> = mutableListOf()
+        currentButtons.fastForEach { button ->
+            when (button) {
+                ProfileActionButtonType.Follow,
+                ProfileActionButtonType.Following,
+                ProfileActionButtonType.FollowRequestSent,
+                -> {
+                    if (newButtons.none { it == target }) {
+                        newButtons.add(target)
                     }
                 }
+                ProfileActionButtonType.Message -> {
+                    if (target == ProfileActionButtonType.Following) {
+                        newButtons.add(button)
+                    }
+                }
+                else -> newButtons.add(button)
             }
+        }
+
+        if (target == ProfileActionButtonType.Following && newButtons.none { it == ProfileActionButtonType.Message }) {
+            newButtons.add(ProfileActionButtonType.Message)
         }
 
         profileActionButtons = profileActionButtons?.copy(
             data = profileActionButtons.data?.copy(
-                buttons = newButtons,
+                buttons = newButtons.map { it.type },
             ),
         )
 
@@ -359,7 +394,9 @@ internal class ProfileViewModel @Inject constructor(
             state.copy(
                 profileModel = profileModel?.copy(
                     components = profileModel.components?.mapNotNull {
-                        if (it.type == ProfileScreenContract.Static.ACTION_BUTTON_COMPONENTS_TYPE) {
+                        if (it.type == ProfileScreenContract.Static.ACTION_BUTTON_COMPONENTS_TYPE ||
+                            it.id == ProfileComponents.ProfileActionButtons.id
+                        ) {
                             profileActionButtons
                         } else {
                             it
@@ -375,10 +412,22 @@ internal class ProfileViewModel @Inject constructor(
             is ProfileEventBus.Event.UpdateFollowingStatus -> {
                 val userId = status.targetUserId
                 if (userId == viewState.profileModel?.info?.id) {
-                    changeFollowStatus(
-                        actionButtonType = when (status.followType) {
-                            UserActionFollowType.Follow -> ProfileActionButtonType.Follow
-                            UserActionFollowType.UnFollow -> ProfileActionButtonType.Following
+                    setFollowButtonState(
+                        target = when (status.followType) {
+                            UserActionFollowType.Follow -> {
+                                if (isFollowRequestPending) {
+                                    return
+                                } else {
+                                    ProfileActionButtonType.Following
+                                }
+                            }
+                            UserActionFollowType.UnFollow -> {
+                                if (isFollowRequestPending) {
+                                    ProfileActionButtonType.FollowRequestSent
+                                } else {
+                                    ProfileActionButtonType.Follow
+                                }
+                            }
                         },
                     )
                 }

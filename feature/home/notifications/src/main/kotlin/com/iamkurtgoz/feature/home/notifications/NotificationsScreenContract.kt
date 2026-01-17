@@ -32,6 +32,7 @@ internal class NotificationsScreenContract {
         val alertDialogModel: AlertDialogModel? = null,
         val notificationList: List<GetNotificationsUIModel> = emptyList(),
         val filterType: NotifListFilterType = NotifListFilterType.All,
+        val followRequestDecisionMap: Map<String, Boolean> = emptyMap(),
     ) : CoreState.ViewState
 
     sealed class SideEffect : CoreState.SideEffect {
@@ -46,6 +47,7 @@ internal class NotificationsScreenContract {
         data object DismissDialogs : Event()
         data class SetFilterType(val filterType: NotifListFilterType) : Event()
         data class SendConfirmationTrainingGroupUser(val notificationId: String?, val groupId: String?, val isAccepted: Boolean) : Event()
+        data class SendConfirmationFollow(val notificationId: String?, val targetUserId: String?, val isAccepted: Boolean) : Event()
     }
 
     object Static

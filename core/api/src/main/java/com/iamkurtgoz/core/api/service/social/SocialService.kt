@@ -33,6 +33,7 @@ import com.iamkurtgoz.domain.model.request.CreatePostRequest
 import com.iamkurtgoz.domain.model.request.CreateStoryRequest
 import com.iamkurtgoz.domain.model.request.DeletePostRequest
 import com.iamkurtgoz.domain.model.request.DeleteStoryRequest
+import com.iamkurtgoz.domain.model.request.ConfirmationFollowRequest
 import com.iamkurtgoz.domain.model.request.FollowUserRequest
 import com.iamkurtgoz.domain.model.request.HidePostRequest
 import com.iamkurtgoz.domain.model.request.LikePostRequest
@@ -75,6 +76,9 @@ interface SocialService {
 
     @POST("Social/UnFollowUser")
     suspend fun unFollowUser(@Body body: FollowUserRequest): Response<BaseResponse<FollowUserResponseModel>>
+
+    @POST("Social/ConfirmationFollow")
+    suspend fun confirmationFollow(@Body body: ConfirmationFollowRequest): Response<BaseResponse<Unit>>
 
     @GET("Social/GetFeedAsync")
     suspend fun getFeedAsync(@Query("Page") page: Int?, @Query("PageSize") pageSize: Int?): Response<BaseResponse<GetFeedAsyncResponseModel>>

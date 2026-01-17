@@ -186,7 +186,7 @@ internal fun TrainingScreenScreenContent(
         item {
             AppTextField.Primary(
                 title = "Grup Adı", // TODO: Localize
-                placeholder = "Grup adı girin", // TODO: Localize
+                placeholder = "Grup Adı", // TODO: Localize
                 suggestions = state.suggestions,
                 value = state.textGroupName.value,
                 onValueChange = {

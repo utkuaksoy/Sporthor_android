@@ -26,6 +26,7 @@ import com.iamkurtgoz.core.common.state.AppBuildConfigStatePack
 import com.iamkurtgoz.core.common.state.AppRemoteConfigStatePack
 import com.iamkurtgoz.domain.controller.SignalRController
 import com.iamkurtgoz.domain.core.CoreViewModel
+import com.iamkurtgoz.domain.dataStore.AppPreferences
 import com.iamkurtgoz.domain.eventbus.impl.ChatMessagingEventBus
 import com.iamkurtgoz.domain.extensions.toAlertDialog
 import com.iamkurtgoz.domain.model.enums.FetchParam
@@ -42,6 +43,7 @@ import kotlinx.collections.immutable.toPersistentList
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.distinctUntilChangedBy
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -53,6 +55,7 @@ import java.io.IOException
 import java.time.LocalDateTime
 import java.util.UUID
 import javax.inject.Inject
+import timber.log.Timber
 
 @HiltViewModel
 internal class ChatMessagingViewModel @Inject constructor(
@@ -61,6 +64,7 @@ internal class ChatMessagingViewModel @Inject constructor(
     private val appBuildConfigStatePack: AppBuildConfigStatePack,
     appRemoteConfigStatePack: AppRemoteConfigStatePack,
     savedStateHandle: SavedStateHandle,
+    private val appPreferences: AppPreferences,
     private val signalRController: SignalRController,
     private val getMessagesUseCase: GetMessagesUseCase,
 ) : CoreViewModel<ChatMessagingScreenContract.State, ChatMessagingScreenContract.SideEffect, ChatMessagingScreenContract.Event>(
@@ -72,6 +76,14 @@ internal class ChatMessagingViewModel @Inject constructor(
 
     ),
 ) {
+    private data class PendingOutgoingMessage(
+        val content: String,
+        val timestampMillis: Long,
+    )
+
+    private val pendingOutgoingMessages = mutableListOf<PendingOutgoingMessage>()
+    private var currentUserId: String? = null
+
     override fun setEvent(event: ChatMessagingScreenContract.Event) {
         when (event) {
             is ChatMessagingScreenContract.Event.Initialize -> handleOneTimeEvent(event, ::initialize)
@@ -94,6 +106,11 @@ internal class ChatMessagingViewModel @Inject constructor(
     // Events functions
     private fun initialize() = viewModelScope.launch {
         listenMessagesListChange()
+        appPreferences.currentPreferenceState
+            .onEach { preferences ->
+                currentUserId = preferences.userId
+            }
+            .launchIn(viewModelScope)
         fetchChatMessagingList(fetchParam = FetchParam.INITIAL)
         signalRController.joinGroup(viewState.route.channelId)
     }
@@ -129,7 +146,47 @@ internal class ChatMessagingViewModel @Inject constructor(
 
     private fun sendMessage() = viewModelScope.launch {
         val textMessage = viewState.textMessage.value
+        if (textMessage.isBlank()) {
+            return@launch
+        }
+        Timber.d(
+            "Chat send: userId=%s routeUserId=%s channelId=%s message=%s",
+            currentUserId,
+            viewState.route.userId,
+            viewState.route.channelId,
+            textMessage,
+        )
         setTextMessage("")
+        if (!currentUserId.isNullOrBlank()) {
+            val currentUser = viewState.users.firstOrNull { it.id == currentUserId }
+            val newItem = ChatMessageItemUIModel(
+                content = textMessage,
+                fileExtension = null,
+                from = ChatMessageItemFromUIModel(
+                    id = currentUserId,
+                    image = currentUser?.imageUrl,
+                    name = currentUser?.name,
+                ),
+                id = UUID.randomUUID().toString(),
+                messageType = SignalRMessageType.TEXT,
+                sendDate = LocalDateTime.now(),
+            )
+            pendingOutgoingMessages.add(
+                PendingOutgoingMessage(
+                    content = textMessage,
+                    timestampMillis = System.currentTimeMillis(),
+                ),
+            )
+            val messages = viewState.messages.toMutableList().apply {
+                add(index = AppDefaults.ZERO, element = newItem)
+            }
+            updateState { state ->
+                state.copy(
+                    messages = messages.toPersistentList(),
+                )
+            }
+            setSideEffect(ChatMessagingScreenContract.SideEffect.ScrollToBottom)
+        }
         signalRController.sendMessage(
             group = viewState.route.channelId,
             message = textMessage,
@@ -245,6 +302,26 @@ internal class ChatMessagingViewModel @Inject constructor(
     private fun updateEventBusStatus(eventBusState: ChatMessagingEventBus.Event) {
         when (eventBusState) {
             is ChatMessagingEventBus.Event.ReceiveNewMessage -> {
+                Timber.d(
+                    "Chat receive: messageUserId=%s currentUserId=%s routeUserId=%s channelId=%s message=%s",
+                    eventBusState.messageUserId,
+                    currentUserId,
+                    viewState.route.userId,
+                    viewState.route.channelId,
+                    eventBusState.messageContent,
+                )
+                val isFromCurrentUser = !currentUserId.isNullOrBlank() && eventBusState.messageUserId == currentUserId
+                if (isFromCurrentUser && !eventBusState.messageContent.isNullOrBlank()) {
+                    val nowMillis = System.currentTimeMillis()
+                    val matchIndex = pendingOutgoingMessages.indexOfFirst { pending ->
+                        pending.content == eventBusState.messageContent &&
+                            nowMillis - pending.timestampMillis <= 10_000L
+                    }
+                    if (matchIndex != -1) {
+                        pendingOutgoingMessages.removeAt(matchIndex)
+                        return
+                    }
+                }
                 val user = viewState.users.firstOrNull { it.id == eventBusState.messageUserId }
                 val messages = viewState.messages.toMutableList()
                 val item = ChatMessageItemUIModel(

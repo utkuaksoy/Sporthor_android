@@ -32,6 +32,7 @@ import com.iamkurtgoz.domain.model.request.CreatePostRequest
 import com.iamkurtgoz.domain.model.request.CreateStoryRequest
 import com.iamkurtgoz.domain.model.request.DeletePostRequest
 import com.iamkurtgoz.domain.model.request.DeleteStoryRequest
+import com.iamkurtgoz.domain.model.request.ConfirmationFollowRequest
 import com.iamkurtgoz.domain.model.request.FollowUserRequest
 import com.iamkurtgoz.domain.model.request.HidePostRequest
 import com.iamkurtgoz.domain.model.request.LikePostRequest
@@ -49,6 +50,7 @@ interface SocialRemoteDataSource {
     suspend fun getFollowing(userId: String?, role: Int? = null): BaseResponse<UserRelationResponseModel>
     suspend fun followUser(body: FollowUserRequest): BaseResponse<FollowUserResponseModel>
     suspend fun unFollowUser(body: FollowUserRequest): BaseResponse<FollowUserResponseModel>
+    suspend fun confirmationFollow(body: ConfirmationFollowRequest): BaseResponse<Unit>
     suspend fun getFeedAsync(page: Int?, pageSize: Int?): BaseResponse<GetFeedAsyncResponseModel>
     suspend fun getStoryFeed(): BaseResponse<GetStoryFeedResponseModel>
     suspend fun getComments(postId: String?): BaseResponse<GetCommentsResponseModel>

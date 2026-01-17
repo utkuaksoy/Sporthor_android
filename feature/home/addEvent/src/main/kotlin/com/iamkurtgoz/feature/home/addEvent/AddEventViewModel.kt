@@ -22,6 +22,8 @@ import com.iamkurtgoz.core.common.state.AppRemoteConfigStatePack
 import com.iamkurtgoz.core.navigation.model.home.addEvent.toHomeScreenAddEventRouteTypeMap
 import com.iamkurtgoz.domain.core.CoreViewModel
 import com.iamkurtgoz.domain.extensions.toAlertDialog
+import com.iamkurtgoz.domain.eventbus.AppEventBus
+import com.iamkurtgoz.domain.eventbus.impl.CalendarEventBus
 import com.iamkurtgoz.domain.model.base.AnyAlertDialogModel
 import com.iamkurtgoz.domain.model.request.AddTaskRequest
 import com.iamkurtgoz.domain.model.request.AddTaskRequestLocation
@@ -36,6 +38,7 @@ import com.iamkurtgoz.feature.home.addEvent.domain.useCase.GetTrainingGroupUserU
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import java.time.LocalDate
+import java.time.LocalDateTime
 import java.time.LocalTime
 import javax.inject.Inject
 
@@ -48,6 +51,7 @@ internal class AddEventViewModel @Inject constructor(
     private val addTaskTypeUseCase: AddTaskTypeUseCase,
     private val getTrainingGroupUserUseCase: GetTrainingGroupUserUseCase,
     private val addTaskUseCase: AddTaskUseCase,
+    private val appEventBus: AppEventBus,
 ) : CoreViewModel<AddEventScreenContract.State, AddEventScreenContract.SideEffect, AddEventScreenContract.Event>(
     initialState = AddEventScreenContract.State(
         isLoading = false,
@@ -321,6 +325,20 @@ internal class AddEventViewModel @Inject constructor(
     }
 
     private fun setEventStartDate(date: LocalDate) {
+        val endDate = viewState.eventEndDate
+        if (date.isAfter(endDate)) {
+            updateState { state ->
+                state.copy(
+                    alertDialogModel = AnyAlertDialogModel(
+                        title = null,
+                        message = "Başlangıç, bitişten sonra olamaz!", // TODO: Localize,
+                        confirmButton = "Tamam", // TODO: Localize,
+                        dismissButton = null,
+                    ),
+                )
+            }
+            return
+        }
         updateState { state ->
             state.copy(
                 eventStartDate = date,
@@ -353,6 +371,20 @@ internal class AddEventViewModel @Inject constructor(
     }
 
     private fun setEventEndDate(date: LocalDate) {
+        val startDate = viewState.eventStartDate
+        if (date.isBefore(startDate)) {
+            updateState { state ->
+                state.copy(
+                    alertDialogModel = AnyAlertDialogModel(
+                        title = null,
+                        message = "Bitiş, başlangıçtan önce olamaz!", // TODO: Localize,
+                        confirmButton = "Tamam", // TODO: Localize,
+                        dismissButton = null,
+                    ),
+                )
+            }
+            return
+        }
         updateState { state ->
             state.copy(
                 eventEndDate = date,
@@ -572,18 +604,29 @@ internal class AddEventViewModel @Inject constructor(
             return
         }
 
+        val location = if (
+            viewState.addressTitle.isNullOrBlank() &&
+            viewState.addressDetail.isNullOrBlank() &&
+            viewState.latitude == null &&
+            viewState.longitude == null
+        ) {
+            null
+        } else {
+            AddTaskRequestLocation(
+                title = viewState.addressTitle,
+                address = viewState.addressDetail,
+                lat = viewState.latitude,
+                lng = viewState.longitude,
+            )
+        }
+
         val request = AddTaskRequest(
             title = viewState.textEventName.value,
             description = viewState.textDescription.value,
             startDate = viewState.eventStartDate.toString() + " " + viewState.eventStartTime.toString(),
             endDate = viewState.eventEndDate.toString() + " " + viewState.eventEndTime.toString(),
             allDay = viewState.switchEventDateAllDay,
-            location = AddTaskRequestLocation(
-                title = viewState.addressTitle,
-                address = viewState.addressDetail,
-                lat = viewState.latitude ?: 0.0,
-                lng = viewState.longitude ?: 0.0,
-            ),
+            location = location,
             isRecurring = viewState.switchEventRepeat,
             isDraft = viewState.isDraft,
             userIds = if (viewState.selectedGetTrainingGroupUserList.isEmpty()) null else viewState.selectedGetTrainingGroupUserList.mapNotNull { it.id },
@@ -611,6 +654,7 @@ internal class AddEventViewModel @Inject constructor(
                 }
             }
             .callWithSuccess { response ->
+                appEventBus.calendarEventBus.trySend(CalendarEventBus.Event.Refresh)
                 setSideEffect(AddEventScreenContract.SideEffect.PopBackStack)
             }
     }

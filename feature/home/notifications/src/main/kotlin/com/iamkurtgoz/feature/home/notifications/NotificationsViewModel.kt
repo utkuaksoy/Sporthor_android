@@ -20,7 +20,9 @@ import com.iamkurtgoz.core.common.state.AppBuildConfigStatePack
 import com.iamkurtgoz.core.common.state.AppRemoteConfigStatePack
 import com.iamkurtgoz.domain.core.CoreViewModel
 import com.iamkurtgoz.domain.extensions.toAlertDialog
+import com.iamkurtgoz.domain.model.request.ConfirmationFollowRequest
 import com.iamkurtgoz.domain.model.request.ConfirmationTrainingGroupUserRequest
+import com.iamkurtgoz.feature.home.notifications.domain.useCase.ConfirmationFollowUseCase
 import com.iamkurtgoz.feature.home.notifications.domain.useCase.ConfirmationTrainingGroupUserUseCase
 import com.iamkurtgoz.feature.home.notifications.domain.useCase.GetNotificationsUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -33,6 +35,7 @@ internal class NotificationsViewModel @Inject constructor(
     appRemoteConfigStatePack: AppRemoteConfigStatePack,
     private val getNotificationsUseCase: GetNotificationsUseCase,
     private val confirmationTrainingGroupUserUseCase: ConfirmationTrainingGroupUserUseCase,
+    private val confirmationFollowUseCase: ConfirmationFollowUseCase,
 ) : CoreViewModel<NotificationsScreenContract.State, NotificationsScreenContract.SideEffect, NotificationsScreenContract.Event>(
     initialState = NotificationsScreenContract.State(
         isLoading = false,
@@ -50,6 +53,11 @@ internal class NotificationsViewModel @Inject constructor(
             is NotificationsScreenContract.Event.SendConfirmationTrainingGroupUser -> sendConfirmationTrainingGroupUser(
                 notificationId = event.notificationId,
                 groupId = event.groupId,
+                isAccepted = event.isAccepted,
+            )
+            is NotificationsScreenContract.Event.SendConfirmationFollow -> sendConfirmationFollow(
+                notificationId = event.notificationId,
+                targetUserId = event.targetUserId,
                 isAccepted = event.isAccepted,
             )
         }
@@ -104,6 +112,41 @@ internal class NotificationsViewModel @Inject constructor(
             isAccepted = isAccepted,
         )
         confirmationTrainingGroupUserUseCase.invoke(params)
+            .requester
+            .onLoading {
+                updateState { state ->
+                    state.copy(
+                        isLoading = true,
+                    )
+                }
+            }
+            .onError {
+                updateState { state ->
+                    state.copy(
+                        isLoading = false,
+                        alertDialogModel = it.toAlertDialog,
+                    )
+                }
+            }
+            .callWithSuccess {
+                getNotifications()
+            }
+    }
+
+    private fun sendConfirmationFollow(notificationId: String?, targetUserId: String?, isAccepted: Boolean) {
+        if (!notificationId.isNullOrBlank()) {
+            updateState { state ->
+                state.copy(
+                    followRequestDecisionMap = state.followRequestDecisionMap + (notificationId to isAccepted),
+                )
+            }
+        }
+        val params = ConfirmationFollowRequest(
+            notificationId = notificationId,
+            targetUserId = targetUserId,
+            isAccepted = isAccepted,
+        )
+        confirmationFollowUseCase.invoke(params)
             .requester
             .onLoading {
                 updateState { state ->

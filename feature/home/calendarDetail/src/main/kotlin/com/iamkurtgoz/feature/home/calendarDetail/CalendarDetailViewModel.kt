@@ -59,6 +59,7 @@ internal class CalendarDetailViewModel @Inject constructor(
     override fun setEvent(event: CalendarDetailScreenContract.Event) {
         when (event) {
             is CalendarDetailScreenContract.Event.Initialize -> handleOneTimeEvent(event, ::initialize)
+            is CalendarDetailScreenContract.Event.RefreshCalendarDetail -> getCalendarDetail()
             is CalendarDetailScreenContract.Event.NavigateUp -> setSideEffect(CalendarDetailScreenContract.SideEffect.NavigateUp)
             is CalendarDetailScreenContract.Event.PopBackStack -> setSideEffect(CalendarDetailScreenContract.SideEffect.PopBackStack)
             is CalendarDetailScreenContract.Event.DismissDialogs -> dismissDialogs()

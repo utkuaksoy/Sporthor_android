@@ -62,6 +62,7 @@ internal class CalendarDetailScreenContract {
 
     sealed class Event : CoreState.Event {
         data object Initialize : Event()
+        data object RefreshCalendarDetail : Event()
         data object NavigateUp : Event()
         data object PopBackStack : Event()
         data object DismissDialogs : Event()

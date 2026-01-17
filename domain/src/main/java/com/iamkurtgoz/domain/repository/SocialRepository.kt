@@ -18,6 +18,7 @@ package com.iamkurtgoz.domain.repository
 import com.iamkurtgoz.core.common.model.RestResult
 import com.iamkurtgoz.domain.model.request.AddCommentRequest
 import com.iamkurtgoz.domain.model.request.AddSearchHistoryRequest
+import com.iamkurtgoz.domain.model.request.ConfirmationFollowRequest
 import com.iamkurtgoz.domain.model.request.CreatePostRequest
 import com.iamkurtgoz.domain.model.request.CreateStoryRequest
 import com.iamkurtgoz.domain.model.request.DeletePostRequest
@@ -49,6 +50,7 @@ interface SocialRepository {
     suspend fun getFollowing(userId: String?, role: Int? = null): RestResult<UserRelationDomainModel>
     suspend fun followUser(body: FollowUserRequest): RestResult<FollowUserDomainModel>
     suspend fun unFollowUser(body: FollowUserRequest): RestResult<FollowUserDomainModel>
+    suspend fun confirmationFollow(body: ConfirmationFollowRequest): RestResult<Unit>
     suspend fun getFeedAsync(page: Int?, pageSize: Int?): RestResult<DashboardFeedDomainModel>
     suspend fun getStoryFeed(): RestResult<StoryFeedDomainModel>
     suspend fun getComments(postId: String?): RestResult<CommentsDomainModel>

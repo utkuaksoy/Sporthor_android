@@ -122,6 +122,8 @@ internal fun NotificationsScreenContent(
         ) { index, item ->
             NotificationRow(
                 item = item,
+                filterType = state.filterType,
+                followRequestDecisionMap = state.followRequestDecisionMap,
                 setEvent = setEvent,
             )
 
@@ -135,9 +137,16 @@ internal fun NotificationsScreenContent(
 @Composable
 internal fun NotificationRow(
     item: GetNotificationsUIModel,
+    filterType: NotifListFilterType,
+    followRequestDecisionMap: Map<String, Boolean>,
     modifier: Modifier = Modifier,
     setEvent: (NotificationsScreenContract.Event) -> Unit,
 ) {
+    val lowerMessage = item.message?.lowercase()
+    val lowerTitle = item.title?.lowercase()
+    val isFollowRequestConfirm = filterType == NotifListFilterType.Confirm &&
+        ((lowerMessage?.contains("takip") == true && lowerMessage.contains("istiyor")) ||
+            (lowerTitle?.contains("takipçi") == true))
     Row(
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.Start,
@@ -152,6 +161,74 @@ internal fun NotificationRow(
             data = item.data?.profilePhoto ?: item.data?.username.getUserNameFirstChar(),
         )
         Spacer(Modifier.width(AppTheme.spacing.spacingMedium))
+
+        if (isFollowRequestConfirm) {
+            val decision = item.id?.let { followRequestDecisionMap[it] }
+            Column(
+                modifier = modifier
+                    .fillMaxWidth()
+                    .padding(
+                        vertical = AppTheme.spacing.spacingSmall,
+                    ),
+            ) {
+                if (!item.title.isNullOrBlank()) {
+                    Text(
+                        text = item.title.orEmpty(),
+                        style = AppTheme.typography.subtitleSmall,
+                    )
+                    Spacer(Modifier.height(AppTheme.spacing.spacingTiny))
+                }
+                if (decision != null) {
+                    Text(
+                        text = if (decision) {
+                            "Takip isteğini kabul ettiniz."
+                        } else {
+                            "Takip isteğini reddettiniz."
+                        },
+                        style = AppTheme.typography.labelRegular,
+                    )
+                } else {
+                    Text(
+                        text = item.message.orEmpty(),
+                        style = AppTheme.typography.labelRegular,
+                    )
+                    Row(
+                        modifier = modifier
+                            .fillMaxWidth()
+                            .padding(
+                                vertical = AppTheme.spacing.spacingSmall,
+                            ),
+                    ) {
+                        AppButton.SecondarySmall(
+                            text = "Kabul Et", // TODO: Localize,
+                            onClick = {
+                                val event = NotificationsScreenContract.Event.SendConfirmationFollow(
+                                    notificationId = item.id,
+                                    targetUserId = item.data?.userId,
+                                    isAccepted = true,
+                                )
+                                setEvent.invoke(event)
+                            },
+                        )
+
+                        AppButton.OutlineSmall(
+                            text = "Reddet", // TODO: Localize,
+                            onClick = {
+                                val event = NotificationsScreenContract.Event.SendConfirmationFollow(
+                                    notificationId = item.id,
+                                    targetUserId = item.data?.userId,
+                                    isAccepted = false,
+                                )
+                                setEvent.invoke(event)
+                            },
+                            modifier = Modifier
+                                .padding(start = AppTheme.spacing.spacingSmall),
+                        )
+                    }
+                }
+            }
+            return
+        }
 
         when (item.pushMessageType) {
             PushMessageType.NEW_POST, PushMessageType.CHAT -> {
@@ -174,15 +251,83 @@ internal fun NotificationRow(
                 }
             }
             PushMessageType.FOLLOW -> {
-                Text(
-                    text = "${item.data?.username.orEmpty()} seni takip etmeye başladı.",
-                    style = AppTheme.typography.labelRegular,
+                val decision = item.id?.let { followRequestDecisionMap[it] }
+                val shouldShowActions = filterType == NotifListFilterType.Confirm && decision == null
+                Column(
                     modifier = modifier
                         .fillMaxWidth()
                         .padding(
                             vertical = AppTheme.spacing.spacingSmall,
                         ),
-                )
+                ) {
+                    if (decision != null) {
+                        if (!item.title.isNullOrBlank()) {
+                            Text(
+                                text = item.title.orEmpty(),
+                                style = AppTheme.typography.subtitleSmall,
+                            )
+                            Spacer(Modifier.height(AppTheme.spacing.spacingTiny))
+                        }
+                        Text(
+                            text = if (decision) {
+                                "Takip isteğini kabul ettiniz."
+                            } else {
+                                "Takip isteğini reddettiniz."
+                            },
+                            style = AppTheme.typography.labelRegular,
+                        )
+                    } else if (!item.title.isNullOrBlank()) {
+                        Text(
+                            text = item.title.orEmpty(),
+                            style = AppTheme.typography.subtitleSmall,
+                        )
+                        Spacer(Modifier.height(AppTheme.spacing.spacingTiny))
+                        Text(
+                            text = item.message.orEmpty(),
+                            style = AppTheme.typography.labelRegular,
+                        )
+                    } else {
+                        Text(
+                            text = item.message ?: "${item.data?.username.orEmpty()} seni takip etmeye başladı.",
+                            style = AppTheme.typography.labelRegular,
+                        )
+                    }
+                    if (shouldShowActions) {
+                        Row(
+                            modifier = modifier
+                                .fillMaxWidth()
+                                .padding(
+                                    vertical = AppTheme.spacing.spacingSmall,
+                                ),
+                        ) {
+                            AppButton.SecondarySmall(
+                                text = "Kabul Et", // TODO: Localize,
+                                onClick = {
+                                    val event = NotificationsScreenContract.Event.SendConfirmationFollow(
+                                        notificationId = item.id,
+                                        targetUserId = item.data?.userId,
+                                        isAccepted = true,
+                                    )
+                                    setEvent.invoke(event)
+                                },
+                            )
+
+                            AppButton.OutlineSmall(
+                                text = "Reddet", // TODO: Localize,
+                                onClick = {
+                                    val event = NotificationsScreenContract.Event.SendConfirmationFollow(
+                                        notificationId = item.id,
+                                        targetUserId = item.data?.userId,
+                                        isAccepted = false,
+                                    )
+                                    setEvent.invoke(event)
+                                },
+                                modifier = Modifier
+                                    .padding(start = AppTheme.spacing.spacingSmall),
+                            )
+                        }
+                    }
+                }
             }
             PushMessageType.LIKE -> {
                 Text(

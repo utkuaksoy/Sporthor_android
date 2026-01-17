@@ -15,8 +15,10 @@
  */
 package com.iamkurtgoz.feature.home.notifications.data.di
 
+import com.iamkurtgoz.feature.home.notifications.data.useCase.ConfirmationFollowUseCaseImpl
 import com.iamkurtgoz.feature.home.notifications.data.useCase.ConfirmationTrainingGroupUserUseCaseImpl
 import com.iamkurtgoz.feature.home.notifications.data.useCase.GetNotificationsUseCaseImpl
+import com.iamkurtgoz.feature.home.notifications.domain.useCase.ConfirmationFollowUseCase
 import com.iamkurtgoz.feature.home.notifications.domain.useCase.ConfirmationTrainingGroupUserUseCase
 import com.iamkurtgoz.feature.home.notifications.domain.useCase.GetNotificationsUseCase
 import dagger.Binds
@@ -40,4 +42,10 @@ internal abstract class UseCaseModule {
     abstract fun bindConfirmationTrainingGroupUserUseCase(
         impl: ConfirmationTrainingGroupUserUseCaseImpl,
     ): ConfirmationTrainingGroupUserUseCase
+
+    @Binds
+    @Singleton
+    abstract fun bindConfirmationFollowUseCase(
+        impl: ConfirmationFollowUseCaseImpl,
+    ): ConfirmationFollowUseCase
 }

@@ -57,6 +57,7 @@ internal class DashboardScreenContract {
         val showReportDialogForPostId: String? = null,
         val reportText: String = "",
         val menuTitle: String = "Hızlı Menü",
+        val isSingleMainMenu: Boolean = false,
     ) : CoreState.ViewState
 
     sealed class SideEffect : CoreState.SideEffect {

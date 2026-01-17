@@ -33,7 +33,6 @@ import com.iamkurtgoz.feature.home.trainingScreen.domain.useCase.GetSeasonsUseCa
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
-import kotlin.random.Random
 
 @HiltViewModel
 internal class TrainingScreenViewModel @Inject constructor(
@@ -73,9 +72,6 @@ internal class TrainingScreenViewModel @Inject constructor(
             setSelectedClub(it)
         }
         getSeasons()
-        if (appBuildConfigStatePack.isDebug) {
-            setGroupName("Grup Name ${Random.nextInt(0, 1000)}")
-        }
     }
 
     private fun dismissDialogs() {
