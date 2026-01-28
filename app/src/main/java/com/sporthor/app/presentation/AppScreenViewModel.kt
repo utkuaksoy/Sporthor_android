@@ -103,7 +103,7 @@ internal class AppScreenViewModel @Inject constructor(
             return@launch
         }
 
-        if (appRemoteConfigStatePack.minVersionAndroid > appBuildConfigStatePack.versionCode) {
+        /*if (appRemoteConfigStatePack.minVersionAndroid > appBuildConfigStatePack.versionCode) {
             updateState {
                 it.copy(
                     keepSplashScreenOn = false,
@@ -116,7 +116,7 @@ internal class AppScreenViewModel @Inject constructor(
                 )
             }
             return@launch
-        }
+        }*/
 
         if (appRemoteConfigStatePack.isStartAdActive && canShowAppOpenAd) {
             // setSideEffect(AppScreenContract.SideEffect.ShowStartAd)

@@ -34,7 +34,7 @@ android {
         applicationId = libs.versions.applicationId.get()
         minSdk = libs.versions.minSdk.get().toInt()
         targetSdk = libs.versions.targetSdk.get().toInt()
-        versionCode = computedVersionCode()
+        versionCode = libs.versions.versionCode.get().toInt()
         versionName = libs.versions.versionName.get()
         setProperty("archivesBaseName", "$namespace-$versionName-$versionCode")
         ndk {
@@ -89,7 +89,6 @@ android {
             isMinifyEnabled = libs.versions.minifyEnabledRelease.get().toBoolean()
             isShrinkResources = true
             isDebuggable = false
-            versionNameSuffix = ".${gitCommitCount()}"
             signingConfig = signingConfigs.findByName(AppFlavor.prod.name)
             configure<CrashlyticsExtension> {
                 mappingFileUploadEnabled = true

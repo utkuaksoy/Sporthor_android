@@ -1,8 +1,8 @@
 <component name="libraryTable">
   <library name="Gradle: io.coil-kt.coil3:coil-gif:3.3.0@aar" external-system-id="GRADLE">
     <CLASSES>
-      <root url="jar://$USER_HOME$/.gradle/caches/8.14.3/transforms/94cbbea00ef6c4cc2eba09e387b804eb/transformed/coil-gif-3.3.0/jars/classes.jar!/" />
-      <root url="file://$USER_HOME$/.gradle/caches/8.14.3/transforms/94cbbea00ef6c4cc2eba09e387b804eb/transformed/coil-gif-3.3.0/AndroidManifest.xml" />
+      <root url="jar://$USER_HOME$/.gradle/caches/8.14.3/transforms/ce646498c2ab5e3f56dd1697d5c637f3/transformed/coil-gif-3.3.0/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/8.14.3/transforms/ce646498c2ab5e3f56dd1697d5c637f3/transformed/coil-gif-3.3.0/AndroidManifest.xml" />
     </CLASSES>
     <JAVADOC>
       <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/io.coil-kt.coil3/coil-gif/3.3.0/129346957be6e2d89d7eee96ba32294d0bd4ed13/coil-gif-3.3.0-javadoc.jar!/" />

@@ -1,9 +1,9 @@
 <component name="libraryTable">
   <library name="Gradle: io.github.takahirom.roborazzi:roborazzi:1.46.1@aar" external-system-id="GRADLE">
     <CLASSES>
-      <root url="jar://$USER_HOME$/.gradle/caches/8.14.3/transforms/b03863fa53c689e66c4f96f49befbc9c/transformed/roborazzi-1.46.1/jars/classes.jar!/" />
-      <root url="file://$USER_HOME$/.gradle/caches/8.14.3/transforms/b03863fa53c689e66c4f96f49befbc9c/transformed/roborazzi-1.46.1/res" />
-      <root url="file://$USER_HOME$/.gradle/caches/8.14.3/transforms/b03863fa53c689e66c4f96f49befbc9c/transformed/roborazzi-1.46.1/AndroidManifest.xml" />
+      <root url="jar://$USER_HOME$/.gradle/caches/8.14.3/transforms/b4484aa79b929b37e1114a6ac9eebb18/transformed/roborazzi-1.46.1/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/8.14.3/transforms/b4484aa79b929b37e1114a6ac9eebb18/transformed/roborazzi-1.46.1/AndroidManifest.xml" />
+      <root url="file://$USER_HOME$/.gradle/caches/8.14.3/transforms/b4484aa79b929b37e1114a6ac9eebb18/transformed/roborazzi-1.46.1/res" />
     </CLASSES>
     <JAVADOC>
       <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/io.github.takahirom.roborazzi/roborazzi/1.46.1/f8829c940f8d76ad4f6f6cae33951bc92998ad07/roborazzi-1.46.1-javadoc.jar!/" />

@@ -1,11 +1,11 @@
 <component name="libraryTable">
   <library name="Gradle: androidx.media3:media3-extractor:1.8.0@aar" external-system-id="GRADLE">
     <ANNOTATIONS>
-      <root url="jar://$USER_HOME$/.gradle/caches/8.14.3/transforms/591ad1847c1f362f9cf322f1a6ef4071/transformed/media3-extractor-1.8.0/annotations.zip!/" />
+      <root url="jar://$USER_HOME$/.gradle/caches/8.14.3/transforms/5cda1f6dcf156918ef7e5cb7e135bcc1/transformed/media3-extractor-1.8.0/annotations.zip!/" />
     </ANNOTATIONS>
     <CLASSES>
-      <root url="jar://$USER_HOME$/.gradle/caches/8.14.3/transforms/591ad1847c1f362f9cf322f1a6ef4071/transformed/media3-extractor-1.8.0/jars/classes.jar!/" />
-      <root url="file://$USER_HOME$/.gradle/caches/8.14.3/transforms/591ad1847c1f362f9cf322f1a6ef4071/transformed/media3-extractor-1.8.0/AndroidManifest.xml" />
+      <root url="jar://$USER_HOME$/.gradle/caches/8.14.3/transforms/5cda1f6dcf156918ef7e5cb7e135bcc1/transformed/media3-extractor-1.8.0/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/8.14.3/transforms/5cda1f6dcf156918ef7e5cb7e135bcc1/transformed/media3-extractor-1.8.0/AndroidManifest.xml" />
     </CLASSES>
     <JAVADOC />
     <SOURCES>

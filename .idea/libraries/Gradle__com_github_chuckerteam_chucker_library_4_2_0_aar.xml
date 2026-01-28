@@ -1,9 +1,9 @@
 <component name="libraryTable">
   <library name="Gradle: com.github.chuckerteam.chucker:library:4.2.0@aar" external-system-id="GRADLE">
     <CLASSES>
-      <root url="jar://$USER_HOME$/.gradle/caches/8.14.3/transforms/bcb5a81599a2e080bc3892abffe87faf/transformed/library-4.2.0/jars/classes.jar!/" />
-      <root url="file://$USER_HOME$/.gradle/caches/8.14.3/transforms/bcb5a81599a2e080bc3892abffe87faf/transformed/library-4.2.0/res" />
-      <root url="file://$USER_HOME$/.gradle/caches/8.14.3/transforms/bcb5a81599a2e080bc3892abffe87faf/transformed/library-4.2.0/AndroidManifest.xml" />
+      <root url="jar://$USER_HOME$/.gradle/caches/8.14.3/transforms/6e87da2f2d451a94f692eca46e3e0167/transformed/library-4.2.0/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/8.14.3/transforms/6e87da2f2d451a94f692eca46e3e0167/transformed/library-4.2.0/res" />
+      <root url="file://$USER_HOME$/.gradle/caches/8.14.3/transforms/6e87da2f2d451a94f692eca46e3e0167/transformed/library-4.2.0/AndroidManifest.xml" />
     </CLASSES>
     <JAVADOC>
       <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.github.chuckerteam.chucker/library/4.2.0/5d786811b4b5934514db9d532989bc1645c0cbd8/library-4.2.0-javadoc.jar!/" />

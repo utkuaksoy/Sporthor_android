@@ -1,9 +1,9 @@
 <component name="libraryTable">
   <library name="Gradle: com.google.firebase:firebase-inappmessaging-display:22.0.0@aar" external-system-id="GRADLE">
     <CLASSES>
-      <root url="jar://$USER_HOME$/.gradle/caches/8.14.3/transforms/c43d8c55eeaeff55442cfec24ecd65d7/transformed/firebase-inappmessaging-display-22.0.0/jars/classes.jar!/" />
-      <root url="file://$USER_HOME$/.gradle/caches/8.14.3/transforms/c43d8c55eeaeff55442cfec24ecd65d7/transformed/firebase-inappmessaging-display-22.0.0/res" />
-      <root url="file://$USER_HOME$/.gradle/caches/8.14.3/transforms/c43d8c55eeaeff55442cfec24ecd65d7/transformed/firebase-inappmessaging-display-22.0.0/AndroidManifest.xml" />
+      <root url="jar://$USER_HOME$/.gradle/caches/8.14.3/transforms/6e819080e4ff1e930c8e2d6e57276709/transformed/firebase-inappmessaging-display-22.0.0/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/8.14.3/transforms/6e819080e4ff1e930c8e2d6e57276709/transformed/firebase-inappmessaging-display-22.0.0/res" />
+      <root url="file://$USER_HOME$/.gradle/caches/8.14.3/transforms/6e819080e4ff1e930c8e2d6e57276709/transformed/firebase-inappmessaging-display-22.0.0/AndroidManifest.xml" />
     </CLASSES>
     <JAVADOC />
     <SOURCES>

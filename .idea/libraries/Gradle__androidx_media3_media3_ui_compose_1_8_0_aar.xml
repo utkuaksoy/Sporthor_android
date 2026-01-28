@@ -1,8 +1,8 @@
 <component name="libraryTable">
   <library name="Gradle: androidx.media3:media3-ui-compose:1.8.0@aar" external-system-id="GRADLE">
     <CLASSES>
-      <root url="jar://$USER_HOME$/.gradle/caches/8.14.3/transforms/116c46bb576b95baa8afd5a9bebacf5f/transformed/media3-ui-compose-1.8.0/jars/classes.jar!/" />
-      <root url="file://$USER_HOME$/.gradle/caches/8.14.3/transforms/116c46bb576b95baa8afd5a9bebacf5f/transformed/media3-ui-compose-1.8.0/AndroidManifest.xml" />
+      <root url="file://$USER_HOME$/.gradle/caches/8.14.3/transforms/e03d12b9308f5c6d0910c8fe218c50ed/transformed/media3-ui-compose-1.8.0/AndroidManifest.xml" />
+      <root url="jar://$USER_HOME$/.gradle/caches/8.14.3/transforms/e03d12b9308f5c6d0910c8fe218c50ed/transformed/media3-ui-compose-1.8.0/jars/classes.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES>

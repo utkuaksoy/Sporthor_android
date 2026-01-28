@@ -1,9 +1,9 @@
 <component name="libraryTable">
   <library name="Gradle: com.google.android.libraries.places:places:4.4.1@aar" external-system-id="GRADLE">
     <CLASSES>
-      <root url="jar://$USER_HOME$/.gradle/caches/8.14.3/transforms/b7ef69354690bae2ad5eaf36e6b1ed4c/transformed/places-4.4.1/jars/classes.jar!/" />
-      <root url="file://$USER_HOME$/.gradle/caches/8.14.3/transforms/b7ef69354690bae2ad5eaf36e6b1ed4c/transformed/places-4.4.1/res" />
-      <root url="file://$USER_HOME$/.gradle/caches/8.14.3/transforms/b7ef69354690bae2ad5eaf36e6b1ed4c/transformed/places-4.4.1/AndroidManifest.xml" />
+      <root url="file://$USER_HOME$/.gradle/caches/8.14.3/transforms/989f6e5cbf3c82bb9c93d160bb1bd6c1/transformed/places-4.4.1/res" />
+      <root url="jar://$USER_HOME$/.gradle/caches/8.14.3/transforms/989f6e5cbf3c82bb9c93d160bb1bd6c1/transformed/places-4.4.1/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/8.14.3/transforms/989f6e5cbf3c82bb9c93d160bb1bd6c1/transformed/places-4.4.1/AndroidManifest.xml" />
     </CLASSES>
     <JAVADOC>
       <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.google.android.libraries.places/places/4.4.1/7544f88ac8623a678eaa1919320a31b7cfe549f/places-4.4.1-javadoc.jar!/" />

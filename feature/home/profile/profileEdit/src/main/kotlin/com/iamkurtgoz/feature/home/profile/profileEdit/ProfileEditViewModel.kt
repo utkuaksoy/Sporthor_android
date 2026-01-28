@@ -326,6 +326,22 @@ internal class ProfileEditViewModel @Inject constructor(
                 val updatedAttributes = viewState.profileSummaryModel?.highlights?.branchesAttributes?.toMutableList()
                     ?.apply { add(newBranchAttributeUIModel) }
                     ?: mutableListOf(newBranchAttributeUIModel)
+                val newDynamicValues = newBranchAttributeUIModel.branchInfoRow
+                    ?.mapNotNull { row ->
+                        val parameterName = row.parameterName ?: return@mapNotNull null
+                        AppTextFieldValue(
+                            id = status.branchId + parameterName,
+                            value = row.text ?: "",
+                        )
+                    }
+                    ?: emptyList()
+                val updatedDynamicValues = viewState.dynamicTextFieldValues.toMutableList().apply {
+                    newDynamicValues.forEach { value ->
+                        if (none { it.id == value.id }) {
+                            add(value)
+                        }
+                    }
+                }
 
                 val updateProfileSummaryModel = viewState.profileSummaryModel?.copy(
                     highlights = viewState.profileSummaryModel?.highlights?.copy(
@@ -342,6 +358,7 @@ internal class ProfileEditViewModel @Inject constructor(
                 updateState { state ->
                     state.copy(
                         profileSummaryModel = updateProfileSummaryModel,
+                        dynamicTextFieldValues = updatedDynamicValues,
                         selectedBranchIds = updatedBranches
                             .filter { it.isSelected == true }
                             .mapNotNull { it.branchId },
@@ -354,20 +371,15 @@ internal class ProfileEditViewModel @Inject constructor(
             }
             is ProfileEditEventBus.Event.RemoveSelectedBranch -> {
                 val branchId = status.branchId ?: return
-                val updatedBranches = viewState.profileSummaryModel?.highlights?.branches?.map { branch ->
-                    if (branch.branchId == branchId) {
-                        branch.copy(isSelected = false)
-                    } else {
-                        branch
-                    }
-                }
+                val updatedBranches = viewState.profileSummaryModel?.highlights?.branches
+                    ?.filterNot { it.branchId == branchId }
                 val updatedAttributes = viewState.profileSummaryModel?.highlights?.branchesAttributes
                     ?.filterNot { it.branchId == branchId }
                 val updatedDynamicValues = viewState.dynamicTextFieldValues.filterNot { value ->
                     value.id.startsWith(branchId)
                 }
                 val nextSelectedBranchId = if (viewState.selectedBranchId == branchId) {
-                    updatedBranches?.firstOrNull { it.isSelected == true }?.branchId
+                    updatedBranches?.firstOrNull()?.branchId
                 } else {
                     viewState.selectedBranchId
                 }

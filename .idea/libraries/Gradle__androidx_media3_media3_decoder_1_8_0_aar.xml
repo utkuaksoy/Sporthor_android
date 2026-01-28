@@ -1,11 +1,11 @@
 <component name="libraryTable">
   <library name="Gradle: androidx.media3:media3-decoder:1.8.0@aar" external-system-id="GRADLE">
     <ANNOTATIONS>
-      <root url="jar://$USER_HOME$/.gradle/caches/8.14.3/transforms/a1778ef81b239a51fc335bf6f0a80363/transformed/media3-decoder-1.8.0/annotations.zip!/" />
+      <root url="jar://$USER_HOME$/.gradle/caches/8.14.3/transforms/8527002171f73a933e6f6f149e5d8a0c/transformed/media3-decoder-1.8.0/annotations.zip!/" />
     </ANNOTATIONS>
     <CLASSES>
-      <root url="jar://$USER_HOME$/.gradle/caches/8.14.3/transforms/a1778ef81b239a51fc335bf6f0a80363/transformed/media3-decoder-1.8.0/jars/classes.jar!/" />
-      <root url="file://$USER_HOME$/.gradle/caches/8.14.3/transforms/a1778ef81b239a51fc335bf6f0a80363/transformed/media3-decoder-1.8.0/AndroidManifest.xml" />
+      <root url="jar://$USER_HOME$/.gradle/caches/8.14.3/transforms/8527002171f73a933e6f6f149e5d8a0c/transformed/media3-decoder-1.8.0/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/8.14.3/transforms/8527002171f73a933e6f6f149e5d8a0c/transformed/media3-decoder-1.8.0/AndroidManifest.xml" />
     </CLASSES>
     <JAVADOC />
     <SOURCES>

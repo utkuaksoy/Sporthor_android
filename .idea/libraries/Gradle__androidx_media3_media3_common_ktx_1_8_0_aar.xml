@@ -1,8 +1,8 @@
 <component name="libraryTable">
   <library name="Gradle: androidx.media3:media3-common-ktx:1.8.0@aar" external-system-id="GRADLE">
     <CLASSES>
-      <root url="jar://$USER_HOME$/.gradle/caches/8.14.3/transforms/adef2ea2b1ea40741bcdad11a4a1dd92/transformed/media3-common-ktx-1.8.0/jars/classes.jar!/" />
-      <root url="file://$USER_HOME$/.gradle/caches/8.14.3/transforms/adef2ea2b1ea40741bcdad11a4a1dd92/transformed/media3-common-ktx-1.8.0/AndroidManifest.xml" />
+      <root url="jar://$USER_HOME$/.gradle/caches/8.14.3/transforms/fe789dbd57b8da718c0d9ffcda398ed3/transformed/media3-common-ktx-1.8.0/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/8.14.3/transforms/fe789dbd57b8da718c0d9ffcda398ed3/transformed/media3-common-ktx-1.8.0/AndroidManifest.xml" />
     </CLASSES>
     <JAVADOC />
     <SOURCES>

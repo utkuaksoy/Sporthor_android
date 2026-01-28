@@ -1,11 +1,11 @@
 <component name="libraryTable">
   <library name="Gradle: com.google.firebase:firebase-abt:21.1.1@aar" external-system-id="GRADLE">
     <ANNOTATIONS>
-      <root url="jar://$USER_HOME$/.gradle/caches/8.14.3/transforms/47607d70ccbec34886de49a47c6fa1f0/transformed/firebase-abt-21.1.1/annotations.zip!/" />
+      <root url="jar://$USER_HOME$/.gradle/caches/8.14.3/transforms/ea8b65a2c24e741a2d568b9ee94a538b/transformed/firebase-abt-21.1.1/annotations.zip!/" />
     </ANNOTATIONS>
     <CLASSES>
-      <root url="jar://$USER_HOME$/.gradle/caches/8.14.3/transforms/47607d70ccbec34886de49a47c6fa1f0/transformed/firebase-abt-21.1.1/jars/classes.jar!/" />
-      <root url="file://$USER_HOME$/.gradle/caches/8.14.3/transforms/47607d70ccbec34886de49a47c6fa1f0/transformed/firebase-abt-21.1.1/AndroidManifest.xml" />
+      <root url="file://$USER_HOME$/.gradle/caches/8.14.3/transforms/ea8b65a2c24e741a2d568b9ee94a538b/transformed/firebase-abt-21.1.1/AndroidManifest.xml" />
+      <root url="jar://$USER_HOME$/.gradle/caches/8.14.3/transforms/ea8b65a2c24e741a2d568b9ee94a538b/transformed/firebase-abt-21.1.1/jars/classes.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />

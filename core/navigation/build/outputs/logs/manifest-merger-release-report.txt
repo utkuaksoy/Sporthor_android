@@ -1,0 +1,14 @@
+-- Merging decision tree log ---
+manifest
+ADDED from /Users/devcelebi/Desktop/Projeler/Sporthor/core/navigation/src/main/AndroidManifest.xml:17:1-19:12
+INJECTED from /Users/devcelebi/Desktop/Projeler/Sporthor/core/navigation/src/main/AndroidManifest.xml:17:1-19:12
+	package
+		INJECTED from /Users/devcelebi/Desktop/Projeler/Sporthor/core/navigation/src/main/AndroidManifest.xml
+uses-sdk
+INJECTED from /Users/devcelebi/Desktop/Projeler/Sporthor/core/navigation/src/main/AndroidManifest.xml reason: use-sdk injection requested
+INJECTED from /Users/devcelebi/Desktop/Projeler/Sporthor/core/navigation/src/main/AndroidManifest.xml
+INJECTED from /Users/devcelebi/Desktop/Projeler/Sporthor/core/navigation/src/main/AndroidManifest.xml
+	android:targetSdkVersion
+		INJECTED from /Users/devcelebi/Desktop/Projeler/Sporthor/core/navigation/src/main/AndroidManifest.xml
+	android:minSdkVersion
+		INJECTED from /Users/devcelebi/Desktop/Projeler/Sporthor/core/navigation/src/main/AndroidManifest.xml

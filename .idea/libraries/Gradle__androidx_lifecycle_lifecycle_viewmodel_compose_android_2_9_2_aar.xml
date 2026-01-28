@@ -1,9 +1,9 @@
 <component name="libraryTable">
   <library name="Gradle: androidx.lifecycle:lifecycle-viewmodel-compose-android:2.9.2@aar" external-system-id="GRADLE">
     <CLASSES>
-      <root url="jar://$USER_HOME$/.gradle/caches/8.14.3/transforms/fe2784c7e6c02dadb6d7d726dc3c4c39/transformed/lifecycle-viewmodel-compose-release/jars/classes.jar!/" />
-      <root url="file://$USER_HOME$/.gradle/caches/8.14.3/transforms/fe2784c7e6c02dadb6d7d726dc3c4c39/transformed/lifecycle-viewmodel-compose-release/res" />
-      <root url="file://$USER_HOME$/.gradle/caches/8.14.3/transforms/fe2784c7e6c02dadb6d7d726dc3c4c39/transformed/lifecycle-viewmodel-compose-release/AndroidManifest.xml" />
+      <root url="file://$USER_HOME$/.gradle/caches/8.14.3/transforms/28408402c620198b6d831840e93f4b19/transformed/lifecycle-viewmodel-compose-release/res" />
+      <root url="file://$USER_HOME$/.gradle/caches/8.14.3/transforms/28408402c620198b6d831840e93f4b19/transformed/lifecycle-viewmodel-compose-release/AndroidManifest.xml" />
+      <root url="jar://$USER_HOME$/.gradle/caches/8.14.3/transforms/28408402c620198b6d831840e93f4b19/transformed/lifecycle-viewmodel-compose-release/jars/classes.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES>
