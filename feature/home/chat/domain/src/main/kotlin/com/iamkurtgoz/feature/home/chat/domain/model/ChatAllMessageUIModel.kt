@@ -29,6 +29,7 @@ data class ChatAllMessageItemUIModel(
     val lastMessage: String?,
     val messageDate: LocalTime?,
     val messageDateLong: LocalDateTime?,
+    val shortDate: String?,
     val messageId: String?,
     val name: String?,
     val toUserId: String?,

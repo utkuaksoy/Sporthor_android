@@ -34,7 +34,7 @@ internal class SelectBranchScreenContract {
         val alertDialogModel: AlertDialogModel? = null,
         val branchesList: BranchesUIModel? = null,
         val branchesAttributeList: BranchesAttributeUIModel? = null,
-        val selectedBranch: BranchesItemUIModel? = null,
+        val selectedBranchIds: Set<String> = emptySet(),
     ) : CoreState.ViewState
 
     sealed class SideEffect : CoreState.SideEffect {
@@ -47,7 +47,8 @@ internal class SelectBranchScreenContract {
         data object NavigateUp : Event()
         data object PopBackStack : Event()
         data object DismissDialogs : Event()
-        data class SetSelectedBranch(val branch: BranchesItemUIModel?) : Event()
+        data class ToggleSelectedBranch(val branch: BranchesItemUIModel) : Event()
+        data object OnClickAdd : Event()
     }
 
     object Static

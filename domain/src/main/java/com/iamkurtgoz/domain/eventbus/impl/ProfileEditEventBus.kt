@@ -26,5 +26,9 @@ object ProfileEditEventBus : CoreEventBus<ProfileEditEventBus.Event>() {
             val branchId: String?,
             val branchAttribute: BranchesAttributeItemDomainModel,
         ) : Event()
+
+        data class RemoveSelectedBranch(
+            val branchId: String?,
+        ) : Event()
     }
 }

@@ -29,6 +29,7 @@ import com.iamkurtgoz.data.model.ProfileResponseModel
 import com.iamkurtgoz.domain.model.request.UpdateProfileImageRequest
 import com.iamkurtgoz.domain.model.request.UpdateProfilePublicPrivateRequest
 import com.iamkurtgoz.domain.model.request.UpdateUserRolesRequest
+import com.iamkurtgoz.domain.model.request.UpdateConfigurationRequest
 import kotlinx.serialization.json.JsonObject
 import retrofit2.Response
 import retrofit2.http.Body
@@ -80,4 +81,7 @@ interface ProfileService {
 
     @POST("Profile/UpdateProfilePublicPrivate")
     suspend fun updateProfilePublicPrivate(@Body body: UpdateProfilePublicPrivateRequest): Response<BaseResponse<Unit>>
+
+    @POST("Profile/UpdateConfiguration")
+    suspend fun updateConfiguration(@Body body: UpdateConfigurationRequest): Response<BaseResponse<Unit>>
 }

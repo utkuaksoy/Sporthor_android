@@ -33,6 +33,7 @@ import com.iamkurtgoz.domain.dataStore.AppPreferences
 import com.iamkurtgoz.domain.model.request.UpdateProfileImageRequest
 import com.iamkurtgoz.domain.model.request.UpdateProfilePublicPrivateRequest
 import com.iamkurtgoz.domain.model.request.UpdateUserRolesRequest
+import com.iamkurtgoz.domain.model.request.UpdateConfigurationRequest
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonObject
 import javax.inject.Inject
@@ -105,5 +106,9 @@ internal class ProfileDataSourceImpl @Inject constructor(
 
     override suspend fun updateProfilePublicPrivate(body: UpdateProfilePublicPrivateRequest): BaseResponse<Unit> = requestRetrofit {
         profileService.updateProfilePublicPrivate(body)
+    }
+
+    override suspend fun updateConfiguration(body: UpdateConfigurationRequest): BaseResponse<Unit> = requestRetrofit {
+        profileService.updateConfiguration(body)
     }
 }

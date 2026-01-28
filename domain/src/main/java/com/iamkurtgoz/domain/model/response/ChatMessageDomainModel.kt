@@ -29,6 +29,7 @@ data class ChatMessageItemDomainModel(
     val id: String?,
     val messageType: Int?,
     val sendDate: LocalDateTime?,
+    val shortDate: String?,
 )
 
 data class ChatMessageItemFromDomainModel(

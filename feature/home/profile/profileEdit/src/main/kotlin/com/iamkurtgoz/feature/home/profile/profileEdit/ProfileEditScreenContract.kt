@@ -37,6 +37,7 @@ internal class ProfileEditScreenContract {
         val profileSummaryModel: EditProfileSummaryUIModel? = null,
         val branchInfoRowUIModel: BranchInfoRowUIModel? = null,
         val selectedBranchId: String? = null,
+        val selectedBranchIds: List<String> = emptyList(),
         val dynamicTextFieldValues: List<AppTextFieldValue> = emptyList(),
         val selectedImage: File? = null,
         val onUploadProgress: Int? = null,

@@ -20,6 +20,7 @@ import com.iamkurtgoz.core.common.state.AppBuildConfigStatePack
 import com.iamkurtgoz.core.common.state.AppRemoteConfigStatePack
 import com.iamkurtgoz.domain.core.CoreViewModel
 import com.iamkurtgoz.domain.eventbus.AppEventBus
+import com.iamkurtgoz.domain.eventbus.impl.ProfileEditEventBus
 import com.iamkurtgoz.domain.extensions.toAlertDialog
 import com.iamkurtgoz.domain.model.response.BranchInfoRowDomainModel
 import com.iamkurtgoz.domain.model.response.BranchesAttributeItemDomainModel
@@ -50,7 +51,8 @@ internal class SelectBranchViewModel @Inject constructor(
             is SelectBranchScreenContract.Event.NavigateUp -> setSideEffect(SelectBranchScreenContract.SideEffect.NavigateUp)
             is SelectBranchScreenContract.Event.PopBackStack -> setSideEffect(SelectBranchScreenContract.SideEffect.PopBackStack)
             is SelectBranchScreenContract.Event.DismissDialogs -> dismissDialogs()
-            is SelectBranchScreenContract.Event.SetSelectedBranch -> setSelectedBranch(event.branch)
+            is SelectBranchScreenContract.Event.ToggleSelectedBranch -> toggleSelectedBranch(event.branch)
+            is SelectBranchScreenContract.Event.OnClickAdd -> onClickAdd()
         }
     }
 
@@ -75,26 +77,61 @@ internal class SelectBranchViewModel @Inject constructor(
                 }
             }
             .callWithSuccess {
+                val apiSelectedIds = it.branches
+                    ?.filter { branch -> branch.isSelected == true }
+                    ?.mapNotNull { branch -> branch.branchId }
+                    ?.toSet()
+                    ?: emptySet()
+                val selectedIds = (apiSelectedIds + appEventBus.profileEditSelectedBranchIds)
                 updateState { state ->
                     state.copy(
                         branchesList = it,
+                        selectedBranchIds = selectedIds,
                     )
                 }
             }
     }
 
-    private fun setSelectedBranch(branch: BranchesItemUIModel?) {
-        updateState { state ->
-            state.copy(
-                selectedBranch = branch,
+    private fun toggleSelectedBranch(branch: BranchesItemUIModel) {
+        val branchId = branch.branchId ?: return
+        val selectedIds = viewState.selectedBranchIds.toMutableSet()
+        val isSelected = selectedIds.contains(branchId)
+
+        if (isSelected) {
+            selectedIds.remove(branchId)
+            updateState { state ->
+                state.copy(
+                    selectedBranchIds = selectedIds,
+                )
+            }
+            appEventBus.profileEditSelectedBranchIds = selectedIds
+            viewModelScope.launch {
+                appEventBus.profileEditEventBus.send(
+                    ProfileEditEventBus.Event.RemoveSelectedBranch(
+                        branchId = branchId,
+                    ),
+                )
+            }
+        } else {
+            selectedIds.add(branchId)
+            updateState { state ->
+                state.copy(
+                    selectedBranchIds = selectedIds,
+                )
+            }
+            appEventBus.profileEditSelectedBranchIds = selectedIds
+            getBranchAttribute(
+                branchId = branchId,
+                branch = branch,
             )
         }
-        getBranchAttribute(
-            branchId = branch?.branchId,
-        )
     }
 
-    private fun getBranchAttribute(branchId: String?) {
+    private fun onClickAdd() {
+        setSideEffect(SelectBranchScreenContract.SideEffect.PopBackStack)
+    }
+
+    private fun getBranchAttribute(branchId: String?, branch: BranchesItemUIModel) {
         branchesAttributeUseCase.invoke(branchId)
             .requester
             .onLoading {
@@ -121,9 +158,9 @@ internal class SelectBranchViewModel @Inject constructor(
                 }
                 viewModelScope.launch {
                     appEventBus.updateSelectedBranch(
-                        branchImage = viewState.selectedBranch?.branchImage,
-                        branchTitle = viewState.selectedBranch?.branchTitle,
-                        branchId = viewState.selectedBranch?.branchId,
+                        branchImage = branch.branchImage,
+                        branchTitle = branch.branchTitle,
+                        branchId = branch.branchId,
                         branchAttribute = BranchesAttributeItemDomainModel(
                             branchId = it.branchId,
                             branchInfoRow = it.branchInfoRow?.map {
@@ -138,7 +175,6 @@ internal class SelectBranchViewModel @Inject constructor(
                             },
                         ),
                     )
-                    setSideEffect(SelectBranchScreenContract.SideEffect.PopBackStack)
                 }
             }
     }

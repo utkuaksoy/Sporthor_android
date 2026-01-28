@@ -499,7 +499,11 @@ internal class EditEventViewModel @Inject constructor(
 
         updateState { state ->
             state.copy(
-                selectedGetTrainingGroupUserUIModelTeam = null,
+                selectedGetTrainingGroupUserUIModelTeam = if (isInitializingFromRoute) {
+                    state.selectedGetTrainingGroupUserUIModelTeam
+                } else {
+                    null
+                },
                 selectedGetTrainingGroupUserList = list,
             )
         }

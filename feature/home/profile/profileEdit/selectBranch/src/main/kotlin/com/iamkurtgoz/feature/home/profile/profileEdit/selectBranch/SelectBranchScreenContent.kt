@@ -51,7 +51,7 @@ internal fun SelectBranchScreenContent(
             rowContent = { index, item ->
                 SelectableCard.Primary(
                     index = index,
-                    isSelected = item == state.selectedBranch,
+                    isSelected = item.branchId?.let { state.selectedBranchIds.contains(it) } == true,
                     imageData = item.branchImage,
                     text = item.branchTitle ?: "",
                     modifier = Modifier
@@ -59,7 +59,7 @@ internal fun SelectBranchScreenContent(
                         .padding(start = if (index % 2 == AppDefaults.ZERO) AppTheme.spacing.spacingHuge else AppTheme.spacing.spacingSmall)
                         .padding(end = if (index % 2 != AppDefaults.ZERO) AppTheme.spacing.spacingHuge else AppTheme.spacing.spacingSmall),
                     onSelect = {
-                        setEvent.invoke(SelectBranchScreenContract.Event.SetSelectedBranch(item))
+                        setEvent.invoke(SelectBranchScreenContract.Event.ToggleSelectedBranch(item))
                     },
                 )
             },

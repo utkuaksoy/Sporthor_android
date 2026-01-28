@@ -28,6 +28,7 @@ import com.iamkurtgoz.data.model.ProfileResponseModel
 import com.iamkurtgoz.domain.model.request.UpdateProfileImageRequest
 import com.iamkurtgoz.domain.model.request.UpdateProfilePublicPrivateRequest
 import com.iamkurtgoz.domain.model.request.UpdateUserRolesRequest
+import com.iamkurtgoz.domain.model.request.UpdateConfigurationRequest
 import kotlinx.serialization.json.JsonObject
 
 interface ProfileDataSource {
@@ -45,4 +46,5 @@ interface ProfileDataSource {
     suspend fun updataUserRoles(body: UpdateUserRolesRequest): BaseResponse<Unit>
     suspend fun deleteAccount(): BaseResponse<Unit>
     suspend fun updateProfilePublicPrivate(body: UpdateProfilePublicPrivateRequest): BaseResponse<Unit>
+    suspend fun updateConfiguration(body: UpdateConfigurationRequest): BaseResponse<Unit>
 }

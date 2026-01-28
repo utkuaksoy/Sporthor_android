@@ -18,7 +18,9 @@ package com.iamkurtgoz.feature.home.profile.profileEdit.selectBranch
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -30,7 +32,10 @@ import com.iamkurtgoz.core.common.state.AppRemoteConfigStatePack
 import com.iamkurtgoz.core.commonui.component.log.TrackedScreen
 import com.iamkurtgoz.core.commonui.extension.Alert
 import com.iamkurtgoz.core.commonui.extension.observeSideEffect
+import com.iamkurtgoz.core.designsystem.component.button.AppButton
 import com.iamkurtgoz.core.designsystem.component.animation.AppLoadingDialog
+import com.iamkurtgoz.core.designsystem.component.toolbar.AppToolbar
+import com.iamkurtgoz.core.designsystem.component.toolbar.AppToolbarFields
 import com.iamkurtgoz.core.designsystem.internal.PreviewAppWithNightMode
 import com.iamkurtgoz.core.designsystem.theme.AppTheme
 import com.iamkurtgoz.core.designsystem.theme.AppThemeScaffold
@@ -67,11 +72,43 @@ internal fun SelectBranchScreen(
 }
 
 @Composable
+@OptIn(ExperimentalMaterial3Api::class)
 private fun SelectBranchScreenScaffold(
     state: SelectBranchScreenContract.State,
     setEvent: (SelectBranchScreenContract.Event) -> Unit,
 ) {
-    AppThemeScaffold { padding ->
+    AppThemeScaffold(
+        topBar = {
+            AppToolbar.Toolbar(
+                leftContent = {
+                    AppToolbarFields.ImageIcon(
+                        resId = android.R.drawable.ic_menu_close_clear_cancel,
+                        onClick = {
+                            setEvent.invoke(SelectBranchScreenContract.Event.NavigateUp)
+                        },
+                    )
+                },
+                centerContent = {
+                    AppToolbarFields.Title(
+                        text = "Branş Ekle", // TODO: Localize
+                    )
+                },
+            )
+        },
+        bottomBar = {
+            AppButton.PrimaryLarge(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = AppTheme.spacing.spacingHuge)
+                    .padding(bottom = AppTheme.configuration.getSafeContentPaddingValues().calculateBottomPadding())
+                    .padding(bottom = AppTheme.spacing.spacingMedium),
+                text = "Ekle", // TODO: Localize
+                onClick = {
+                    setEvent.invoke(SelectBranchScreenContract.Event.OnClickAdd)
+                },
+            )
+        },
+    ) { padding ->
         SelectBranchScreenContent(
             modifier = Modifier
                 .padding(padding),

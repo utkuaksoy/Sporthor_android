@@ -39,6 +39,7 @@ data class ChatMessageItemResponseModel(
     @Serializable(with = LocalDateTimeSerializer::class)
     @SerialName("sendDate")
     val sendDate: LocalDateTime?,
+    @SerialName("shortDate") val shortDate: String?,
 )
 
 @Keep

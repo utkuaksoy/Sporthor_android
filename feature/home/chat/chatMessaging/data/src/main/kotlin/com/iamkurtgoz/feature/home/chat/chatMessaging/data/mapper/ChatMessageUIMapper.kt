@@ -40,6 +40,7 @@ internal class ChatMessageUIMapper @Inject constructor() : IMapper<ChatMessageDo
                         id = item?.id,
                         messageType = item?.messageType?.toSignalRMessageType(),
                         sendDate = item?.sendDate,
+                        shortDate = item?.shortDate,
                     )
                 },
                 users = response.users?.map { user ->

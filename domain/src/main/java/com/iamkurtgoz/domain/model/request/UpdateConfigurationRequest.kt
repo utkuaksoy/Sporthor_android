@@ -13,26 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.iamkurtgoz.domain.model.response
+package com.iamkurtgoz.domain.model.request
 
-import java.time.LocalDateTime
-import java.time.LocalTime
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
-data class ChatAllMessageDomainModel(
-    val messages: List<ChatAllMessageItemDomainModel>?,
-)
-
-data class ChatAllMessageItemDomainModel(
-    val image: String?,
-    val isGroup: Boolean?,
-    val lastMessage: String?,
-    val messageDate: LocalTime?,
-    val messageDateLong: LocalDateTime?,
-    val shortDate: String?,
-    val messageId: String?,
-    val name: String?,
-    val toUserId: String?,
-    val unReadMessageCount: Int?,
-    val userId: String?,
-    val userName: String?,
+@Serializable
+data class UpdateConfigurationRequest(
+    @SerialName("firebaseToken") val firebaseToken: String?,
 )

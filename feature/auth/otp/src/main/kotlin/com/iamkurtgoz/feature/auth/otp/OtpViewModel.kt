@@ -29,8 +29,10 @@ import com.iamkurtgoz.domain.dataStore.AppPreferences
 import com.iamkurtgoz.domain.extensions.toAlertDialog
 import com.iamkurtgoz.domain.model.request.GenerateOtpRequest
 import com.iamkurtgoz.domain.model.request.LoginWithPhoneRequest
+import com.iamkurtgoz.domain.model.request.UpdateConfigurationRequest
 import com.iamkurtgoz.domain.model.request.ValidateOtpRequest
 import com.iamkurtgoz.domain.notification.INotificationSettingsManager
+import com.iamkurtgoz.domain.repository.ProfileRepository
 import com.iamkurtgoz.feature.auth.otp.domain.useCase.GenerateOtpUseCase
 import com.iamkurtgoz.feature.auth.otp.domain.useCase.LoginWithPhoneUseCase
 import com.iamkurtgoz.feature.auth.otp.domain.useCase.ValidateOtpUseCase
@@ -50,6 +52,7 @@ internal class OtpViewModel @Inject constructor(
     private val loginWithPhoneUseCase: LoginWithPhoneUseCase,
     private val notificationSettingsManager: INotificationSettingsManager,
     private val appPreferences: AppPreferences,
+    private val profileRepository: ProfileRepository,
 ) : CoreViewModel<OtpScreenContract.State, OtpScreenContract.SideEffect, OtpScreenContract.Event>(
     initialState = OtpScreenContract.State(
         isLoading = false,
@@ -184,6 +187,7 @@ internal class OtpViewModel @Inject constructor(
             val token = notificationSettingsManager.getRegisterFcmToken()
             if (!token.isNullOrBlank()) {
                 appPreferences.setFirebaseToken(firebaseToken = token)
+                profileRepository.updateConfiguration(UpdateConfigurationRequest(firebaseToken = token))
             }
         }
     }

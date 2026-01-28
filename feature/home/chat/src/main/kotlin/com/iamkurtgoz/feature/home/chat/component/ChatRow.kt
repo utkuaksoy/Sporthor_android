@@ -162,8 +162,11 @@ internal fun ChatRow(
                             modifier = Modifier.weight(AppDefaults.WEIGHT_FULL),
                         )
 
+                        val dateText = item?.shortDate?.takeIf { it.isNotBlank() }
+                            ?: item?.messageDateLong?.toString(format = DateFormat.TIME)
+                            ?: ""
                         Text(
-                            text = item?.messageDateLong?.toString(format = DateFormat.TIME) ?: "",
+                            text = dateText,
                             style = AppTheme.typography.labelRegular,
                             color = AppTheme.colors.generalColors.textSecondary,
                         )

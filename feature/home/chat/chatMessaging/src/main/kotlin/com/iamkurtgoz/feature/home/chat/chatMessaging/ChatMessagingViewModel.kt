@@ -170,6 +170,7 @@ internal class ChatMessagingViewModel @Inject constructor(
                 id = UUID.randomUUID().toString(),
                 messageType = SignalRMessageType.TEXT,
                 sendDate = LocalDateTime.now(),
+                shortDate = null,
             )
             pendingOutgoingMessages.add(
                 PendingOutgoingMessage(
@@ -335,6 +336,7 @@ internal class ChatMessagingViewModel @Inject constructor(
                     id = UUID.randomUUID().toString(),
                     messageType = eventBusState.type,
                     sendDate = LocalDateTime.now(),
+                    shortDate = null,
                 )
                 messages.add(
                     index = AppDefaults.ZERO,

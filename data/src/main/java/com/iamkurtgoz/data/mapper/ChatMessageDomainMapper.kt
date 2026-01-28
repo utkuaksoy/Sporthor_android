@@ -39,6 +39,7 @@ internal class ChatMessageDomainMapper @Inject constructor() : IMapper<ChatMessa
                         id = item?.id,
                         messageType = item?.messageType,
                         sendDate = item?.sendDate,
+                        shortDate = item?.shortDate,
                     )
                 },
                 users = response.users?.map { user ->

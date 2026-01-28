@@ -22,8 +22,10 @@ import com.iamkurtgoz.core.common.state.AppBuildConfigStatePack
 import com.iamkurtgoz.core.common.state.AppRemoteConfigStatePack
 import com.iamkurtgoz.core.commonui.model.AppTextFieldValue
 import com.iamkurtgoz.domain.core.CoreViewModel
+import com.iamkurtgoz.domain.eventbus.AppEventBus
 import com.iamkurtgoz.domain.eventbus.impl.ProfileEditEventBus
 import com.iamkurtgoz.domain.extensions.toAlertDialog
+import com.iamkurtgoz.domain.model.base.AnyAlertDialogModel
 import com.iamkurtgoz.domain.model.request.UpdateProfileImageRequest
 import com.iamkurtgoz.domain.repository.LocationRepository
 import com.iamkurtgoz.feature.home.profile.profileEdit.domain.model.BranchInfoRowUIModel
@@ -137,20 +139,59 @@ internal class ProfileEditViewModel @Inject constructor(
                     }
                 }
 
+                val selectedBranchIds = it.highlights?.branches
+                    ?.filter { branch -> branch.isSelected == true }
+                    ?.mapNotNull { branch -> branch.branchId }
+                    ?: emptyList()
                 val selectedBranch = it.highlights?.branches?.fastFirstOrNull { it.isSelected == true } ?: it.highlights?.branches?.firstOrNull()
                 updateState { state ->
                     state.copy(
                         isLoading = false,
                         profileSummaryModel = it,
                         selectedBranchId = selectedBranch?.branchId,
+                        selectedBranchIds = selectedBranchIds,
                         dynamicTextFieldValues = dynamicTextFieldValues,
                     )
                 }
+                AppEventBus.profileEditSelectedBranchIds = selectedBranchIds.toSet()
             }
     }
 
     @Suppress("NestedBlockDepth")
     private fun updateProfileSummary() {
+        val missingRequiredAttributes = viewState.profileSummaryModel?.highlights?.branchesAttributes
+            ?.flatMap { branchesAttributes ->
+                val branchId = branchesAttributes.branchId ?: return@flatMap emptyList()
+                branchesAttributes.branchInfoRow?.mapNotNull { row ->
+                    if (row.isRequired == true) {
+                        val key = branchId + (row.parameterName ?: "")
+                        val value = viewState.dynamicTextFieldValues.firstOrNull { it.id == key }?.value
+                        if (value.isNullOrBlank()) {
+                            row.title ?: row.parameterName
+                        } else {
+                            null
+                        }
+                    } else {
+                        null
+                    }
+                } ?: emptyList()
+            }
+            ?.distinct()
+            ?: emptyList()
+        if (missingRequiredAttributes.isNotEmpty()) {
+            updateState { state ->
+                state.copy(
+                    alertDialogModel = AnyAlertDialogModel(
+                        title = "Uyari",
+                        message = "Lutfen zorunlu alanlari doldurun: ${missingRequiredAttributes.joinToString()}",
+                        confirmButton = "Tamam",
+                        dismissButton = null,
+                    ),
+                )
+            }
+            return
+        }
+
         val content = mutableMapOf<String, JsonElement>()
         viewState.profileSummaryModel?.profileInfo?.row?.forEach { row ->
             val parameterName = row.parameterName ?: return@forEach
@@ -236,17 +277,25 @@ internal class ProfileEditViewModel @Inject constructor(
     }
 
     private fun onClickAddBranch() {
+        val selectedBranchIds = viewState.profileSummaryModel?.highlights?.branches
+            ?.filter { it.isSelected == true }
+            ?.mapNotNull { it.branchId }
+            ?.toSet()
+            ?: emptySet()
+        AppEventBus.profileEditSelectedBranchIds = selectedBranchIds
         setSideEffect(ProfileEditScreenContract.SideEffect.NavigateToProfileEditSelectBranch)
     }
 
     private fun updateEventBusStatus(status: ProfileEditEventBus.Event) {
         when (status) {
             is ProfileEditEventBus.Event.UpdateSelectedBranch -> {
+                val existingBranches = viewState.profileSummaryModel?.highlights?.branches?.toMutableList() ?: mutableListOf()
+                val alreadyExists = existingBranches.any { it.branchId == status.branchId }
                 val newBranchUIModel = BranchItemUIModel(
                     branchImage = status.branchImage,
                     branchTitle = status.branchTitle,
                     branchId = status.branchId,
-                    isSelected = false,
+                    isSelected = true,
                 )
                 val newBranchAttributeUIModel = BranchesAttributeItemUIModel(
                     branchId = status.branchId,
@@ -262,22 +311,88 @@ internal class ProfileEditViewModel @Inject constructor(
                     },
                 )
 
+                val updatedBranches = if (alreadyExists) {
+                    existingBranches.map { branch ->
+                        if (branch.branchId == status.branchId) {
+                            branch.copy(isSelected = true)
+                        } else {
+                            branch
+                        }
+                    }
+                } else {
+                    existingBranches.apply { add(newBranchUIModel) }
+                }
+
+                val updatedAttributes = viewState.profileSummaryModel?.highlights?.branchesAttributes?.toMutableList()
+                    ?.apply { add(newBranchAttributeUIModel) }
+                    ?: mutableListOf(newBranchAttributeUIModel)
+
                 val updateProfileSummaryModel = viewState.profileSummaryModel?.copy(
                     highlights = viewState.profileSummaryModel?.highlights?.copy(
-                        branches = viewState.profileSummaryModel?.highlights?.branches?.toMutableList()?.apply {
-                            add(newBranchUIModel)
-                        },
-                        branchesAttributes = viewState.profileSummaryModel?.highlights?.branchesAttributes?.toMutableList()?.apply {
-                            add(newBranchAttributeUIModel)
-                        },
+                        branches = updatedBranches,
+                        branchesAttributes = updatedAttributes,
                     ),
                 )
 
+                val updatedSelectedBranchIds = viewState.selectedBranchIds.toMutableList().apply {
+                    if (!contains(status.branchId)) {
+                        status.branchId?.let { add(it) }
+                    }
+                }
                 updateState { state ->
                     state.copy(
                         profileSummaryModel = updateProfileSummaryModel,
+                        selectedBranchIds = updatedBranches
+                            .filter { it.isSelected == true }
+                            .mapNotNull { it.branchId },
                     )
                 }
+                AppEventBus.profileEditSelectedBranchIds = updatedBranches
+                    .filter { it.isSelected == true }
+                    .mapNotNull { it.branchId }
+                    .toSet()
+            }
+            is ProfileEditEventBus.Event.RemoveSelectedBranch -> {
+                val branchId = status.branchId ?: return
+                val updatedBranches = viewState.profileSummaryModel?.highlights?.branches?.map { branch ->
+                    if (branch.branchId == branchId) {
+                        branch.copy(isSelected = false)
+                    } else {
+                        branch
+                    }
+                }
+                val updatedAttributes = viewState.profileSummaryModel?.highlights?.branchesAttributes
+                    ?.filterNot { it.branchId == branchId }
+                val updatedDynamicValues = viewState.dynamicTextFieldValues.filterNot { value ->
+                    value.id.startsWith(branchId)
+                }
+                val nextSelectedBranchId = if (viewState.selectedBranchId == branchId) {
+                    updatedBranches?.firstOrNull { it.isSelected == true }?.branchId
+                } else {
+                    viewState.selectedBranchId
+                }
+                val updateProfileSummaryModel = viewState.profileSummaryModel?.copy(
+                    highlights = viewState.profileSummaryModel?.highlights?.copy(
+                        branches = updatedBranches,
+                        branchesAttributes = updatedAttributes,
+                    ),
+                )
+                updateState { state ->
+                    state.copy(
+                        profileSummaryModel = updateProfileSummaryModel,
+                        selectedBranchId = nextSelectedBranchId,
+                        dynamicTextFieldValues = updatedDynamicValues,
+                        selectedBranchIds = updatedBranches
+                            ?.filter { it.isSelected == true }
+                            ?.mapNotNull { it.branchId }
+                            ?: emptyList(),
+                    )
+                }
+                AppEventBus.profileEditSelectedBranchIds = updatedBranches
+                    ?.filter { it.isSelected == true }
+                    ?.mapNotNull { it.branchId }
+                    ?.toSet()
+                    ?: emptySet()
             }
         }
     }

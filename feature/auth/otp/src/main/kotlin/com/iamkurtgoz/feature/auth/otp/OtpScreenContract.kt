@@ -77,7 +77,7 @@ internal class OtpScreenContract {
         val fakeNavigateRoute: AuthOtpScreenRoute = AuthOtpScreenRoute(
             model = AuthOtpScreenNavigateModel(
                 fromPage = AuthOtpScreenFromPage.Register,
-                phoneNumber = "5425916095",
+                phoneNumber = "",
                 registerSocialInfoRequest = null,
             ),
         )

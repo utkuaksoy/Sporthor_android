@@ -28,6 +28,7 @@ object MockData {
             lastMessage = "Selam, nasılsın? Antrenman için hazır mısın? 🤩",
             messageDate = LocalTime.now(),
             messageDateLong = LocalDateTime.now(),
+            shortDate = "2 ay once",
             messageId = null,
             name = null,
             toUserId = null,

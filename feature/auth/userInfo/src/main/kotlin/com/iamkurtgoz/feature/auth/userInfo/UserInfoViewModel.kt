@@ -74,10 +74,10 @@ internal class UserInfoViewModel @Inject constructor(
     // Events functions
     private fun initialize() = viewModelScope.launch {
         if (appBuildConfigStatePack.isDebug) {
-            setFirstName("Mehmet")
-            setLastName("Kurtgöz")
-            setEmailAddress(generateRandomEmail())
-            setPassword("AaAaAa123")
+            setFirstName("")
+            setLastName("")
+            setEmailAddress("")
+            setPassword("")
         }
     }
 

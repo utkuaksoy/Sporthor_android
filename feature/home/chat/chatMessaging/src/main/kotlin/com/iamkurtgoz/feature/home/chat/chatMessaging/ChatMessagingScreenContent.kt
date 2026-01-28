@@ -116,13 +116,15 @@ internal fun ChatMessagingScreenContent(
                         else -> false
                     }
                 }
+                val timeText = item.message.shortDate?.takeIf { it.isNotBlank() }
+                    ?: item.message.sendDate?.toString(format = DateFormat.TIME)
                 if (isOutgoing) {
                 ChatRowOutgoing(
                     isParentMessageRow = item.isParentMessageRow,
                     imageData = item.message.from?.image,
                     userName = currentUserName ?: item.message.from?.name,
                     message = item.message.content,
-                    time = item.message.sendDate?.toString(format = DateFormat.TIME),
+                    time = timeText,
                     messageType = item.message.messageType,
                     extension = item.message.fileExtension,
                     setEvent = setEvent,
@@ -136,7 +138,7 @@ internal fun ChatMessagingScreenContent(
                     imageData = item.message.from?.image,
                     userName = item.message.from?.name,
                     message = item.message.content,
-                    time = item.message.sendDate?.toString(format = DateFormat.TIME),
+                    time = timeText,
                     messageType = item.message.messageType,
                     extension = item.message.fileExtension,
                     setEvent = setEvent,
@@ -165,6 +167,7 @@ private fun Preview() {
             id = UUID.randomUUID().toString(),
             messageType = SignalRMessageType.TEXT,
             sendDate = LocalDateTime.now(),
+            shortDate = "2 ay once",
         ),
         ChatMessageItemUIModel(
             content = "World",
@@ -177,6 +180,7 @@ private fun Preview() {
             id = UUID.randomUUID().toString(),
             messageType = SignalRMessageType.TEXT,
             sendDate = LocalDateTime.now(),
+            shortDate = "2 ay once",
         ),
     )
     AppTheme {

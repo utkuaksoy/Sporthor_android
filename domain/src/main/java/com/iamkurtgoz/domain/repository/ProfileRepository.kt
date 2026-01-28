@@ -19,6 +19,7 @@ import com.iamkurtgoz.core.common.model.RestResult
 import com.iamkurtgoz.domain.model.request.UpdateProfileImageRequest
 import com.iamkurtgoz.domain.model.request.UpdateProfilePublicPrivateRequest
 import com.iamkurtgoz.domain.model.request.UpdateUserRolesRequest
+import com.iamkurtgoz.domain.model.request.UpdateConfigurationRequest
 import com.iamkurtgoz.domain.model.response.BranchesAttributeItemDomainModel
 import com.iamkurtgoz.domain.model.response.BranchesDomainModel
 import com.iamkurtgoz.domain.model.response.DashboardFeedDomainModel
@@ -44,4 +45,5 @@ interface ProfileRepository {
     suspend fun updataUserRoles(body: UpdateUserRolesRequest): RestResult<Unit>
     suspend fun deleteAccount(): RestResult<Unit>
     suspend fun updateProfilePublicPrivate(body: UpdateProfilePublicPrivateRequest): RestResult<Unit>
+    suspend fun updateConfiguration(body: UpdateConfigurationRequest): RestResult<Unit>
 }

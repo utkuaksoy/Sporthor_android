@@ -25,6 +25,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Text
@@ -53,6 +54,7 @@ import com.iamkurtgoz.core.designsystem.theme.AppThemeSurface
 import com.iamkurtgoz.core.navigation.HomeScreenEditEventRoute
 import com.iamkurtgoz.core.navigation.model.home.editEvent.HomeScreenEditEventScreenNavigationModel
 import com.iamkurtgoz.feature.home.editEvent.EditEventScreenContract
+import com.iamkurtgoz.feature.home.editEvent.domain.model.GetTrainingGroupUserUIModelTeam
 import com.iamkurtgoz.feature.home.editEvent.domain.model.mockTrainingGroupUserUIModel
 import java.time.LocalDate
 import java.time.LocalTime
@@ -146,7 +148,18 @@ private fun AddUserBottomSheetContent(
                 textAlign = TextAlign.Start,
             )
 
-            state.getTrainingGroupUserUIModel?.groups?.filterNotNull()?.forEach { item ->
+            val searchText = state.textSearchUser.value.trim()
+            state.getTrainingGroupUserUIModel?.groups
+                ?.filterNotNull()
+                ?.filter { item ->
+                    if (searchText.isEmpty()) {
+                        true
+                    } else {
+                        item.groupName?.contains(searchText, ignoreCase = true) == true ||
+                            item.team?.name?.contains(searchText, ignoreCase = true) == true
+                    }
+                }
+                ?.forEach { item ->
                 key(item) {
                     Row(
                         modifier = Modifier
@@ -155,6 +168,7 @@ private fun AddUserBottomSheetContent(
                         verticalAlignment = Alignment.CenterVertically,
                         horizontalArrangement = Arrangement.Center,
                     ) {
+                        val actionButtonModifier = Modifier.width(96.dp)
                         UserImageView(
                             data = item.team?.detail ?: item.groupName.getUserNameFirstChar(),
                             modifier = Modifier
@@ -171,21 +185,29 @@ private fun AddUserBottomSheetContent(
                             textAlign = TextAlign.Start,
                         )
 
-                        if (item.team?.value == state.selectedGetTrainingGroupUserUIModelTeam?.value) {
+                        if (item.groupId == state.selectedGetTrainingGroupUserUIModelTeam?.value) {
                             AppButton.PrimarySmall(
                                 text = "İptal", // TODO: Localize
                                 onClick = {
                                     setEvent.invoke(EditEventScreenContract.Event.SetGetTrainingGroupUserUIModelTeam(null))
                                 },
-                                modifier = Modifier,
+                                modifier = actionButtonModifier,
                             )
                         } else {
                             AppButton.SecondarySmall(
                                 text = "Gönder", // TODO: Localize
                                 onClick = {
-                                    setEvent.invoke(EditEventScreenContract.Event.SetGetTrainingGroupUserUIModelTeam(item.team))
+                                    setEvent.invoke(
+                                        EditEventScreenContract.Event.SetGetTrainingGroupUserUIModelTeam(
+                                            GetTrainingGroupUserUIModelTeam(
+                                                detail = item.groupImage,
+                                                name = item.groupName,
+                                                value = item.groupId,
+                                            ),
+                                        ),
+                                    )
                                 },
-                                modifier = Modifier,
+                                modifier = actionButtonModifier,
                             )
                         }
                     }
@@ -201,13 +223,7 @@ private fun AddUserBottomSheetContent(
                 textAlign = TextAlign.Start,
             )
 
-            state.getTrainingGroupUserUIModel?.allUsers?.filter {
-                if (state.textSearchUser.value.isEmpty()) {
-                    true
-                } else {
-                    it.isMatch(state.textSearchUser.value)
-                }
-            }?.forEach { item ->
+            state.getTrainingGroupUserUIModel?.allUsers?.forEach { item ->
                 key(item) {
                     UserRow(
                         modifier = Modifier,

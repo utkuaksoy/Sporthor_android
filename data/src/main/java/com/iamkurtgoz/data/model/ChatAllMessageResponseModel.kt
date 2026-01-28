@@ -41,6 +41,7 @@ data class ChatAllMessageItemResponseModel(
     @Serializable(with = LocalDateTimeSerializer::class)
     @SerialName("messageDateLong")
     val messageDateLong: LocalDateTime?,
+    @SerialName("shortDate") val shortDate: String?,
     @SerialName("messageId") val messageId: String?,
     @SerialName("name") val name: String?,
     @SerialName("toUserId") val toUserId: String?,

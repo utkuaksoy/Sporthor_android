@@ -22,10 +22,13 @@ import com.iamkurtgoz.core.common.state.AppBuildConfigStatePack
 import com.iamkurtgoz.core.common.state.AppRemoteConfigStatePack
 import com.iamkurtgoz.core.navigation.model.auth.userName.toAuthUserNameScreenRoute
 import com.iamkurtgoz.domain.core.CoreViewModel
+import com.iamkurtgoz.domain.dataStore.AppPreferences
 import com.iamkurtgoz.domain.extensions.toAlertDialog
 import com.iamkurtgoz.domain.model.request.CheckUserNameRequest
 import com.iamkurtgoz.domain.model.request.RegisterRequest
+import com.iamkurtgoz.domain.model.request.UpdateConfigurationRequest
 import com.iamkurtgoz.domain.notification.INotificationSettingsManager
+import com.iamkurtgoz.domain.repository.ProfileRepository
 import com.iamkurtgoz.feature.auth.userName.domain.useCase.CheckUserNameUseCase
 import com.iamkurtgoz.feature.auth.userName.domain.useCase.RegisterUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -45,6 +48,8 @@ internal class UserNameViewModel @Inject constructor(
     appRemoteConfigStatePack: AppRemoteConfigStatePack,
     savedStateHandle: SavedStateHandle,
     private val notificationSettingsManager: INotificationSettingsManager,
+    private val appPreferences: AppPreferences,
+    private val profileRepository: ProfileRepository,
     private val checkUserNameUseCase: CheckUserNameUseCase,
     private val registerUseCase: RegisterUseCase,
 ) : CoreViewModel<UserNameScreenContract.State, UserNameScreenContract.SideEffect, UserNameScreenContract.Event>(
@@ -165,6 +170,7 @@ internal class UserNameViewModel @Inject constructor(
                 }
             }
             .callWithSuccess {
+                refreshFirebaseToken()
                 updateState { state ->
                     state.copy(
                         isLoading = false,
@@ -172,6 +178,16 @@ internal class UserNameViewModel @Inject constructor(
                 }
                 setSideEffect(UserNameScreenContract.SideEffect.NavigateToHome)
             }
+    }
+
+    private fun refreshFirebaseToken() {
+        viewModelScope.launch {
+            val token = notificationSettingsManager.getRegisterFcmToken()
+            if (!token.isNullOrBlank()) {
+                appPreferences.setFirebaseToken(firebaseToken = token)
+                profileRepository.updateConfiguration(UpdateConfigurationRequest(firebaseToken = token))
+            }
+        }
     }
 
     private fun searchListen() {

@@ -30,6 +30,7 @@ data class ChatMessageItemUIModel(
     val id: String?,
     val messageType: SignalRMessageType?,
     val sendDate: LocalDateTime?,
+    val shortDate: String?,
 )
 
 data class ChatMessageItemFromUIModel(

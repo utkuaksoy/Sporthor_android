@@ -56,6 +56,8 @@ object AppEventBus {
     val editTeamEventBus: EditTeamEventBus = EditTeamEventBus
     val createTeamEventBus: CreateTeamEventBus = CreateTeamEventBus
 
+    var profileEditSelectedBranchIds: Set<String> = emptySet()
+
     /******************************************************************************************
      ******************************************************************************************
      * Update Following Status

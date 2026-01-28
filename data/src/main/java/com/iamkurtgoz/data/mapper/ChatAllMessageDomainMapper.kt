@@ -32,6 +32,7 @@ internal class ChatAllMessageDomainMapper @Inject constructor() : IMapper<ChatAl
                         lastMessage = item.lastMessage,
                         messageDate = item.messageDate,
                         messageDateLong = item.messageDateLong,
+                        shortDate = item.shortDate,
                         messageId = item.messageId,
                         name = item.name,
                         toUserId = item.toUserId,

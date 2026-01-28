@@ -59,9 +59,7 @@ internal class RegisterViewModel @Inject constructor(
         if (appBuildConfigStatePack.isDebug) {
             updateState { state ->
                 state.copy(
-                    textPhoneNumber = AppTextFieldValue(
-                        value = "5425916095",
-                    ),
+                    textPhoneNumber = AppTextFieldValue(),
                 )
             }
         }

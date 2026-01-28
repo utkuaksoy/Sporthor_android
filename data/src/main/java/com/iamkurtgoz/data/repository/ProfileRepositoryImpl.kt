@@ -30,6 +30,7 @@ import com.iamkurtgoz.data.mapper.ProfileDomainMapper
 import com.iamkurtgoz.domain.model.request.UpdateProfileImageRequest
 import com.iamkurtgoz.domain.model.request.UpdateProfilePublicPrivateRequest
 import com.iamkurtgoz.domain.model.request.UpdateUserRolesRequest
+import com.iamkurtgoz.domain.model.request.UpdateConfigurationRequest
 import com.iamkurtgoz.domain.model.response.BranchesAttributeItemDomainModel
 import com.iamkurtgoz.domain.model.response.BranchesDomainModel
 import com.iamkurtgoz.domain.model.response.DashboardFeedDomainModel
@@ -124,5 +125,9 @@ internal class ProfileRepositoryImpl @Inject constructor(
 
     override suspend fun updateProfilePublicPrivate(body: UpdateProfilePublicPrivateRequest): RestResult<Unit> = mapToRestResult {
         profileDataSource.updateProfilePublicPrivate(body)
+    }
+
+    override suspend fun updateConfiguration(body: UpdateConfigurationRequest): RestResult<Unit> = mapToRestResult {
+        profileDataSource.updateConfiguration(body)
     }
 }

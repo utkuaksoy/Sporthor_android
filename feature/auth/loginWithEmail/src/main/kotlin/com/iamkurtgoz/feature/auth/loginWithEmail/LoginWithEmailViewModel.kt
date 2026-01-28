@@ -26,7 +26,9 @@ import com.iamkurtgoz.domain.core.CoreViewModel
 import com.iamkurtgoz.domain.dataStore.AppPreferences
 import com.iamkurtgoz.domain.extensions.toAlertDialog
 import com.iamkurtgoz.domain.model.request.LoginWithEmailRequest
+import com.iamkurtgoz.domain.model.request.UpdateConfigurationRequest
 import com.iamkurtgoz.domain.notification.INotificationSettingsManager
+import com.iamkurtgoz.domain.repository.ProfileRepository
 import com.iamkurtgoz.feature.auth.loginWithEmail.domain.useCase.LoginWithEmailUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -39,6 +41,7 @@ internal class LoginWithEmailViewModel @Inject constructor(
     private val loginWithEmailUseCase: LoginWithEmailUseCase,
     private val notificationSettingsManager: INotificationSettingsManager,
     private val appPreferences: AppPreferences,
+    private val profileRepository: ProfileRepository,
 ) : CoreViewModel<LoginWithEmailScreenContract.State, LoginWithEmailScreenContract.SideEffect, LoginWithEmailScreenContract.Event>(
     initialState = LoginWithEmailScreenContract.State(
         isLoading = false,
@@ -154,6 +157,7 @@ internal class LoginWithEmailViewModel @Inject constructor(
             val token = notificationSettingsManager.getRegisterFcmToken()
             if (!token.isNullOrBlank()) {
                 appPreferences.setFirebaseToken(firebaseToken = token)
+                profileRepository.updateConfiguration(UpdateConfigurationRequest(firebaseToken = token))
             }
         }
     }
