@@ -27,6 +27,6 @@
       applicationId="com.iamkurtgoz.core.connectivity"
       generatedSourceFolders="build/generated/ksp/release/java:build/generated/ksp/release/kotlin:build/generated/ap_generated_sources/release/out"
       generatedResourceFolders="build/generated/res/resValues/release"
-      desugaredMethodsFiles="/Users/devcelebi/.gradle/caches/8.14.3/transforms/a4aa3c8e7267848ca3851add68f8cb7d/transformed/desugar_jdk_libs_configuration-2.1.5-desugar-lint.txt:/Users/devcelebi/.gradle/caches/8.14.3/transforms/b9aa44883419e9fb972a0a08f95d34cf/transformed/D8BackportedDesugaredMethods.txt">
+      desugaredMethodsFiles="/Users/devcelebi/.gradle/caches/8.14.3/transforms/b14e72aa0ec6b109c39718e77db9ebc2/transformed/desugar_jdk_libs_configuration-2.1.5-desugar-lint.txt:/Users/devcelebi/.gradle/caches/8.14.3/transforms/894076d7e94e243050a56cbbf414f41e/transformed/D8BackportedDesugaredMethods.txt">
   </artifact>
 </variant>
