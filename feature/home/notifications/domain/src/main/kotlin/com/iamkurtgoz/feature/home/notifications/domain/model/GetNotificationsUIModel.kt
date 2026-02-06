@@ -57,6 +57,7 @@ enum class PushMessageType(val code: Int) {
     NEW_POST(3),
     TRAINING_GROUP_REQUEST(4),
     NEW_TASK(5),
+    FOLLOW_REQUEST(6),
     ;
 
     companion object {

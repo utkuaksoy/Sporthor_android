@@ -110,7 +110,8 @@ internal fun NotificationsScreenContent(
                     if (it.notificationType == NotificationParamType.CONFIRM) 1 else 0
                 }
                 NotifListFilterType.Confirm -> state.notificationList.filter {
-                    it.notificationType == NotificationParamType.CONFIRM
+                    it.pushMessageType == PushMessageType.FOLLOW ||
+                        it.pushMessageType == PushMessageType.FOLLOW_REQUEST
                 }
                 NotifListFilterType.Like -> state.notificationList.filter {
                     it.pushMessageType == PushMessageType.LIKE
@@ -142,11 +143,9 @@ internal fun NotificationRow(
     modifier: Modifier = Modifier,
     setEvent: (NotificationsScreenContract.Event) -> Unit,
 ) {
-    val lowerMessage = item.message?.lowercase()
-    val lowerTitle = item.title?.lowercase()
-    val isFollowRequestConfirm = (filterType == NotifListFilterType.Confirm || filterType == NotifListFilterType.All) &&
-        ((lowerMessage?.contains("takip") == true && lowerMessage.contains("istiyor")) ||
-            (lowerTitle?.contains("takipçi") == true))
+    val isFollowRequestConfirm = (item.pushMessageType == PushMessageType.FOLLOW ||
+        item.pushMessageType == PushMessageType.FOLLOW_REQUEST) &&
+        item.notificationType == NotificationParamType.CONFIRM
     Row(
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.Start,
@@ -250,9 +249,9 @@ internal fun NotificationRow(
                     )
                 }
             }
-            PushMessageType.FOLLOW -> {
+            PushMessageType.FOLLOW, PushMessageType.FOLLOW_REQUEST -> {
                 val decision = item.id?.let { followRequestDecisionMap[it] }
-                val shouldShowActions = filterType == NotifListFilterType.Confirm && decision == null
+                val shouldShowActions = decision == null && item.notificationType == NotificationParamType.CONFIRM
                 Column(
                     modifier = modifier
                         .fillMaxWidth()
