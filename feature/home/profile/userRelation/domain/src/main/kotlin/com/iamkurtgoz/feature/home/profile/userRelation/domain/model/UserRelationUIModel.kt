@@ -26,5 +26,6 @@ data class UserRelationUIItemModel(
     val summary: String?,
     val imageUrl: String?,
     val isFollow: Boolean?,
+    val isFollowRequest: Boolean? = null,
     val isCurrentUser: Boolean?,
 )

@@ -27,6 +27,7 @@ data class UserRelationItemDomainModel(
     val summary: String?,
     val imageUrl: String?,
     val isFollow: Boolean?,
+    val isFollowRequest: Boolean? = null,
     val isCurrentUser: Boolean?,
 )
 
@@ -37,5 +38,6 @@ data class CoachRelationItemDomainModel(
     val summary: String?,
     val imageUrl: String?,
     val isFollow: Boolean?,
+    val isFollowRequest: Boolean? = null,
     val isCurrentUser: Boolean?,
 )

@@ -20,6 +20,7 @@ import androidx.lifecycle.viewModelScope
 import androidx.navigation.toRoute
 import com.iamkurtgoz.core.common.state.AppBuildConfigStatePack
 import com.iamkurtgoz.core.common.state.AppRemoteConfigStatePack
+import com.iamkurtgoz.core.common.contract.AppDefaults
 import com.iamkurtgoz.domain.controller.UserActionController
 import com.iamkurtgoz.domain.core.CoreViewModel
 import com.iamkurtgoz.domain.eventbus.impl.ProfileUserRelationEventBus
@@ -48,7 +49,7 @@ internal class UserRelationViewModel @Inject constructor(
         navigationRoute = savedStateHandle.toRoute(),
     ),
 ) {
-    private var followingJob: Job? = null
+    private var relationJob: Job? = null
 
     override fun setEvent(event: UserRelationScreenContract.Event) {
         when (event) {
@@ -64,7 +65,7 @@ internal class UserRelationViewModel @Inject constructor(
 
     // Events functions
     private fun initialize() = viewModelScope.launch {
-        getFollowing(viewState.navigationRoute.userId)
+        fetchUserRelationByTab(viewState.selectedTabIndex)
     }
 
     private fun dismissDialogs() {
@@ -77,19 +78,36 @@ internal class UserRelationViewModel @Inject constructor(
                 selectedTabIndex = index,
             )
         }
+        fetchUserRelationByTab(index)
     }
 
-    private fun getFollowing(userId: String) {
-        if (followingJob != null) {
-            followingJob?.cancel()
-            followingJob = null
+    private fun fetchUserRelationByTab(index: Int) {
+        val userId = viewState.navigationRoute.userId
+        when (index) {
+            AppDefaults.ZERO -> {
+                if (viewState.followersList == null) {
+                    getUserRelation(userId, UserRelationUIItemType.FOLLOWERS)
+                }
+            }
+            AppDefaults.ONE -> {
+                if (viewState.followingList == null) {
+                    getUserRelation(userId, UserRelationUIItemType.FOLLOWING)
+                }
+            }
+        }
+    }
+
+    private fun getUserRelation(userId: String, type: UserRelationUIItemType) {
+        if (relationJob != null) {
+            relationJob?.cancel()
+            relationJob = null
         }
 
         val params = GetUserRelationUseCaseParams(
             userId = userId,
-            type = UserRelationUIItemType.FOLLOWING,
+            type = type,
         )
-        followingJob = userRelationUseCase.invoke(params)
+        relationJob = userRelationUseCase.invoke(params)
             .requester
             .onLoading {
             }
@@ -102,27 +120,39 @@ internal class UserRelationViewModel @Inject constructor(
             }
             .callWithSuccess {
                 updateState { state ->
-                    state.copy(
-                        followingList = it,
-                    )
+                    when (type) {
+                        UserRelationUIItemType.FOLLOWERS -> state.copy(followersList = it)
+                        UserRelationUIItemType.FOLLOWING -> state.copy(followingList = it)
+                    }
                 }
             }
     }
 
     private fun changeFollowStatus(userActionFollowType: UserActionFollowType, userId: String?) {
-        var followingList = viewState.followingList?.users?.toMutableList() ?: mutableListOf()
-
-        followingList = followingList.map {
-            if (it.id == userId) {
-                it.copy(isFollow = userActionFollowType == UserActionFollowType.Follow)
-            } else {
-                it
-            }
-        }.toMutableList()
-
         updateState { state ->
+            val updateUser: (com.iamkurtgoz.feature.home.profile.userRelation.domain.model.UserRelationUIItemModel) -> com.iamkurtgoz.feature.home.profile.userRelation.domain.model.UserRelationUIItemModel = { item ->
+                if (item.id != userId) {
+                    item
+                } else {
+                    when (userActionFollowType) {
+                        UserActionFollowType.Follow -> item.copy(
+                            isFollow = false,
+                            isFollowRequest = true,
+                        )
+                        UserActionFollowType.UnFollow -> item.copy(
+                            isFollow = false,
+                            isFollowRequest = false,
+                        )
+                    }
+                }
+            }
             state.copy(
-                followingList = state.followingList?.copy(users = followingList),
+                followersList = state.followersList?.copy(
+                    users = state.followersList?.users?.map(updateUser),
+                ),
+                followingList = state.followingList?.copy(
+                    users = state.followingList?.users?.map(updateUser),
+                ),
             )
         }
 
@@ -143,19 +173,30 @@ internal class UserRelationViewModel @Inject constructor(
     private fun updateEventBusStatus(status: ProfileUserRelationEventBus.Event) {
         when (status) {
             is ProfileUserRelationEventBus.Event.UpdateFollowingStatus -> {
-                var followingList = viewState.followingList?.users?.toMutableList() ?: mutableListOf()
-
-                followingList = followingList.map {
-                    if (it.id == status.targetUserId) {
-                        it.copy(isFollow = status.followType == UserActionFollowType.Follow)
+                val updateUser: (com.iamkurtgoz.feature.home.profile.userRelation.domain.model.UserRelationUIItemModel) -> com.iamkurtgoz.feature.home.profile.userRelation.domain.model.UserRelationUIItemModel = { item ->
+                    if (item.id != status.targetUserId) {
+                        item
                     } else {
-                        it
+                        when (status.followType) {
+                            UserActionFollowType.Follow -> item.copy(
+                                isFollow = false,
+                                isFollowRequest = true,
+                            )
+                            UserActionFollowType.UnFollow -> item.copy(
+                                isFollow = false,
+                                isFollowRequest = false,
+                            )
+                        }
                     }
-                }.toMutableList()
-
+                }
                 updateState { state ->
                     state.copy(
-                        followingList = state.followingList?.copy(users = followingList),
+                        followersList = state.followersList?.copy(
+                            users = state.followersList?.users?.map(updateUser),
+                        ),
+                        followingList = state.followingList?.copy(
+                            users = state.followingList?.users?.map(updateUser),
+                        ),
                     )
                 }
             }

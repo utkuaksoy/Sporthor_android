@@ -19,6 +19,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import com.iamkurtgoz.core.common.contract.AppDefaults
 import com.iamkurtgoz.core.common.state.AppBuildConfigStatePack
 import com.iamkurtgoz.core.common.state.AppRemoteConfigStatePack
 import com.iamkurtgoz.core.designsystem.internal.PreviewAppWithNightMode
@@ -37,8 +38,13 @@ internal fun UserRelationScreenContent(
         modifier = modifier
             .fillMaxSize(),
     ) {
+        val users = when (state.selectedTabIndex) {
+            AppDefaults.ZERO -> state.followersList?.users
+            AppDefaults.ONE -> state.followingList?.users
+            else -> state.followersList?.users
+        }
         UserRelationFriends(
-            users = state.followingList?.users ?: arrayListOf(),
+            users = users ?: arrayListOf(),
             setEvent = setEvent,
         )
     }

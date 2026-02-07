@@ -35,6 +35,7 @@ internal class UserRelationScreenContract {
         val isShimmerLoading: Boolean = false,
         val alertDialogModel: AlertDialogModel? = null,
         val navigationRoute: HomeScreenProfileUserRelationRoute,
+        val followersList: UserRelationUIModel? = null,
         val followingList: UserRelationUIModel? = null,
         val selectedTabIndex: Int = AppDefaults.ZERO,
     ) : CoreState.ViewState

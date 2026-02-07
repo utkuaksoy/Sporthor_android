@@ -33,6 +33,7 @@ internal class UserRelationUIMapper @Inject constructor() : IMapper<UserRelation
                         summary = it?.summary,
                         imageUrl = it?.imageUrl,
                         isFollow = it?.isFollow,
+                        isFollowRequest = it?.isFollowRequest,
                         isCurrentUser = it?.isCurrentUser,
                     )
                 },
