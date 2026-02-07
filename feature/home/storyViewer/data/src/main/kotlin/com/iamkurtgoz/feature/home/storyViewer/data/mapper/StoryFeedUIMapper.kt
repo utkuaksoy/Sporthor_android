@@ -67,6 +67,8 @@ internal class StoryDetailUIMapper @Inject constructor(
         return with(response) {
             StoryDetailUIModel(
                 storyId = storyId,
+                link = link,
+                linkDescription = linkDescription,
                 media = media?.let { mediaUIMapper.map(it) },
                 publishDate = publishDate,
                 isWatched = isWatched,

@@ -15,6 +15,7 @@
  */
 package com.iamkurtgoz.feature.home.storyViewer
 
+import android.net.Uri
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -28,19 +29,24 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.unit.dp
+import androidx.browser.customtabs.CustomTabsIntent
 import com.iamkurtgoz.core.common.contract.AppDefaults
 import com.iamkurtgoz.core.common.state.AppBuildConfigStatePack
 import com.iamkurtgoz.core.common.state.AppRemoteConfigStatePack
@@ -67,6 +73,7 @@ internal fun StoryViewerScreenContent(
     modifier: Modifier = Modifier,
     setEvent: (StoryViewerScreenContract.Event) -> Unit,
 ) {
+    val context = LocalContext.current
     Box(
         modifier = modifier
             .fillMaxSize()
@@ -75,40 +82,82 @@ internal fun StoryViewerScreenContent(
     ) {
         state.stories.firstOrNull { it.userId == state.currentStoryUserId }?.let { story ->
             story.details?.getOrNull(state.currentStoryDetailIndex)?.let { storyDetail ->
-                if (storyDetail.media?.type == CustomMediaType.IMAGE) {
-                    AppAsyncImageLoader.Load(
-                        data = storyDetail.media?.url,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .aspectRatio(AppDefaults.ASPECT_RATIO_0_56),
-                        contentScale = ContentScale.FillBounds,
-                    )
-                } else if (storyDetail.media?.type == CustomMediaType.VIDEO) {
-                    StoryVideoPlayer(
-                        url = storyDetail.media?.url,
-                    )
-                }
-                Row(
+                Box(
                     modifier = Modifier
-                        .fillMaxSize(),
+                        .fillMaxWidth()
+                        .aspectRatio(AppDefaults.ASPECT_RATIO_0_56)
+                        .align(Alignment.Center),
                 ) {
-                    Box(
-                        modifier = Modifier
-                            .fillMaxHeight()
-                            .weight(AppDefaults.WEIGHT_FULL)
-                            .clickable {
-                                setEvent.invoke(StoryViewerScreenContract.Event.NavigateToBackStory)
-                            },
-                    )
+                    if (storyDetail.media?.type == CustomMediaType.IMAGE) {
+                        AppAsyncImageLoader.Load(
+                            data = storyDetail.media?.url,
+                            modifier = Modifier.fillMaxSize(),
+                            contentScale = ContentScale.Fit,
+                        )
+                    } else if (storyDetail.media?.type == CustomMediaType.VIDEO) {
+                        StoryVideoPlayer(
+                            url = storyDetail.media?.url,
+                        )
+                    }
 
-                    Box(
+                    Row(
                         modifier = Modifier
-                            .fillMaxHeight()
-                            .weight(AppDefaults.WEIGHT_FULL)
-                            .clickable {
-                                setEvent.invoke(StoryViewerScreenContract.Event.NavigateToNextStory)
+                            .fillMaxSize()
+                            .padding(bottom = 140.dp),
+                    ) {
+                        Box(
+                            modifier = Modifier
+                                .fillMaxHeight()
+                                .weight(AppDefaults.WEIGHT_FULL)
+                                .clickable {
+                                    setEvent.invoke(StoryViewerScreenContract.Event.NavigateToBackStory)
+                                },
+                        )
+
+                        Box(
+                            modifier = Modifier
+                                .fillMaxHeight()
+                                .weight(AppDefaults.WEIGHT_FULL)
+                                .clickable {
+                                    setEvent.invoke(StoryViewerScreenContract.Event.NavigateToNextStory)
+                                },
+                        )
+                    }
+
+                    storyDetail.link?.takeIf { it.isNotBlank() }?.let { link ->
+                        val normalizedUrl = link.normalizeLink()
+                        Button(
+                            onClick = {
+                                CustomTabsIntent.Builder()
+                                    .setShowTitle(true)
+                                    .build()
+                                    .launchUrl(context, Uri.parse(normalizedUrl))
                             },
-                    )
+                            modifier = Modifier
+                                .align(Alignment.BottomCenter)
+                                .padding(bottom = 32.dp),
+                            colors = ButtonDefaults.buttonColors(
+                                containerColor = AppTheme.colors.generalColors.foregroundWhite,
+                                contentColor = AppTheme.colors.generalColors.foregroundBlack,
+                            ),
+                            shape = RoundedCornerShape(22.dp),
+                        ) {
+                            Image(
+                                painter = painterResource(resourcesR.drawable.img_link),
+                                contentDescription = null,
+                                modifier = Modifier.size(20.dp),
+                                colorFilter = ColorFilter.tint(androidx.compose.ui.graphics.Color(0xFF2196F3)),
+                            )
+                            Text(
+                                modifier = Modifier.padding(start = 10.dp),
+                                text = normalizedUrl,
+                                color = AppTheme.colors.generalColors.foregroundBlack,
+                                style = AppTheme.typography.labelMedium,
+                                maxLines = 1,
+                                overflow = TextOverflow.Ellipsis,
+                            )
+                        }
+                    }
                 }
                 Column(
                     modifier = Modifier
@@ -192,6 +241,7 @@ internal fun StoryViewerScreenContent(
                         )
                     }
                 }
+
                 val bottomSheetState = rememberModalBottomSheetState()
 
                 if (state.showBottomSheet) {
@@ -219,6 +269,14 @@ internal fun StoryViewerScreenContent(
     }
 }
 
+private fun String.normalizeLink(): String {
+    val trimmedValue = trim()
+    if (trimmedValue.startsWith("http://") || trimmedValue.startsWith("https://")) {
+        return trimmedValue
+    }
+    return "https://$trimmedValue"
+}
+
 @PreviewAppWithNightMode
 @Composable
 private fun Preview() {
@@ -244,31 +302,14 @@ private fun Preview() {
                             details = listOf(
                                 StoryDetailUIModel(
                                     storyId = UUID.randomUUID().toString(),
+                                    link = "https://sporthor.com",
                                     media = null,
                                     publishDate = null,
                                     isWatched = false,
                                 ),
                                 StoryDetailUIModel(
                                     storyId = UUID.randomUUID().toString(),
-                                    media = null,
-                                    publishDate = null,
-                                    isWatched = false,
-                                ),
-
-                                StoryDetailUIModel(
-                                    storyId = UUID.randomUUID().toString(),
-                                    media = null,
-                                    publishDate = null,
-                                    isWatched = false,
-                                ),
-                                StoryDetailUIModel(
-                                    storyId = UUID.randomUUID().toString(),
-                                    media = null,
-                                    publishDate = null,
-                                    isWatched = false,
-                                ),
-                                StoryDetailUIModel(
-                                    storyId = UUID.randomUUID().toString(),
+                                    link = null,
                                     media = null,
                                     publishDate = null,
                                     isWatched = false,
@@ -276,18 +317,43 @@ private fun Preview() {
 
                                 StoryDetailUIModel(
                                     storyId = UUID.randomUUID().toString(),
+                                    link = null,
                                     media = null,
                                     publishDate = null,
                                     isWatched = false,
                                 ),
                                 StoryDetailUIModel(
                                     storyId = UUID.randomUUID().toString(),
+                                    link = null,
                                     media = null,
                                     publishDate = null,
                                     isWatched = false,
                                 ),
                                 StoryDetailUIModel(
                                     storyId = UUID.randomUUID().toString(),
+                                    link = null,
+                                    media = null,
+                                    publishDate = null,
+                                    isWatched = false,
+                                ),
+
+                                StoryDetailUIModel(
+                                    storyId = UUID.randomUUID().toString(),
+                                    link = null,
+                                    media = null,
+                                    publishDate = null,
+                                    isWatched = false,
+                                ),
+                                StoryDetailUIModel(
+                                    storyId = UUID.randomUUID().toString(),
+                                    link = null,
+                                    media = null,
+                                    publishDate = null,
+                                    isWatched = false,
+                                ),
+                                StoryDetailUIModel(
+                                    storyId = UUID.randomUUID().toString(),
+                                    link = null,
                                     media = null,
                                     publishDate = null,
                                     isWatched = false,

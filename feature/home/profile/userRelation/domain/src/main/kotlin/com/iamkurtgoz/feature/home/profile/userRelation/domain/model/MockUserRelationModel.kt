@@ -24,6 +24,7 @@ data object MockUserRelationModel {
             summary = "Baş Antrenör",
             imageUrl = "https://randomuser.me/api/portraits/men/45.jpg",
             isFollow = true,
+            isFollowRequest = false,
             isCurrentUser = false,
         ),
         UserRelationUIItemModel(
@@ -33,6 +34,7 @@ data object MockUserRelationModel {
             summary = "Kondisyoner",
             imageUrl = "https://randomuser.me/api/portraits/women/68.jpg",
             isFollow = false,
+            isFollowRequest = true,
             isCurrentUser = false,
         ),
         UserRelationUIItemModel(
@@ -42,6 +44,7 @@ data object MockUserRelationModel {
             summary = "Asistan Antrenör",
             imageUrl = "https://randomuser.me/api/portraits/men/34.jpg",
             isFollow = true,
+            isFollowRequest = false,
             isCurrentUser = false,
         ),
         UserRelationUIItemModel(
@@ -51,6 +54,7 @@ data object MockUserRelationModel {
             summary = "Fizyoterapist",
             imageUrl = "https://randomuser.me/api/portraits/women/55.jpg",
             isFollow = false,
+            isFollowRequest = false,
             isCurrentUser = true,
         ),
     )

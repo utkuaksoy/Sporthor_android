@@ -1,11 +1,11 @@
 <component name="libraryTable">
   <library name="Gradle: com.android.volley:volley:1.2.1@aar" external-system-id="GRADLE">
     <ANNOTATIONS>
-      <root url="jar://$USER_HOME$/.gradle/caches/8.14.3/transforms/6035955f6963e6a3c32c878f6195a3cc/transformed/volley-1.2.1/annotations.zip!/" />
+      <root url="jar://$USER_HOME$/.gradle/caches/8.14.3/transforms/6bc04dc27f9757ac1a59bd6104d4860d/transformed/volley-1.2.1/annotations.zip!/" />
     </ANNOTATIONS>
     <CLASSES>
-      <root url="jar://$USER_HOME$/.gradle/caches/8.14.3/transforms/6035955f6963e6a3c32c878f6195a3cc/transformed/volley-1.2.1/jars/classes.jar!/" />
-      <root url="file://$USER_HOME$/.gradle/caches/8.14.3/transforms/6035955f6963e6a3c32c878f6195a3cc/transformed/volley-1.2.1/AndroidManifest.xml" />
+      <root url="jar://$USER_HOME$/.gradle/caches/8.14.3/transforms/6bc04dc27f9757ac1a59bd6104d4860d/transformed/volley-1.2.1/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/8.14.3/transforms/6bc04dc27f9757ac1a59bd6104d4860d/transformed/volley-1.2.1/AndroidManifest.xml" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />

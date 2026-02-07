@@ -14,7 +14,6 @@
  * limitations under the License.
  */
 package com.iamkurtgoz.feature.home.notifications
-
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
@@ -24,6 +23,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.iamkurtgoz.core.common.state.AppBuildConfigStatePack
@@ -35,6 +35,7 @@ import com.iamkurtgoz.core.designsystem.component.animation.AppLoadingDialog
 import com.iamkurtgoz.core.designsystem.component.toolbar.AppToolbar
 import com.iamkurtgoz.core.designsystem.component.toolbar.AppToolbarFields
 import com.iamkurtgoz.core.designsystem.internal.PreviewAppWithNightMode
+import com.iamkurtgoz.core.resources.R as resourcesR
 import com.iamkurtgoz.core.designsystem.theme.AppTheme
 import com.iamkurtgoz.core.designsystem.theme.AppThemeScaffold
 import com.iamkurtgoz.core.designsystem.theme.AppThemeSurface
@@ -84,7 +85,7 @@ private fun NotificationsScreenScaffold(
                 },
                 centerContent = {
                     AppToolbarFields.Title(
-                        text = "Bildirimler", // TODO: Localize
+                        text = stringResource(resourcesR.string.notificationsscreen_title),
                     )
                 },
             )

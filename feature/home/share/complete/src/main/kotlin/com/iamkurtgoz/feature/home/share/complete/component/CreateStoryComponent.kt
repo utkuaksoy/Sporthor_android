@@ -41,8 +41,10 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -57,6 +59,8 @@ import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.core.graphics.createBitmap
 import androidx.media3.common.Player
@@ -151,8 +155,11 @@ internal fun CreateStoryComponent(
                     if (media.customMediaType == CustomMediaType.IMAGE) {
                         IconButton(
                             onClick = {
-                                val event = CompleteScreenContract.Event.SetShowTextInputDialog(
-                                    isShowTextInputDialog = "",
+                                imageEditorViewTextEditView = null
+                                val event = CompleteScreenContract.Event.SetStoryOverlayInputDialog(
+                                    storyOverlayInputDialog = CompleteScreenContract.StoryOverlayInputDialog(
+                                        type = CompleteScreenContract.StoryOverlayInputType.TEXT,
+                                    ),
                                 )
                                 setEvent.invoke(event)
                             },
@@ -163,6 +170,41 @@ internal fun CreateStoryComponent(
                                     modifier = Modifier
                                         .size(AppTheme.dimens.dp48),
                                 )
+                            },
+                        )
+
+                        IconButton(
+                            onClick = {
+                                imageEditorViewTextEditView = null
+                                val event = CompleteScreenContract.Event.SetStoryOverlayInputDialog(
+                                    storyOverlayInputDialog = CompleteScreenContract.StoryOverlayInputDialog(
+                                        type = CompleteScreenContract.StoryOverlayInputType.LINK,
+                                    ),
+                                )
+                                setEvent.invoke(event)
+                            },
+                            content = {
+                                Box(
+                                    modifier = Modifier
+                                        .size(AppTheme.dimens.dp48)
+                                        .background(
+                                            color = AppTheme.colors.generalColors.foregroundBlack,
+                                            shape = AppTheme.shapes.radiusCircle,
+                                        ),
+                                    contentAlignment = Alignment.Center,
+                                ) {
+                                    Row(
+                                        verticalAlignment = Alignment.CenterVertically,
+                                        horizontalArrangement = Arrangement.spacedBy(AppTheme.spacing.spacingMedium),
+                                    ) {
+                                        Image(
+                                            painter = painterResource(resourcesR.drawable.img_link),
+                                            contentDescription = "link",
+                                            modifier = Modifier.size(AppTheme.dimens.dp48),
+                                        )
+
+                                    }
+                                }
                             },
                         )
 
@@ -294,8 +336,11 @@ internal fun CreateStoryComponent(
 
                                     override fun onEditTextChangeListener(rootView: View, text: String, colorCode: Int) {
                                         imageEditorViewTextEditView = Pair(rootView, colorCode)
-                                        val event = CompleteScreenContract.Event.SetShowTextInputDialog(
-                                            isShowTextInputDialog = text,
+                                        val event = CompleteScreenContract.Event.SetStoryOverlayInputDialog(
+                                            storyOverlayInputDialog = CompleteScreenContract.StoryOverlayInputDialog(
+                                                type = CompleteScreenContract.StoryOverlayInputType.TEXT,
+                                                value = text,
+                                            ),
                                         )
                                         setEvent.invoke(event)
                                     }
@@ -324,20 +369,29 @@ internal fun CreateStoryComponent(
                             .aspectRatio(AppDefaults.ASPECT_RATIO_0_56),
                     )
 
-                    state.isShowTextInputDialog?.let {
+                    state.storyOverlayInputDialog?.let { dialog ->
                         TextInputDialog(
-                            initialText = it,
+                            initialText = dialog.value,
                             initialTextColor = imageEditorViewTextEditView?.second,
+                            inputType = dialog.type,
                             onConfirm = { text, textColor ->
-                                imageEditorViewTextEditView?.let { pair ->
-                                    imageEditorViewTextEditView = null
-                                    photoEditorRef.value?.editText(pair.first, text, textColor)
-                                } ?: run {
-                                    addTextWithBackground(
-                                        photoEditorRef = photoEditorRef.value,
-                                        context = context,
-                                        text = text,
-                                        textColor = textColor,
+                                if (dialog.type == CompleteScreenContract.StoryOverlayInputType.TEXT) {
+                                    imageEditorViewTextEditView?.let { pair ->
+                                        imageEditorViewTextEditView = null
+                                        photoEditorRef.value?.editText(pair.first, text, textColor)
+                                    } ?: run {
+                                        addTextWithBackground(
+                                            photoEditorRef = photoEditorRef.value,
+                                            context = context,
+                                            text = text,
+                                            textColor = textColor,
+                                        )
+                                    }
+                                } else {
+                                    setEvent.invoke(
+                                        CompleteScreenContract.Event.SetStoryLinkUrl(
+                                            value = text,
+                                        ),
                                     )
                                 }
                                 setEvent.invoke(CompleteScreenContract.Event.DismissDialogs)
@@ -346,6 +400,36 @@ internal fun CreateStoryComponent(
                                 setEvent.invoke(CompleteScreenContract.Event.DismissDialogs)
                             },
                         )
+                    }
+
+                    state.storyLinkUrl?.takeIf { it.isNotBlank() }?.let { url ->
+                        val normalizedUrl = normalizeLink(url)
+                        Row(
+                            modifier = Modifier
+                                .align(Alignment.BottomCenter)
+                                .padding(bottom = 24.dp)
+                                .background(
+                                    color = AppTheme.colors.generalColors.foregroundWhite,
+                                    shape = RoundedCornerShape(22.dp),
+                                )
+                                .padding(horizontal = 20.dp, vertical = 12.dp),
+                            verticalAlignment = Alignment.CenterVertically,
+                        ) {
+                            Image(
+                                painter = painterResource(resourcesR.drawable.img_link),
+                                contentDescription = null,
+                                modifier = Modifier.size(20.dp),
+                                colorFilter = ColorFilter.tint(Color(0xFF2196F3)),
+                            )
+                            Text(
+                                modifier = Modifier.padding(start = 10.dp),
+                                text = normalizedUrl,
+                                color = AppTheme.colors.generalColors.foregroundBlack,
+                                style = AppTheme.typography.labelMedium,
+                                maxLines = 1,
+                                overflow = TextOverflow.Ellipsis,
+                            )
+                        }
                     }
                 }
             }
@@ -423,6 +507,14 @@ private fun addLocationTextWithPin(photoEditorRef: PhotoEditor?, context: Contex
 
 private fun dpToPx(context: Context, dp: Int): Int {
     return (dp * context.resources.displayMetrics.density).toInt()
+}
+
+private fun normalizeLink(value: String): String {
+    val trimmedValue = value.trim()
+    if (trimmedValue.startsWith("http://") || trimmedValue.startsWith("https://")) {
+        return trimmedValue
+    }
+    return "https://$trimmedValue"
 }
 
 @Composable

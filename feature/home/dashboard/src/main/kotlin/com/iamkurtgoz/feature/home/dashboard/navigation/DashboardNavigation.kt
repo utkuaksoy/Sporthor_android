@@ -39,6 +39,7 @@ fun NavGraphBuilder.dashboardScreenNavigation(
     navigateToSelectTeamScreen: (fromGenerateClub: Boolean, fromTrainingGroup: Boolean) -> Unit,
     navigateToSelectTrainingGroupScreen: (fromTrainingGroup: Boolean) -> Unit,
     navigateToCoachListScreen: () -> Unit,
+    navigateToPaymentListScreen: () -> Unit,
 ) {
     composable<HomeScreenDashboardRoute> {
         DashboardScreen(
@@ -55,6 +56,7 @@ fun NavGraphBuilder.dashboardScreenNavigation(
             navigateToSelectTeamScreen = navigateToSelectTeamScreen,
             navigateToSelectTrainingGroupScreen = navigateToSelectTrainingGroupScreen,
             navigateToCoachListScreen = navigateToCoachListScreen,
+            navigateToPaymentListScreen = navigateToPaymentListScreen,
         )
     }
 }

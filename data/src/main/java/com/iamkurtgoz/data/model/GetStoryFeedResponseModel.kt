@@ -16,6 +16,7 @@
 package com.iamkurtgoz.data.model
 
 import androidx.annotation.Keep
+import kotlinx.serialization.json.JsonNames
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
@@ -52,6 +53,11 @@ data class StoryResponseModel(
 data class StoryDetailResponseModel(
     @SerialName("stroryId")
     val storyId: String?,
+    @JsonNames("linkUrl", "externalUrl", "redirectUrl", "ctaUrl")
+    @SerialName("link")
+    val link: String? = null,
+    @SerialName("linkDescription")
+    val linkDescription: String? = null,
     @SerialName("media")
     val media: MediaResponseModel?,
     @SerialName("publishDate")

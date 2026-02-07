@@ -26,6 +26,8 @@ enum class MenuKeyType {
     TrainingGroupUsers,
     TrainingGroupEdit,
     CoachList,
+
+    PaymentList,
     ;
 
     companion object {

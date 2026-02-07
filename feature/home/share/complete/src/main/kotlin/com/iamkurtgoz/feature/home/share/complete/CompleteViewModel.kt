@@ -69,10 +69,11 @@ internal class CompleteViewModel @Inject constructor(
             is CompleteScreenContract.Event.DismissDialogs -> dismissDialogs()
             is CompleteScreenContract.Event.SetLoadingStatus -> setLoadingStatus(event.isLoading)
             is CompleteScreenContract.Event.SetTextContent -> setTextContent(event.value)
+            is CompleteScreenContract.Event.SetStoryLinkUrl -> setStoryLinkUrl(event.value)
             is CompleteScreenContract.Event.Share -> share()
             is CompleteScreenContract.Event.ShareStoryImage -> shareStoryImage(event.file)
             is CompleteScreenContract.Event.ShareStoryVideo -> shareStoryVideo()
-            is CompleteScreenContract.Event.SetShowTextInputDialog -> setShowTextInputDialog(event.isShowTextInputDialog)
+            is CompleteScreenContract.Event.SetStoryOverlayInputDialog -> setStoryOverlayInputDialog(event.storyOverlayInputDialog)
             is CompleteScreenContract.Event.NavigateToSelectAddressScreen -> setSideEffect(CompleteScreenContract.SideEffect.NavigateToSelectAddressScreen)
         }
     }
@@ -84,7 +85,7 @@ internal class CompleteViewModel @Inject constructor(
         updateState { state ->
             state.copy(
                 alertDialogModel = null,
-                isShowTextInputDialog = null,
+                storyOverlayInputDialog = null,
             )
         }
     }
@@ -103,6 +104,14 @@ internal class CompleteViewModel @Inject constructor(
                 textContent = state.textContent.copy(
                     value = value,
                 ),
+            )
+        }
+    }
+
+    private fun setStoryLinkUrl(value: String?) {
+        updateState { state ->
+            state.copy(
+                storyLinkUrl = value?.normalizeLink(),
             )
         }
     }
@@ -329,6 +338,8 @@ internal class CompleteViewModel @Inject constructor(
         val params = CreateStoryRequest(
             mediaType = mediaType.value,
             mediaUrl = mediaUrl,
+            link = viewState.storyLinkUrl,
+            linkDescription = viewState.storyLinkUrl?.toLinkDescription(),
         )
         createStoryUseCase.invoke(params)
             .requester
@@ -351,11 +362,25 @@ internal class CompleteViewModel @Inject constructor(
             }
     }
 
-    private fun setShowTextInputDialog(isShowTextInputDialog: String?) {
+    private fun setStoryOverlayInputDialog(storyOverlayInputDialog: CompleteScreenContract.StoryOverlayInputDialog?) {
         updateState { state ->
             state.copy(
-                isShowTextInputDialog = isShowTextInputDialog,
+                storyOverlayInputDialog = storyOverlayInputDialog,
             )
         }
+    }
+
+    private fun String.normalizeLink(): String {
+        val trimmedValue = trim()
+        if (trimmedValue.startsWith("http://") || trimmedValue.startsWith("https://")) {
+            return trimmedValue
+        }
+        return "https://$trimmedValue"
+    }
+
+    private fun String.toLinkDescription(): String {
+        return removePrefix("https://")
+            .removePrefix("http://")
+            .trimEnd('/')
     }
 }

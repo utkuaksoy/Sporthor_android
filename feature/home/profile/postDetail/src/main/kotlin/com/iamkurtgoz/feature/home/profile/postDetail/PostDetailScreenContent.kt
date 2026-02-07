@@ -76,7 +76,7 @@ internal fun PostDetailScreenContent(
                 postData = item.media?.map {
                     Pair(it.url, it.type ?: 0)
                 } ?: listOf(),
-                postRatio = AppDefaults.ASPECT_RATIO_SQUARE,
+                postRatio = AppDefaults.ASPECT_RATIO_0_75,
                 isLiked = item.isLiked == true,
                 likedCount = item.likeCount,
                 commentCount = item.commentCount,

@@ -25,6 +25,7 @@ import com.iamkurtgoz.domain.eventbus.impl.CreateStoryComponent
 import com.iamkurtgoz.domain.eventbus.impl.CreateTeamEventBus
 import com.iamkurtgoz.domain.eventbus.impl.DashboardEventBus
 import com.iamkurtgoz.domain.eventbus.impl.EditEventTaskEventBus
+import com.iamkurtgoz.domain.eventbus.impl.PaymentListEventBus
 import com.iamkurtgoz.domain.eventbus.impl.EditTeamEventBus
 import com.iamkurtgoz.domain.eventbus.impl.ProfileEditEventBus
 import com.iamkurtgoz.domain.eventbus.impl.ProfileEventBus
@@ -55,6 +56,7 @@ object AppEventBus {
     val createStoryComponent: CreateStoryComponent = CreateStoryComponent
     val editTeamEventBus: EditTeamEventBus = EditTeamEventBus
     val createTeamEventBus: CreateTeamEventBus = CreateTeamEventBus
+    val paymentListEventBus: PaymentListEventBus = PaymentListEventBus
 
     var profileEditSelectedBranchIds: Set<String> = emptySet()
 
@@ -275,6 +277,13 @@ object AppEventBus {
     suspend fun fetchStory() {
         dashboardEventBus.apply {
             val event = DashboardEventBus.Event.FetchStoryFeed
+            send(event)
+        }
+    }
+
+    suspend fun refreshPaymentList() {
+        paymentListEventBus.apply {
+            val event = PaymentListEventBus.Event.RefreshList
             send(event)
         }
     }

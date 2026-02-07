@@ -69,12 +69,17 @@ fun Context.openFile(
 
 fun Context.openUrl(url: String?) {
     try {
-        val intent =
+        val browserIntent =
             Intent(Intent.ACTION_VIEW, Uri.parse(url)).apply {
-                addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+                addCategory(Intent.CATEGORY_BROWSABLE)
                 addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
             }
-        startActivity(intent)
+        val chooserIntent = Intent.createChooser(browserIntent, null).apply {
+            addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        }
+        if (browserIntent.resolveActivity(packageManager) != null) {
+            startActivity(chooserIntent)
+        }
     } catch (e: java.lang.Exception) {
         Log.d("IntentExtensions", "Error", e)
     }

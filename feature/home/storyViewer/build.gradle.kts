@@ -35,6 +35,7 @@ dependencies {
     implementation(projects.feature.home.storyViewer.domain)
 
     // Other
+    implementation(libs.androidx.browser)
     implementation(libs.exo.player)
     implementation(libs.exo.player.ui)
     implementation(libs.exo.player.ui.compose)

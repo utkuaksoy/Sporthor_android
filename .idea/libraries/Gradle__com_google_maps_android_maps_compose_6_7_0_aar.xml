@@ -1,9 +1,9 @@
 <component name="libraryTable">
   <library name="Gradle: com.google.maps.android:maps-compose:6.7.0@aar" external-system-id="GRADLE">
     <CLASSES>
-      <root url="file://$USER_HOME$/.gradle/caches/8.14.3/transforms/7bdb113a92f760706acde9f85e4e881f/transformed/maps-compose-6.7.0/AndroidManifest.xml" />
-      <root url="file://$USER_HOME$/.gradle/caches/8.14.3/transforms/7bdb113a92f760706acde9f85e4e881f/transformed/maps-compose-6.7.0/res" />
-      <root url="jar://$USER_HOME$/.gradle/caches/8.14.3/transforms/7bdb113a92f760706acde9f85e4e881f/transformed/maps-compose-6.7.0/jars/classes.jar!/" />
+      <root url="jar://$USER_HOME$/.gradle/caches/8.14.3/transforms/9cae86c9ab0ca9d2288d339a597d1c2d/transformed/maps-compose-6.7.0/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/8.14.3/transforms/9cae86c9ab0ca9d2288d339a597d1c2d/transformed/maps-compose-6.7.0/res" />
+      <root url="file://$USER_HOME$/.gradle/caches/8.14.3/transforms/9cae86c9ab0ca9d2288d339a597d1c2d/transformed/maps-compose-6.7.0/AndroidManifest.xml" />
     </CLASSES>
     <JAVADOC>
       <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.google.maps.android/maps-compose/6.7.0/444a9af45183841708ca04ca3ceee9273e7aad54/maps-compose-6.7.0-javadoc.jar!/" />

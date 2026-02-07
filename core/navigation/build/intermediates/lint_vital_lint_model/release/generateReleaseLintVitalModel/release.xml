@@ -27,6 +27,6 @@
       applicationId="com.iamkurtgoz.core.navigation"
       generatedSourceFolders="build/generated/ksp/release/java:build/generated/ksp/release/kotlin:build/generated/ap_generated_sources/release/out"
       generatedResourceFolders="build/generated/res/resValues/release"
-      desugaredMethodsFiles="/Users/devcelebi/.gradle/caches/8.14.3/transforms/b14e72aa0ec6b109c39718e77db9ebc2/transformed/desugar_jdk_libs_configuration-2.1.5-desugar-lint.txt:/Users/devcelebi/.gradle/caches/8.14.3/transforms/894076d7e94e243050a56cbbf414f41e/transformed/D8BackportedDesugaredMethods.txt">
+      desugaredMethodsFiles="/Users/devcelebi/.gradle/caches/8.14.3/transforms/6ea7a0f99a5e9d12c2ffea198a6a362d/transformed/desugar_jdk_libs_configuration-2.1.5-desugar-lint.txt:/Users/devcelebi/.gradle/caches/8.14.3/transforms/8597c1a157c2deb7c1e0719ed4bb55e6/transformed/D8BackportedDesugaredMethods.txt">
   </artifact>
 </variant>

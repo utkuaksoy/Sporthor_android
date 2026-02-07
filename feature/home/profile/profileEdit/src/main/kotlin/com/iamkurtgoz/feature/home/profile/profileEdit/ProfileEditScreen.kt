@@ -15,6 +15,7 @@
  */
 package com.iamkurtgoz.feature.home.profile.profileEdit
 
+import android.widget.Toast
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
@@ -52,6 +53,7 @@ internal fun ProfileEditScreen(
     viewModel: ProfileEditViewModel = hiltViewModel(),
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
+    val context = androidx.compose.ui.platform.LocalContext.current
 
     TrackedScreen("EditScreen")
 
@@ -69,6 +71,9 @@ internal fun ProfileEditScreen(
             is ProfileEditScreenContract.SideEffect.PopBackStack -> popBackStack()
             is ProfileEditScreenContract.SideEffect.NavigateToProfileEditSelectBranch -> navigateToEditProfileSelectBranch()
             is ProfileEditScreenContract.SideEffect.NavigateToSelectUserRole -> navigateToSelectUserRole()
+            is ProfileEditScreenContract.SideEffect.ShowSuccessToast -> {
+                Toast.makeText(context, event.message, Toast.LENGTH_SHORT).show()
+            }
         }
     }
 

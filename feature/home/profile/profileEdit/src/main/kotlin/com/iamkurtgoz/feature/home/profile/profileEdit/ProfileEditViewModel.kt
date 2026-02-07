@@ -25,7 +25,6 @@ import com.iamkurtgoz.domain.core.CoreViewModel
 import com.iamkurtgoz.domain.eventbus.AppEventBus
 import com.iamkurtgoz.domain.eventbus.impl.ProfileEditEventBus
 import com.iamkurtgoz.domain.extensions.toAlertDialog
-import com.iamkurtgoz.domain.model.base.AnyAlertDialogModel
 import com.iamkurtgoz.domain.model.request.UpdateProfileImageRequest
 import com.iamkurtgoz.domain.repository.LocationRepository
 import com.iamkurtgoz.feature.home.profile.profileEdit.domain.model.BranchInfoRowUIModel
@@ -159,39 +158,6 @@ internal class ProfileEditViewModel @Inject constructor(
 
     @Suppress("NestedBlockDepth")
     private fun updateProfileSummary() {
-        val missingRequiredAttributes = viewState.profileSummaryModel?.highlights?.branchesAttributes
-            ?.flatMap { branchesAttributes ->
-                val branchId = branchesAttributes.branchId ?: return@flatMap emptyList()
-                branchesAttributes.branchInfoRow?.mapNotNull { row ->
-                    if (row.isRequired == true) {
-                        val key = branchId + (row.parameterName ?: "")
-                        val value = viewState.dynamicTextFieldValues.firstOrNull { it.id == key }?.value
-                        if (value.isNullOrBlank()) {
-                            row.title ?: row.parameterName
-                        } else {
-                            null
-                        }
-                    } else {
-                        null
-                    }
-                } ?: emptyList()
-            }
-            ?.distinct()
-            ?: emptyList()
-        if (missingRequiredAttributes.isNotEmpty()) {
-            updateState { state ->
-                state.copy(
-                    alertDialogModel = AnyAlertDialogModel(
-                        title = "Uyari",
-                        message = "Lutfen zorunlu alanlari doldurun: ${missingRequiredAttributes.joinToString()}",
-                        confirmButton = "Tamam",
-                        dismissButton = null,
-                    ),
-                )
-            }
-            return
-        }
-
         val content = mutableMapOf<String, JsonElement>()
         viewState.profileSummaryModel?.profileInfo?.row?.forEach { row ->
             val parameterName = row.parameterName ?: return@forEach
@@ -250,6 +216,8 @@ internal class ProfileEditViewModel @Inject constructor(
                         isLoading = false,
                     )
                 }
+                setSideEffect(ProfileEditScreenContract.SideEffect.ShowSuccessToast(message = "Profil başarıyla güncellendi"))
+                setSideEffect(ProfileEditScreenContract.SideEffect.PopBackStack)
             }
     }
 

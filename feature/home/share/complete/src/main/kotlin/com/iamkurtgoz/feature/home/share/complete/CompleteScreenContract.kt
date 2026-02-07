@@ -26,6 +26,17 @@ import java.io.File
 
 internal class CompleteScreenContract {
     @Immutable
+    data class StoryOverlayInputDialog(
+        val type: StoryOverlayInputType,
+        val value: String = "",
+    )
+
+    enum class StoryOverlayInputType {
+        TEXT,
+        LINK,
+    }
+
+    @Immutable
     data class State(
         override val isLoading: Boolean,
         val appBuildConfigStatePack: AppBuildConfigStatePack,
@@ -34,7 +45,8 @@ internal class CompleteScreenContract {
         val alertDialogModel: AlertDialogModel? = null,
         val navigateRoute: HomeScreenShareCompleteRoute,
         val textContent: AppTextFieldValue = AppTextFieldValue(),
-        val isShowTextInputDialog: String? = null,
+        val storyOverlayInputDialog: StoryOverlayInputDialog? = null,
+        val storyLinkUrl: String? = null,
     ) : CoreState.ViewState
 
     sealed class SideEffect : CoreState.SideEffect {
@@ -51,10 +63,11 @@ internal class CompleteScreenContract {
         data object DismissDialogs : Event()
         data class SetLoadingStatus(val isLoading: Boolean) : Event()
         data class SetTextContent(val value: String) : Event()
+        data class SetStoryLinkUrl(val value: String?) : Event()
         data object Share : Event()
         data class ShareStoryImage(val file: File) : Event()
         data object ShareStoryVideo : Event()
-        data class SetShowTextInputDialog(val isShowTextInputDialog: String?) : Event()
+        data class SetStoryOverlayInputDialog(val storyOverlayInputDialog: StoryOverlayInputDialog?) : Event()
         data object NavigateToSelectAddressScreen : Event()
     }
 

@@ -50,6 +50,7 @@ internal class ProfileEditScreenContract {
         data object PopBackStack : SideEffect()
         data object NavigateToProfileEditSelectBranch : SideEffect()
         data object NavigateToSelectUserRole : SideEffect()
+        data class ShowSuccessToast(val message: String) : SideEffect()
     }
 
     sealed class Event : CoreState.Event {

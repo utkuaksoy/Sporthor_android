@@ -69,6 +69,8 @@ internal class StoryDetailDomainMapper @Inject constructor(
         return with(response) {
             StoryDetailDomainModel(
                 storyId = storyId,
+                link = link,
+                linkDescription = linkDescription,
                 media = media?.let { mediaMapper.map(it) },
                 publishDate = publishDate,
                 isWatched = isWatched,

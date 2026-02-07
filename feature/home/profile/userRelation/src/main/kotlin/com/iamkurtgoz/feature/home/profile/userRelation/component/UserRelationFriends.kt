@@ -60,7 +60,14 @@ internal fun UserRelationFriends(
                 subTitle = item.summary?.let { arrayOf(it) },
                 modifier = Modifier,
                 trailingContent = {
-                    if (item.isFollow == true) {
+                    if (item.isFollowRequest == true) {
+                        AppButton.OutlineSmall(
+                            text = "İstek gönderildi", // TODO: Localize
+                            onClick = { },
+                            enabled = false,
+                            modifier = Modifier,
+                        )
+                    } else if (item.isFollow == true) {
                         AppButton.OutlineSmall(
                             text = "Takiptesin", // TODO: Localize
                             onClick = {

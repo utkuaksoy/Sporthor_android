@@ -23,4 +23,6 @@ import kotlinx.serialization.Serializable
 data class CreateStoryRequest(
     @SerialName("mediaUrl") val mediaUrl: String?,
     @SerialName("mediaType") val mediaType: Int?,
+    @SerialName("link") val link: String? = null,
+    @SerialName("linkDescription") val linkDescription: String? = null,
 )

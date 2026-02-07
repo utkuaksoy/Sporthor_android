@@ -34,6 +34,7 @@ internal class UserRelationDomainMapper @Inject constructor() : IMapper<UserRela
                         imageUrl = it?.imageUrl,
                         summary = it?.summary,
                         isFollow = it?.isFollow,
+                        isFollowRequest = it?.isFollowRequest,
                         isCurrentUser = it?.isCurrentUser,
                     )
                 },
@@ -45,6 +46,7 @@ internal class UserRelationDomainMapper @Inject constructor() : IMapper<UserRela
                         imageUrl = it?.imageUrl,
                         summary = it?.summary,
                         isFollow = it?.isFollow,
+                        isFollowRequest = it?.isFollowRequest,
                         isCurrentUser = it?.isCurrentUser,
                     )
                 },

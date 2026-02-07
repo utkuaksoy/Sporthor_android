@@ -153,31 +153,14 @@ private fun Preview() {
                             details = listOf(
                                 StoryDetailUIModel(
                                     storyId = UUID.randomUUID().toString(),
+                                    link = null,
                                     media = null,
                                     publishDate = null,
                                     isWatched = false,
                                 ),
                                 StoryDetailUIModel(
                                     storyId = UUID.randomUUID().toString(),
-                                    media = null,
-                                    publishDate = null,
-                                    isWatched = false,
-                                ),
-
-                                StoryDetailUIModel(
-                                    storyId = UUID.randomUUID().toString(),
-                                    media = null,
-                                    publishDate = null,
-                                    isWatched = false,
-                                ),
-                                StoryDetailUIModel(
-                                    storyId = UUID.randomUUID().toString(),
-                                    media = null,
-                                    publishDate = null,
-                                    isWatched = false,
-                                ),
-                                StoryDetailUIModel(
-                                    storyId = UUID.randomUUID().toString(),
+                                    link = null,
                                     media = null,
                                     publishDate = null,
                                     isWatched = false,
@@ -185,18 +168,43 @@ private fun Preview() {
 
                                 StoryDetailUIModel(
                                     storyId = UUID.randomUUID().toString(),
+                                    link = null,
                                     media = null,
                                     publishDate = null,
                                     isWatched = false,
                                 ),
                                 StoryDetailUIModel(
                                     storyId = UUID.randomUUID().toString(),
+                                    link = null,
                                     media = null,
                                     publishDate = null,
                                     isWatched = false,
                                 ),
                                 StoryDetailUIModel(
                                     storyId = UUID.randomUUID().toString(),
+                                    link = null,
+                                    media = null,
+                                    publishDate = null,
+                                    isWatched = false,
+                                ),
+
+                                StoryDetailUIModel(
+                                    storyId = UUID.randomUUID().toString(),
+                                    link = null,
+                                    media = null,
+                                    publishDate = null,
+                                    isWatched = false,
+                                ),
+                                StoryDetailUIModel(
+                                    storyId = UUID.randomUUID().toString(),
+                                    link = null,
+                                    media = null,
+                                    publishDate = null,
+                                    isWatched = false,
+                                ),
+                                StoryDetailUIModel(
+                                    storyId = UUID.randomUUID().toString(),
+                                    link = null,
                                     media = null,
                                     publishDate = null,
                                     isWatched = false,

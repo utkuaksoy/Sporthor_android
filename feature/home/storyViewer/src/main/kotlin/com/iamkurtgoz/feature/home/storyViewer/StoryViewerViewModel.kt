@@ -134,9 +134,7 @@ internal class StoryViewerViewModel @Inject constructor(
         storyTimerJob?.cancel()
         storyTimerJob = null
 
-        val currentStoryDetail = currentStory?.details?.firstOrNull { storyDetailUIModel ->
-            storyDetailUIModel.isWatched == false
-        } ?: currentStory?.details?.getOrNull(viewState.currentStoryDetailIndex)
+        val currentStoryDetail = currentStory?.details?.getOrNull(viewState.currentStoryDetailIndex)
 
         val currentStoryTotalTime = if (currentStoryDetail?.media?.type == CustomMediaType.IMAGE) {
             StoryViewerScreenContract.Static.DEFAULT_STORY_TOTAL_TIME

@@ -165,6 +165,9 @@
             <option value="$PROJECT_DIR$/feature/home/onboarding" />
             <option value="$PROJECT_DIR$/feature/home/onboarding/data" />
             <option value="$PROJECT_DIR$/feature/home/onboarding/domain" />
+            <option value="$PROJECT_DIR$/feature/home/paymentList" />
+            <option value="$PROJECT_DIR$/feature/home/paymentList/data" />
+            <option value="$PROJECT_DIR$/feature/home/paymentList/domain" />
             <option value="$PROJECT_DIR$/feature/home/profile" />
             <option value="$PROJECT_DIR$/feature/home/profile/data" />
             <option value="$PROJECT_DIR$/feature/home/profile/domain" />

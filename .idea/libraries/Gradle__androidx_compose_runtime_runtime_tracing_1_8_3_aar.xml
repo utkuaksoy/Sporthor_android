@@ -1,9 +1,9 @@
 <component name="libraryTable">
   <library name="Gradle: androidx.compose.runtime:runtime-tracing:1.8.3@aar" external-system-id="GRADLE">
     <CLASSES>
-      <root url="file://$USER_HOME$/.gradle/caches/8.14.3/transforms/79ee9e64703831f3b6d6084e3c0185dc/transformed/runtime-tracing-1.8.3/AndroidManifest.xml" />
-      <root url="jar://$USER_HOME$/.gradle/caches/8.14.3/transforms/79ee9e64703831f3b6d6084e3c0185dc/transformed/runtime-tracing-1.8.3/jars/classes.jar!/" />
-      <root url="file://$USER_HOME$/.gradle/caches/8.14.3/transforms/79ee9e64703831f3b6d6084e3c0185dc/transformed/runtime-tracing-1.8.3/res" />
+      <root url="file://$USER_HOME$/.gradle/caches/8.14.3/transforms/2ab331db7b79c09abe646145f03213e4/transformed/runtime-tracing-1.8.3/AndroidManifest.xml" />
+      <root url="jar://$USER_HOME$/.gradle/caches/8.14.3/transforms/2ab331db7b79c09abe646145f03213e4/transformed/runtime-tracing-1.8.3/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/8.14.3/transforms/2ab331db7b79c09abe646145f03213e4/transformed/runtime-tracing-1.8.3/res" />
     </CLASSES>
     <JAVADOC />
     <SOURCES>

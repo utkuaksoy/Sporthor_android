@@ -94,6 +94,8 @@ import com.iamkurtgoz.domain.model.enums.MenuKeyType.TrainingGroupEdit
 import com.iamkurtgoz.domain.model.enums.MenuKeyType.TrainingGroupUsers
 import com.iamkurtgoz.domain.model.enums.MenuKeyType.UpdateClub
 import com.iamkurtgoz.domain.model.enums.MenuKeyType.WebRedirect
+import com.iamkurtgoz.domain.model.enums.MenuKeyType.PaymentList
+
 import com.iamkurtgoz.feature.home.dashboard.component.comment.CommentDialog
 import com.iamkurtgoz.feature.home.dashboard.domain.model.MenuUIModelItem
 import com.iamkurtgoz.feature.home.dashboard.domain.types.MenuClickModel
@@ -116,6 +118,7 @@ internal fun DashboardScreen(
     navigateToSelectTeamScreen: (fromGenerateClub: Boolean, fromTrainingGroup: Boolean) -> Unit,
     navigateToSelectTrainingGroupScreen: (fromTrainingGroup: Boolean) -> Unit,
     navigateToCoachListScreen: () -> Unit,
+    navigateToPaymentListScreen:() -> Unit,
     viewModel: DashboardViewModel = hiltViewModel(),
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
@@ -172,6 +175,8 @@ internal fun DashboardScreen(
             is DashboardScreenContract.SideEffect.NavigateToSelectTeamScreen -> navigateToSelectTeamScreen(event.fromGenerateClub, event.fromTrainingGroup)
             is DashboardScreenContract.SideEffect.NavigateToSelectTrainingGroupScreen -> navigateToSelectTrainingGroupScreen(event.fromTrainingGroup)
             is DashboardScreenContract.SideEffect.NavigateToCoachListScreen -> navigateToCoachListScreen()
+            is DashboardScreenContract.SideEffect.NavigateToPaymentListScreen -> navigateToPaymentListScreen()
+
         }
     }
 
@@ -275,6 +280,9 @@ private fun DashboardScreenScaffold(
                         TrainingGroupUsers -> {}
                         CoachList -> {
                             setEvent(DashboardScreenContract.Event.NavigateToCoachListScreen)
+                        }
+                        PaymentList -> {
+                            setEvent(DashboardScreenContract.Event.NavigateToPaymentListScreen)
                         }
                         null -> {}
                     }

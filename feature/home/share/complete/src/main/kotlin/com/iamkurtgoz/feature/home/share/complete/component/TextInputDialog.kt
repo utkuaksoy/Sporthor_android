@@ -40,11 +40,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
+import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.foundation.text.KeyboardOptions
 import com.iamkurtgoz.core.common.contract.AppDefaults
 import com.iamkurtgoz.core.designsystem.extension.ifTrue
 import com.iamkurtgoz.core.designsystem.internal.PreviewAppWithNightMode
 import com.iamkurtgoz.core.designsystem.theme.AppTheme
 import com.iamkurtgoz.core.designsystem.theme.AppThemeSurface
+import com.iamkurtgoz.feature.home.share.complete.CompleteScreenContract
 
 @Composable
 internal fun TextInputDialog(
@@ -52,10 +55,12 @@ internal fun TextInputDialog(
     modifier: Modifier = Modifier,
     initialText: String = "",
     initialTextColor: Int? = null,
+    inputType: CompleteScreenContract.StoryOverlayInputType = CompleteScreenContract.StoryOverlayInputType.TEXT,
     onDismiss: () -> Unit = {},
 ) {
     var text by remember { mutableStateOf(initialText) }
     var textColor by remember { mutableIntStateOf(initialTextColor ?: Color.Black.toArgb()) }
+    val isLinkInput = inputType == CompleteScreenContract.StoryOverlayInputType.LINK
 
     val colorPalette: List<Pair<Color, Color>> = listOf(
         Pair(
@@ -106,44 +111,53 @@ internal fun TextInputDialog(
                     value = text,
                     onValueChange = { text = it },
                     singleLine = true,
+                    keyboardOptions = KeyboardOptions(
+                        keyboardType = if (isLinkInput) KeyboardType.Uri else KeyboardType.Text,
+                    ),
                     placeholder = {
                         Text(
-                            text = "Ekleyeceğiniz metni girin..", // TODO: Localize
+                            text = if (isLinkInput) {
+                                "Eklemek istediğiniz linki girin"
+                            } else {
+                                "Ekleyeceğiniz metni girin.."
+                            }, // TODO: Localize
                         )
                     },
                     modifier = Modifier
                         .fillMaxWidth(),
                 )
 
-                Row(
-                    modifier = Modifier
-                        .padding(top = AppTheme.spacing.spacingMedium)
-                        .horizontalScroll(rememberScrollState())
-                        .fillMaxWidth(),
-                ) {
-                    colorPalette.forEachIndexed { index, colorPair ->
-                        Box(
-                            modifier = Modifier
-                                .ifTrue(index != AppDefaults.ZERO) {
-                                    this.padding(start = AppTheme.spacing.spacingSmallest)
-                                }
-                                .ifTrue(index == colorPalette.lastIndex) {
-                                    this.padding(end = AppTheme.spacing.spacingSmallest)
-                                }
-                                .size(AppTheme.dimens.dp32)
-                                .clip(AppTheme.shapes.radiusCircle)
-                                .background(colorPair.first)
-                                .ifTrue(textColor == colorPair.first.toArgb()) {
-                                    this.border(
-                                        width = AppTheme.dimens.dp1,
-                                        color = colorPair.second,
-                                        shape = AppTheme.shapes.radiusCircle,
-                                    )
-                                }
-                                .clickable {
-                                    textColor = colorPair.first.toArgb()
-                                },
-                        )
+                if (!isLinkInput) {
+                    Row(
+                        modifier = Modifier
+                            .padding(top = AppTheme.spacing.spacingMedium)
+                            .horizontalScroll(rememberScrollState())
+                            .fillMaxWidth(),
+                    ) {
+                        colorPalette.forEachIndexed { index, colorPair ->
+                            Box(
+                                modifier = Modifier
+                                    .ifTrue(index != AppDefaults.ZERO) {
+                                        this.padding(start = AppTheme.spacing.spacingSmallest)
+                                    }
+                                    .ifTrue(index == colorPalette.lastIndex) {
+                                        this.padding(end = AppTheme.spacing.spacingSmallest)
+                                    }
+                                    .size(AppTheme.dimens.dp32)
+                                    .clip(AppTheme.shapes.radiusCircle)
+                                    .background(colorPair.first)
+                                    .ifTrue(textColor == colorPair.first.toArgb()) {
+                                        this.border(
+                                            width = AppTheme.dimens.dp1,
+                                            color = colorPair.second,
+                                            shape = AppTheme.shapes.radiusCircle,
+                                        )
+                                    }
+                                    .clickable {
+                                        textColor = colorPair.first.toArgb()
+                                    },
+                            )
+                        }
                     }
                 }
             }
@@ -152,7 +166,10 @@ internal fun TextInputDialog(
             TextButton(
                 enabled = text.isNotEmpty(),
                 onClick = {
-                    onConfirm(text, textColor)
+                    onConfirm(
+                        text,
+                        if (isLinkInput) Color(0xFF2563EB).toArgb() else textColor,
+                    )
                 },
             ) {
                 Text(
@@ -177,6 +194,7 @@ private fun Preview() {
         AppThemeSurface {
             TextInputDialog(
                 initialText = "",
+                inputType = CompleteScreenContract.StoryOverlayInputType.TEXT,
                 onConfirm = { _, _ -> },
                 onDismiss = {},
             )

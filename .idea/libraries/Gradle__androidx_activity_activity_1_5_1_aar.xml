@@ -1,12 +1,12 @@
 <component name="libraryTable">
   <library name="Gradle: androidx.activity:activity:1.5.1@aar" external-system-id="GRADLE">
     <ANNOTATIONS>
-      <root url="jar://$USER_HOME$/.gradle/caches/8.14.3/transforms/87316a13d497b2a0e4ccfd1bcce31263/transformed/activity-1.5.1/annotations.zip!/" />
+      <root url="jar://$USER_HOME$/.gradle/caches/8.14.3/transforms/5929f4fedc3de52ee999776dc2f0a8f4/transformed/activity-1.5.1/annotations.zip!/" />
     </ANNOTATIONS>
     <CLASSES>
-      <root url="jar://$USER_HOME$/.gradle/caches/8.14.3/transforms/87316a13d497b2a0e4ccfd1bcce31263/transformed/activity-1.5.1/jars/classes.jar!/" />
-      <root url="file://$USER_HOME$/.gradle/caches/8.14.3/transforms/87316a13d497b2a0e4ccfd1bcce31263/transformed/activity-1.5.1/AndroidManifest.xml" />
-      <root url="file://$USER_HOME$/.gradle/caches/8.14.3/transforms/87316a13d497b2a0e4ccfd1bcce31263/transformed/activity-1.5.1/res" />
+      <root url="file://$USER_HOME$/.gradle/caches/8.14.3/transforms/5929f4fedc3de52ee999776dc2f0a8f4/transformed/activity-1.5.1/res" />
+      <root url="jar://$USER_HOME$/.gradle/caches/8.14.3/transforms/5929f4fedc3de52ee999776dc2f0a8f4/transformed/activity-1.5.1/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/8.14.3/transforms/5929f4fedc3de52ee999776dc2f0a8f4/transformed/activity-1.5.1/AndroidManifest.xml" />
     </CLASSES>
     <JAVADOC />
     <SOURCES>

@@ -251,7 +251,7 @@ private fun PostViewImpl(
                                             }
                                         },
                                     ),
-                                contentScale = ContentScale.Crop,
+                                contentScale = ContentScale.Fit,
                             )
 
                             if (isVideo && playingVideoUrl != url) {

@@ -81,6 +81,8 @@ dependencies {
     implementation(projects.feature.home.coachList)
     implementation(projects.feature.home.coachList.trainingGroups)
     implementation(projects.feature.home.coachList.trainingGroups.updateCoach)
+    implementation(projects.feature.home.paymentList)
     implementation(projects.feature.home.editTeam.selectBranch)
     implementation(projects.feature.home.createTeam.selectBranch)
+
 }

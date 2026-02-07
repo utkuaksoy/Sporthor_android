@@ -32,6 +32,8 @@ data class StoryDomainModel(
 
 data class StoryDetailDomainModel(
     val storyId: String?,
+    val link: String? = null,
+    val linkDescription: String? = null,
     val media: MediaDomainModel?,
     val publishDate: String?,
     val isWatched: Boolean?,

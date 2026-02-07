@@ -35,6 +35,7 @@ data class UserRelationItemResponseModel(
     @SerialName("summary") val summary: String?,
     @SerialName("imageUrl") val imageUrl: String?,
     @SerialName("isFollow") val isFollow: Boolean?,
+    @SerialName("isFollowRequest") val isFollowRequest: Boolean? = null,
     @SerialName("isCurrentUser") val isCurrentUser: Boolean?,
 )
 
@@ -47,5 +48,6 @@ data class CoachRelationItemResponseModel(
     @SerialName("summary") val summary: String?,
     @SerialName("imageUrl") val imageUrl: String?,
     @SerialName("isFollow") val isFollow: Boolean?,
+    @SerialName("isFollowRequest") val isFollowRequest: Boolean? = null,
     @SerialName("isCurrentUser") val isCurrentUser: Boolean?,
 )

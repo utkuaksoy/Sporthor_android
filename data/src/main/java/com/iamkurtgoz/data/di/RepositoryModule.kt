@@ -39,6 +39,9 @@ import com.iamkurtgoz.domain.repository.ProfileRepository
 import com.iamkurtgoz.domain.repository.SocialRepository
 import com.iamkurtgoz.domain.repository.TeamRepository
 import com.iamkurtgoz.domain.repository.UploadRepository
+import com.iamkurtgoz.data.repository.FeeRepositoryImpl
+import com.iamkurtgoz.domain.repository.FeeRepository
+
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -96,4 +99,9 @@ internal interface RepositoryModule {
     @Singleton
     @Binds
     fun bindCalendarRepository(impl: CalendarRepositoryImpl): CalendarRepository
+
+    @Singleton
+    @Binds
+    abstract fun bindFeeRepository(impl: FeeRepositoryImpl): FeeRepository
+
 }

@@ -1,9 +1,9 @@
 <component name="libraryTable">
   <library name="Gradle: com.burhanrashid52:photoeditor:3.0.2@aar" external-system-id="GRADLE">
     <CLASSES>
-      <root url="file://$USER_HOME$/.gradle/caches/8.14.3/transforms/3f39e4b5de0d88720dadb2520f4e0a43/transformed/photoeditor-3.0.2/res" />
-      <root url="file://$USER_HOME$/.gradle/caches/8.14.3/transforms/3f39e4b5de0d88720dadb2520f4e0a43/transformed/photoeditor-3.0.2/AndroidManifest.xml" />
-      <root url="jar://$USER_HOME$/.gradle/caches/8.14.3/transforms/3f39e4b5de0d88720dadb2520f4e0a43/transformed/photoeditor-3.0.2/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/8.14.3/transforms/dc98173f8c057a564ef7c590a050c8f1/transformed/photoeditor-3.0.2/res" />
+      <root url="jar://$USER_HOME$/.gradle/caches/8.14.3/transforms/dc98173f8c057a564ef7c590a050c8f1/transformed/photoeditor-3.0.2/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/8.14.3/transforms/dc98173f8c057a564ef7c590a050c8f1/transformed/photoeditor-3.0.2/AndroidManifest.xml" />
     </CLASSES>
     <JAVADOC />
     <SOURCES>

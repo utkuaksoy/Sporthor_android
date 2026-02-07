@@ -74,6 +74,9 @@ internal class DashboardScreenContract {
         data class NavigateToSelectTeamScreen(val fromGenerateClub: Boolean, val fromTrainingGroup: Boolean) : SideEffect()
         data class NavigateToSelectTrainingGroupScreen(val fromTrainingGroup: Boolean) : SideEffect()
         data object NavigateToCoachListScreen : SideEffect()
+
+        data object NavigateToPaymentListScreen : SideEffect()
+
     }
 
     sealed class Event : CoreState.Event {
@@ -107,6 +110,9 @@ internal class DashboardScreenContract {
         data class NavigateToSelectTeamScreen(val fromGenerateClub: Boolean, val fromTrainingGroup: Boolean) : Event()
         data class NavigateToSelectTrainingGroupScreen(val fromTrainingGroup: Boolean) : Event()
         data object NavigateToCoachListScreen : Event()
+
+        data object NavigateToPaymentListScreen : Event()
+
     }
 
     object Static

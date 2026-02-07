@@ -283,7 +283,7 @@ internal fun InviteGroupMembersScreenContent(
                                                 userHeaderData = item.image ?: item.name.getUserNameFirstChar(),
                                                 isHeaderUser = true,
                                                 title = item.name,
-                                                subTitle = arrayOf("Teknik Kadro"),
+                                                subTitle = arrayOf("Sporcu"),
                                                 onClickAction = {
                                                     setEvent(
                                                         InviteGroupMembersScreenContract.Event.ChangeSelectedUserState(

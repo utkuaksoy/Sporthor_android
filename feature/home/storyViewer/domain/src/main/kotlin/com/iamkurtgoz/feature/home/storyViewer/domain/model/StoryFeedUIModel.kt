@@ -33,6 +33,8 @@ data class StoryUIModel(
 
 data class StoryDetailUIModel(
     val storyId: String?,
+    val link: String? = null,
+    val linkDescription: String? = null,
     val media: MediaUIModel?,
     val publishDate: String?,
     val isWatched: Boolean?,

@@ -111,6 +111,8 @@ internal class DashboardViewModel @Inject constructor(
             is DashboardScreenContract.Event.NavigateToSelectTeamScreen -> setSideEffect(NavigateToSelectTeamScreen(event.fromGenerateClub, event.fromTrainingGroup))
             is DashboardScreenContract.Event.NavigateToSelectTrainingGroupScreen -> setSideEffect(NavigateToSelectTrainingGroupScreen(event.fromTrainingGroup))
             is DashboardScreenContract.Event.NavigateToCoachListScreen -> setSideEffect(DashboardScreenContract.SideEffect.NavigateToCoachListScreen)
+            is DashboardScreenContract.Event.NavigateToPaymentListScreen -> setSideEffect(DashboardScreenContract.SideEffect.NavigateToPaymentListScreen)
+
             is DashboardScreenContract.Event.OnMainMenuClick -> {
                 updateState { state ->
                     state.copy(

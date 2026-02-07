@@ -85,6 +85,7 @@ object AppDefaults {
     const val ASPECT_RATIO_0_56 = 0.56f
     const val ASPECT_RATIO_0_75 = 0.75f
     const val ASPECT_RATIO_0_8 = 0.8f
+    const val ASPECT_RATIO_0_85 = 0.85f
     const val ASPECT_RATIO_SQUARE = 1f
     const val ASPECT_RATIO_1_15 = 1.15f
     const val ASPECT_RATIO_1_25 = 1.25f

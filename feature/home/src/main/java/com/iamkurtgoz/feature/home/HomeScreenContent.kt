@@ -78,6 +78,12 @@ import com.iamkurtgoz.feature.home.mediaViewer.navigation.navigateToMediaViewerS
 import com.iamkurtgoz.feature.home.notifications.navigation.navigateToNotificationsScreen
 import com.iamkurtgoz.feature.home.notifications.navigation.notificationsScreenNavigation
 import com.iamkurtgoz.feature.home.onboarding.navigation.onboardingScreenNavigation
+import com.iamkurtgoz.feature.home.paymentList.navigation.navigateToPaymentListScreen
+import com.iamkurtgoz.feature.home.paymentList.navigation.navigateToAddFeeScreen
+import com.iamkurtgoz.feature.home.paymentList.navigation.addFeeScreenNavigation
+import com.iamkurtgoz.feature.home.paymentList.navigation.feeDetailScreenNavigation
+import com.iamkurtgoz.feature.home.paymentList.navigation.navigateToFeeDetailScreen
+import com.iamkurtgoz.feature.home.paymentList.navigation.paymentListScreenNavigation
 import com.iamkurtgoz.feature.home.profile.navigation.navigateToProfileScreen
 import com.iamkurtgoz.feature.home.profile.navigation.profileScreenNavigation
 import com.iamkurtgoz.feature.home.profile.postDetail.navigation.navigateToPostDetailScreen
@@ -173,6 +179,7 @@ internal fun HomeScreenContent(
             },
             navigateToSelectTrainingGroupScreen = homeNavController::navigateToSelectTrainingGroupScreen,
             navigateToCoachListScreen = homeNavController::navigateToCoachListScreen,
+            navigateToPaymentListScreen = homeNavController::navigateToPaymentListScreen,
         )
 
         searchScreenNavigation(
@@ -739,6 +746,21 @@ internal fun HomeScreenContent(
         notificationsScreenNavigation(
             navigateUp = homeNavController::navigateUp,
             popBackStack = homeNavController::popBackStack,
+        )
+
+        paymentListScreenNavigation(
+            navigateUp = homeNavController::navigateUp,
+            navigateToAddFeeScreen = homeNavController::navigateToAddFeeScreen,
+            navigateToFeeDetailScreen = homeNavController::navigateToFeeDetailScreen,
+        )
+
+        addFeeScreenNavigation(
+            navigateUp = homeNavController::navigateUp,
+        )
+
+        feeDetailScreenNavigation(
+            navigateUp = homeNavController::navigateUp,
+            navigateToAddFeeScreen = homeNavController::navigateToAddFeeScreen,
         )
 
         selectSportClubScreenNavigation(
