@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="paymentlist_title">Ödeme Listesi</string>
+    <string name="paymentlist_filter_all">Tümü</string>
+    <string name="paymentlist_filter_paid">Ödenenler</string>
+    <string name="paymentlist_filter_unpaid">Ödenmemiş</string>
+    <string name="paymentlist_filter_cancelled">İptal Edilen</string>
+    <string name="paymentlist_unknown_club">Bilinmeyen Kulüp</string>
+    <string name="paymentlist_unnamed_athlete">İsimsiz Sporcu</string>
+    <string name="paymentlist_group_prefix">Grup: %1$s</string>
+    <string name="paymentlist_action_add_payment">Yeni ödeme</string>
+    <string name="paymentlist_action_expand_collapse">Aç/Kapat</string>
+    <string name="paymentlist_badge_overdue">%1$d - GECİKMİŞ</string>
+    <string name="paymentlist_badge_paid">%1$d - ÖDENEN</string>
+
+    <string name="addfeescreen_title">Ödeme Kaydı Oluştur</string>
+    <string name="addfeescreen_person_or_group">Kişi ya da Grup Ekle</string>
+    <string name="addfeescreen_person_or_group_section">Kişi ya da Grup</string>
+    <string name="addfeescreen_category">Kategori</string>
+    <string name="addfeescreen_single_payment">Tekil Ödeme</string>
+    <string name="addfeescreen_recurring_payment">Tekrarlı Ödeme</string>
+    <string name="addfeescreen_payment_date">Ödeme Tarihi</string>
+    <string name="addfeescreen_amount">Tutar</string>
+    <string name="addfeescreen_payment_date_placeholder">25 Haziran 2025</string>
+    <string name="addfeescreen_amount_placeholder">Tutar giriniz</string>
+    <string name="addfeescreen_create_payment">Ödeme Kaydı Oluştur</string>
+    <string name="addfeescreen_first_payment_date">İlk Ödeme Tarihi</string>
+    <string name="addfeescreen_repeat_count">Tekrar Sayısı</string>
+    <string name="addfeescreen_repeat_count_placeholder">3</string>
+    <string name="addfeescreen_description">Açıklama</string>
+    <string name="addfeescreen_optional">Opsiyonel</string>
+    <string name="addfeescreen_description_placeholder">Açıklama giriniz</string>
+    <string name="addfeescreen_picker_title">Kişi Ekle</string>
+    <string name="addfeescreen_picker_search_placeholder">Kişi ara</string>
+    <string name="addfeescreen_picker_groups">Gruplar</string>
+    <string name="addfeescreen_picker_people">Kişiler</string>
+    <string name="addfeescreen_picker_save">Kaydet</string>
+    <string name="addfeescreen_picker_selected_people_count">%1$d kişi seçildi</string>
+    <string name="paymentdetail_title">Ödeme Detay</string>
+    <string name="paymentdetail_training_group">Antrenman Grubu:</string>
+    <string name="paymentdetail_registration_date">Kayıt Tarihi:</string>
+    <string name="paymentdetail_column_category">Kategori</string>
+    <string name="paymentdetail_column_period">Dönem</string>
+    <string name="paymentdetail_column_amount">Tutar</string>
+    <string name="paymentdetail_total">Toplam</string>
+    <string name="paymentdetail_completed_payment">Tamamlanan Ödeme</string>
+    <string name="paymentdetail_pending_payment">Bekleyen Ödeme</string>
+    <string name="paymentdetail_overdue_payment">Gecikmiş Ödeme</string>
+    <string name="paymentdetail_status_sheet_title">Ödeme Durumu</string>
+    <string name="paymentdetail_status_label">Ödeme Durumu</string>
+    <string name="paymentdetail_category_label">Kategori</string>
+    <string name="paymentdetail_payment_date_label">Ödeme Tarihi</string>
+    <string name="paymentdetail_due_date_label">Son Ödeme Tarihi</string>
+    <string name="paymentdetail_paid_amount_label">Ödenen Tutar</string>
+    <string name="paymentdetail_amount_due_label">Ödenecek Tutar</string>
+    <string name="paymentdetail_status_completed">Ödeme Tamamlandı</string>
+    <string name="paymentdetail_status_pending">Bekleniyor</string>
+    <string name="paymentdetail_status_overdue">Gecikmiş Ödeme</string>
+    <string name="paymentdetail_pending_reminder_action">Beklenen Ödeme için hatırlatma bildirimi gönder</string>
+    <string name="paymentdetail_overdue_reminder_action">Gecikmiş Ödeme için hatırlatma bildirimi gönder</string>
+    <string name="paymentdetail_mark_completed_action">Ödeme Tamamlandı</string>
+    <string name="paymentdetail_pending_notification_sent_toast">Beklenen ödeme için hatırlatma bildirimi gönderildi</string>
+    <string name="paymentdetail_overdue_notification_sent_toast">Gecikmiş ödeme için hatırlatma bildirimi gönderildi</string>
+    <string name="paymentdetail_empty">Henüz ödeme kaydı bulunamadı</string>
+
+    <string name="notificationsscreen_title">Bildirimler</string>
+</resources>
