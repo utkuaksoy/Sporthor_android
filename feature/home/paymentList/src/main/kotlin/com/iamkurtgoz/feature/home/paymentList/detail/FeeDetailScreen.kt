@@ -273,43 +273,36 @@ private fun FeeDetailScreenContent(
 private fun FeeDetailHeader(
     user: FeeDetailUserDomainModel?,
 ) {
-    Column(
+    Row(
         modifier = Modifier.fillMaxWidth(),
-        verticalArrangement = Arrangement.spacedBy(16.dp),
+        verticalAlignment = Alignment.Top,
     ) {
-        Text(
-            text = user?.fullName.orEmpty(),
-            modifier = Modifier.fillMaxWidth(),
-            style = AppTheme.typography.heading05,
-            fontWeight = FontWeight.Bold,
-            textAlign = TextAlign.Center,
+        FeeDetailAvatar(
+            imageUrl = user?.profilePhoto,
+            fallbackText = user?.fullName.orEmpty(),
         )
 
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            verticalAlignment = Alignment.Top,
+        Spacer(modifier = Modifier.width(16.dp))
+
+        Column(
+            modifier = Modifier.weight(1f),
+            verticalArrangement = Arrangement.spacedBy(12.dp),
         ) {
-            FeeDetailAvatar(
-                imageUrl = user?.profilePhoto,
-                fallbackText = user?.fullName.orEmpty(),
+            Text(
+                text = user?.fullName.orEmpty(),
+                style = AppTheme.typography.heading05,
+                fontWeight = FontWeight.Bold,
             )
 
-            Spacer(modifier = Modifier.width(16.dp))
+            HeaderInfoRow(
+                label = stringResource(resourcesR.string.paymentdetail_training_group),
+                value = user?.trainingGroupName.orEmpty(),
+            )
 
-            Column(
-                modifier = Modifier.weight(1f),
-                verticalArrangement = Arrangement.spacedBy(12.dp),
-            ) {
-                HeaderInfoRow(
-                    label = stringResource(resourcesR.string.paymentdetail_training_group),
-                    value = user?.trainingGroupName.orEmpty(),
-                )
-
-                HeaderInfoRow(
-                    label = stringResource(resourcesR.string.paymentdetail_registration_date),
-                    value = user?.registrationDate.formatDisplayDate(),
-                )
-            }
+            HeaderInfoRow(
+                label = stringResource(resourcesR.string.paymentdetail_registration_date),
+                value = user?.registrationDate.formatDisplayDate(),
+            )
         }
     }
 }
@@ -337,7 +330,7 @@ private fun HeaderInfoRow(
             style = AppTheme.typography.bodyLarge,
             fontWeight = FontWeight.Bold,
             color = Color(0xFF1D1D1D),
-            maxLines = 3,
+            maxLines = 1,
             overflow = TextOverflow.Ellipsis,
         )
     }
